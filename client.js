@@ -153,12 +153,16 @@ window.__ModuleLoader__.load({
 .hermes-brand-lockup{display:inline-flex;flex-direction:column;justify-content:center;gap:0;min-width:0;line-height:1;overflow:hidden}
 .hermes-brand-zh{font-family:${SERIF};font-size:17px;font-weight:500;line-height:17px;letter-spacing:.12em;color:var(--dsw-alias-label-primary);white-space:nowrap}
 .hermes-brand-en{font-size:6.5px;font-weight:500;line-height:7px;letter-spacing:.34em;color:var(--hermes-gold);opacity:.95;white-space:nowrap;transform:translateX(.08em)}
+.hermes-brand-row{display:inline-flex;align-items:center;gap:10px;min-width:0}
+.hermes-fortune-trigger{display:inline-flex;align-items:center;justify-content:center;flex:none;height:22px;padding:0 8px;border:1px solid var(--hermes-gold);border-radius:11px;background:transparent;color:var(--hermes-gold);font-family:${SERIF};font-size:10px;line-height:1;letter-spacing:.16em;white-space:nowrap;cursor:pointer;user-select:none;transition:background-color .15s ease,color .15s ease}
+.hermes-fortune-trigger:hover{background:var(--dsw-alias-interactive-bg-hover-accent);color:var(--dsw-alias-label-primary)}
+.hermes-fortune-trigger:focus-visible{outline:2px solid var(--hermes-gold);outline-offset:2px}
 .hermes-motto{display:inline-flex;align-items:center;gap:7px;color:var(--hermes-art);font-size:11px;line-height:16px;letter-spacing:.18em;opacity:.9;white-space:nowrap;user-select:none}
 .hermes-motto-star{color:var(--hermes-gold);font-size:10px;line-height:1;opacity:.95}
 .hermes-inscription{position:absolute;top:48%;left:50%;transform:translate(-50%,-50%);display:flex;flex-direction:row-reverse;align-items:flex-start;gap:.55em;color:var(--hermes-inscription);font-family:${BRUSH};font-weight:400;white-space:nowrap;user-select:none;pointer-events:none}
 .hermes-inscription-line{display:block;writing-mode:vertical-rl;text-orientation:upright;font-size:clamp(20px,4.5vh,44px);line-height:1.2;letter-spacing:.16em;padding-top:.16em}
 .hermes-ambient{position:fixed;inset:0;z-index:0;overflow:hidden;pointer-events:none;user-select:none}
-.hermes-ambient-orb{position:absolute;top:-100px;right:-80px;width:560px;height:560px;color:var(--hermes-gold);opacity:.22;animation:hermes-drift 34s ease-in-out infinite}
+.hermes-ambient-orb{position:absolute;top:-6vh;right:-4vw;width:min(560px,46vw,62vh);height:auto;aspect-ratio:1;color:var(--hermes-gold);opacity:.22;animation:hermes-drift 34s ease-in-out infinite}
 .hermes-ambient-ridges{position:absolute;left:0;right:0;bottom:0;width:100%;height:250px;color:var(--hermes-ink);opacity:.09}
 .hermes-ambient-star{position:absolute;width:2px;height:2px;border-radius:50%;background:var(--hermes-gold);box-shadow:0 0 6px var(--hermes-gold);opacity:.55;animation:hermes-twinkle 9s ease-in-out infinite}
 .hermes-ambient-star--violet{background:var(--hermes-violet);box-shadow:0 0 6px var(--hermes-violet)}
@@ -193,6 +197,31 @@ window.__ModuleLoader__.load({
 .hermes-send-plate .hermes-bagua{filter:drop-shadow(0 0 22px rgba(176,138,70,.35))}
 .hermes-send-plate .hermes-bagua-ring{animation:hermes-send-turn 1180ms cubic-bezier(.16,.6,.24,1) both}
 .hermes-send-plate .hermes-bagua-glow{animation:hermes-send-glow 1180ms ease-in-out both}
+/* 发送键：曜金圆键上的一枚太极（白/金两仪）。只替换发送态（箭头 svg），停止态仍是方块。 */
+[data-slot="conversation.composer.bar"] button:has(path[d^="M8.3125"]),
+[data-slot="conversation.composer.bar"] button[class*="_primary"]:has(svg path){background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cdefs%3E%3Cmask id='m' maskUnits='userSpaceOnUse' x='0' y='0' width='32' height='32'%3E%3Crect width='32' height='32' fill='%23fff'/%3E%3Ccircle cx='16' cy='8.5' r='2.8' fill='%23000'/%3E%3C/mask%3E%3C/defs%3E%3Cpath mask='url(%23m)' d='M16 1a15 15 0 0 1 0 30 7.5 7.5 0 0 1 0-15 7.5 7.5 0 0 0 0-15Z' fill='%23FFFCF6'/%3E%3Ccircle cx='16' cy='23.5' r='2.8' fill='%23FFFCF6'/%3E%3C/svg%3E");background-position:center;background-size:100% 100%;background-repeat:no-repeat}
+[data-slot="conversation.composer.bar"] button:has(path[d^="M8.3125"]) > svg,
+[data-slot="conversation.composer.bar"] button[class*="_primary"]:has(svg path) > svg{display:none}
+/* 今日占卜：侧栏品牌行的“占卜”按钮 + 居中签卡 */
+.hermes-fortune{position:fixed;inset:0;z-index:8600;display:flex;align-items:center;justify-content:center;padding:24px;background:rgba(20,17,24,.34);animation:hermes-fortune-in 180ms ease both}
+.hermes-fortune-card{position:relative;width:min(372px,100%);max-height:calc(100vh - 48px);overflow:auto;box-sizing:border-box;background:var(--dsw-alias-bg-layer-1);border:1px solid var(--hermes-gold);border-radius:16px;padding:22px 24px 18px;color:var(--dsw-alias-label-primary);font-family:${SERIF};box-shadow:0 26px 70px rgba(20,17,24,.3);animation:hermes-fortune-rise 220ms cubic-bezier(.2,.8,.3,1) both}
+.hermes-fortune-head{display:flex;align-items:baseline;justify-content:space-between;gap:12px;padding-bottom:10px;border-bottom:1px solid var(--dsw-alias-border-l1)}
+.hermes-fortune-kicker{font-size:11px;letter-spacing:.3em;color:var(--hermes-gold)}
+.hermes-fortune-date{font-size:11px;letter-spacing:.08em;color:var(--dsw-alias-label-tertiary);font-family:var(--dsw-font-family)}
+.hermes-fortune-core{display:flex;flex-direction:column;align-items:center;gap:6px;padding:16px 0 10px}
+.hermes-fortune-trigram{display:block;color:var(--hermes-gold)}
+.hermes-fortune-title{font-size:19px;letter-spacing:.16em;line-height:1.4}
+.hermes-fortune-grade{font-size:11px;letter-spacing:.22em;color:var(--hermes-gold);padding:2px 10px;border:1px solid var(--dsw-alias-border-l2);border-radius:999px}
+.hermes-fortune-poem{margin:0;text-align:center;font-size:15px;line-height:1.95;letter-spacing:.1em}
+.hermes-fortune-read{margin:12px 0 0;font-size:12px;line-height:1.85;letter-spacing:.04em;color:var(--dsw-alias-label-secondary);font-family:var(--dsw-font-family)}
+.hermes-fortune-tags{display:flex;gap:8px;justify-content:center;margin-top:12px}
+.hermes-fortune-tag{font-size:11px;line-height:1;letter-spacing:.1em;padding:6px 10px;border-radius:999px;border:1px solid var(--dsw-alias-border-l1);color:var(--dsw-alias-label-secondary);font-family:var(--dsw-font-family)}
+.hermes-fortune-tag--good{border-color:rgba(176,138,70,.55);color:var(--dsw-alias-state-warn-label)}
+.hermes-fortune-tag--bad{border-color:rgba(114,97,140,.45);color:var(--dsw-alias-label-deep-diving)}
+.hermes-fortune-foot{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:16px;padding-top:12px;border-top:1px solid var(--dsw-alias-border-l1)}
+.hermes-fortune-note{font-size:10px;letter-spacing:.14em;color:var(--dsw-alias-label-caption);font-family:var(--dsw-font-family)}
+.hermes-fortune-close{cursor:pointer;background:transparent;border:1px solid var(--hermes-gold);border-radius:999px;color:var(--hermes-gold);font:inherit;font-size:11px;letter-spacing:.16em;padding:6px 14px;transition:background-color .15s ease,color .15s ease}
+.hermes-fortune-close:hover{background:var(--dsw-alias-interactive-bg-hover-accent);color:var(--dsw-alias-label-primary)}
 .hermes-boot-hint{position:absolute;right:clamp(20px,3vw,46px);bottom:clamp(14px,2.2vh,30px);font-size:11px;line-height:1.4;letter-spacing:.2em;color:var(--hermes-art,#6D6473);opacity:0;animation:hermes-boot-hint-in 700ms ease 2400ms both}
 @keyframes hermes-boot-in{from{opacity:0}to{opacity:1}}
 @keyframes hermes-boot-out{from{opacity:1}to{opacity:0}}
@@ -205,7 +234,9 @@ window.__ModuleLoader__.load({
 @keyframes hermes-send-turn{from{transform:rotate(0deg)}to{transform:rotate(150deg)}}
 @keyframes hermes-send-glow{0%{opacity:.12}28%{opacity:.42}100%{opacity:0}}
 @keyframes hermes-send-fade{0%{opacity:0}22%,62%{opacity:.9}100%{opacity:0}}
-@media (prefers-reduced-motion: reduce){.hermes-ambient-orb,.hermes-ambient-star,.hermes-bagua-ring,.hermes-bagua-glow{animation:none!important}.hermes-boot-core,.hermes-boot-line,.hermes-boot-hint{animation:none!important;filter:none!important;clip-path:none!important;opacity:1!important}.hermes-boot-core{transform:translate(-50%,-50%)!important}.hermes-boot-hint{opacity:.55!important}.hermes-send-plate{animation:hermes-send-fade 900ms ease both}}
+@keyframes hermes-fortune-in{from{opacity:0}to{opacity:1}}
+@keyframes hermes-fortune-rise{from{opacity:0;transform:translateY(10px) scale(.985)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion: reduce){.hermes-ambient-orb,.hermes-ambient-star,.hermes-bagua-ring,.hermes-bagua-glow{animation:none!important}.hermes-boot-core,.hermes-boot-line,.hermes-boot-hint{animation:none!important;filter:none!important;clip-path:none!important;opacity:1!important}.hermes-boot-core{transform:translate(-50%,-50%)!important}.hermes-boot-hint{opacity:.55!important}.hermes-send-plate{animation:hermes-send-fade 900ms ease both}.hermes-fortune,.hermes-fortune-card{animation:none!important}}
 `
 
     const TRIGRAMS = [
@@ -280,13 +311,18 @@ window.__ModuleLoader__.load({
       return null
     }
 
-    /** Sidebar wordmark: 深度求索 / DEEPSEEK. */
+    /** Sidebar wordmark: 深度求索 / DEEPSEEK, with the daily-divination chip beside it. */
     function BrandName() {
       return h(
         'span',
-        { className: 'hermes-brand-lockup' },
-        h('span', { className: 'hermes-brand-zh' }, '深度求索'),
-        h('span', { className: 'hermes-brand-en' }, 'DEEPSEEK'),
+        { className: 'hermes-brand-row' },
+        h(
+          'span',
+          { className: 'hermes-brand-lockup' },
+          h('span', { className: 'hermes-brand-zh' }, '深度求索'),
+          h('span', { className: 'hermes-brand-en' }, 'DEEPSEEK'),
+        ),
+        h(FortuneTrigger),
       )
     }
 
@@ -310,19 +346,224 @@ window.__ModuleLoader__.load({
       )
     }
 
+    /* ——— 每日占卜：品牌字标旁的「占卜」按钮 + 今日一签 ——— */
+    const FORTUNE_LOTS = [
+      {
+        gua: '乾',
+        pattern: [1, 1, 1],
+        grade: '上上签',
+        poem: ['天行健，君子以自强不息；', '今日事，今日成。'],
+        read: '乾为天，刚健中正。势头在你这边，适合把搁置的事一次推到底。',
+        good: '进取 · 签约 · 早起',
+        bad: '懒散 · 反复',
+      },
+      {
+        gua: '坤',
+        pattern: [0, 0, 0],
+        grade: '上吉签',
+        poem: ['地势坤，君子以厚德载物；', '容得下，福气自会留下。'],
+        read: '坤为地，厚德载物。今日宜守宜和，慢一步反而走得更稳。',
+        good: '守成 · 协作 · 纳福',
+        bad: '争强 · 催逼',
+      },
+      {
+        gua: '震',
+        pattern: [0, 0, 1],
+        grade: '中吉签',
+        poem: ['一声雷动惊蛰后，', '万象更新自此时。'],
+        read: '震为雷，动而后安。今天适合开个头，但别把动静当成结果。',
+        good: '开创 · 面试 · 破局',
+        bad: '冲动 · 熬夜',
+      },
+      {
+        gua: '巽',
+        pattern: [1, 1, 0],
+        grade: '中平签',
+        poem: ['柔风入户无痕迹，', '润物无声自成蹊。'],
+        read: '巽为风，随风而入。今日宜沟通协调，顺着势头说话，事就成了。',
+        good: '沟通 · 谈判 · 出行',
+        bad: '拖延 · 赌气',
+      },
+      {
+        gua: '坎',
+        pattern: [0, 1, 0],
+        grade: '中平签',
+        poem: ['水到渠成终有路，', '心平何惧浪千重。'],
+        read: '坎为水，习坎而孚。今日事有反复，守住节奏，不冒进就是赢。',
+        good: '读书 · 复盘 · 守成',
+        bad: '冒险 · 轻信',
+      },
+      {
+        gua: '离',
+        pattern: [1, 0, 1],
+        grade: '中吉签',
+        poem: ['红日当空照九州，', '才华尽显在今朝。'],
+        read: '离为火，明两作离。今日宜表达与展示，光要打在你身上，别躲。',
+        good: '表达 · 展示 · 发布',
+        bad: '急躁 · 争执',
+      },
+      {
+        gua: '艮',
+        pattern: [1, 0, 0],
+        grade: '中平签',
+        poem: ['山重水复疑无路，', '静坐观心便是门。'],
+        read: '艮为山，止于当止。今日宜静不宜动，停一停，路自己会浮出来。',
+        good: '静养 · 复盘 · 断舍离',
+        bad: '强求 · 赶路',
+      },
+      {
+        gua: '兑',
+        pattern: [0, 1, 1],
+        grade: '上吉签',
+        poem: ['喜气盈门人语笑，', '与君同醉一壶春。'],
+        read: '兑为泽，和悦而亨。今日人缘顺，宜见人、宜开口，好事常在饭桌上。',
+        good: '社交 · 宴饮 · 约会',
+        bad: '口舌 · 赌气',
+      },
+    ]
+
+    /** Frame-level open signal for the divination card (trigger lives in the sidebar). */
+    const fortuneOpeners = new Set()
+    function openFortune() {
+      for (const opener of fortuneOpeners) opener()
+    }
+
+    /** Stable daily reading: the date picks today's lot, repeated clicks stay the same. */
+    function fortuneOfDay() {
+      const now = new Date()
+      const seed = now.getFullYear() * 10000 + (now.getMonth() + 1) * 100 + now.getDate()
+      const roll = (seed * 9301 + 49297) % 233280
+      const lot = FORTUNE_LOTS[Math.floor((roll / 233280) * FORTUNE_LOTS.length)]
+      const weekday = ['日', '一', '二', '三', '四', '五', '六'][now.getDay()]
+      return {
+        ...lot,
+        dateText: now.getFullYear() + '年' + (now.getMonth() + 1) + '月' + now.getDate() + '日 · 星期' + weekday,
+      }
+    }
+
+    /** Small trigram glyph for the fortune card. */
+    function FortuneTrigram({ pattern }) {
+      return h(
+        'svg',
+        { className: 'hermes-fortune-trigram', width: 46, height: 26, viewBox: '0 0 46 26', fill: 'none', 'aria-hidden': 'true' },
+        trigramLines(23, 4, 32, 2.6, 7, pattern),
+      )
+    }
+
+    /** The 「占卜」 chip beside the sidebar wordmark. */
+    function FortuneTrigger() {
+      const open = (event) => {
+        event.preventDefault()
+        event.stopPropagation()
+        openFortune()
+      }
+      const onKeyDown = (event) => {
+        if (event.key !== 'Enter' && event.key !== ' ') return
+        open(event)
+      }
+      return h(
+        'span',
+        {
+          className: 'hermes-fortune-trigger',
+          role: 'button',
+          tabIndex: 0,
+          title: '今日运势',
+          'aria-label': '今日运势',
+          onClick: open,
+          onKeyDown,
+          onPointerDown: (event) => event.stopPropagation(),
+        },
+        '占卜',
+      )
+    }
+
+    /** Frame-level divination card: today's grade, lot poem, and 宜/忌. */
+    function FortunePanel() {
+      const [reading, setReading] = React.useState(null)
+
+      React.useEffect(() => {
+        const opener = () => setReading(fortuneOfDay())
+        fortuneOpeners.add(opener)
+        return () => {
+          fortuneOpeners.delete(opener)
+        }
+      }, [])
+
+      React.useEffect(() => {
+        if (reading === null) return undefined
+        const onKey = (event) => {
+          if (event.key === 'Escape') setReading(null)
+        }
+        window.addEventListener('keydown', onKey)
+        return () => window.removeEventListener('keydown', onKey)
+      }, [reading])
+
+      if (reading === null) return null
+      const close = () => setReading(null)
+      const keepOpen = (event) => event.stopPropagation()
+
+      return h(
+        'div',
+        {
+          className: 'hermes-fortune',
+          role: 'presentation',
+          onPointerDown: (event) => {
+            if (event.target === event.currentTarget) close()
+          },
+        },
+        h(
+          'div',
+          {
+            className: 'hermes-fortune-card',
+            role: 'dialog',
+            'aria-modal': 'true',
+            'aria-label': '今日运势',
+            onPointerDown: keepOpen,
+          },
+          h(
+            'div',
+            { className: 'hermes-fortune-head' },
+            h('span', { className: 'hermes-fortune-kicker' }, '今日占卜'),
+            h('span', { className: 'hermes-fortune-date' }, reading.dateText),
+          ),
+          h(
+            'div',
+            { className: 'hermes-fortune-core' },
+            h(FortuneTrigram, { pattern: reading.pattern }),
+            h('span', { className: 'hermes-fortune-title' }, reading.gua + '卦'),
+            h('span', { className: 'hermes-fortune-grade' }, reading.grade),
+          ),
+          reading.poem.map((line, index) => h('p', { key: 'poem-' + index, className: 'hermes-fortune-poem' }, line)),
+          h('p', { className: 'hermes-fortune-read' }, reading.read),
+          h(
+            'div',
+            { className: 'hermes-fortune-tags' },
+            h('span', { className: 'hermes-fortune-tag hermes-fortune-tag--good' }, '宜 ' + reading.good),
+            h('span', { className: 'hermes-fortune-tag hermes-fortune-tag--bad' }, '忌 ' + reading.bad),
+          ),
+          h(
+            'div',
+            { className: 'hermes-fortune-foot' },
+            h('span', { className: 'hermes-fortune-note' }, '每日一签 · 图个心安'),
+            h('button', { type: 'button', className: 'hermes-fortune-close', onClick: close }, '收下'),
+          ),
+        ),
+      )
+    }
+
     const STARS = [
-      { top: '13%', left: '9%', delay: '0s' },
-      { top: '21%', left: '27%', delay: '1.6s', violet: true },
-      { top: '9%', left: '44%', delay: '3.1s' },
-      { top: '17%', left: '63%', delay: '0.8s' },
-      { top: '31%', left: '83%', delay: '2.4s' },
-      { top: '44%', left: '15%', delay: '4.2s' },
-      { top: '58%', left: '5%', delay: '1.1s', violet: true },
-      { top: '67%', left: '92%', delay: '3.7s' },
-      { top: '78%', left: '78%', delay: '0.4s' },
-      { top: '52%', left: '71%', delay: '5.3s' },
-      { top: '86%', left: '33%', delay: '2.9s' },
-      { top: '73%', left: '48%', delay: '4.8s' },
+      { top: '9%', left: '6%', delay: '0s' },
+      { top: '19%', left: '23%', delay: '1.6s', violet: true },
+      { top: '7%', left: '38%', delay: '3.1s' },
+      { top: '31%', left: '12%', delay: '0.8s' },
+      { top: '37%', left: '31%', delay: '2.4s' },
+      { top: '47%', left: '4%', delay: '4.2s', violet: true },
+      { top: '60%', left: '18%', delay: '1.1s' },
+      { top: '67%', left: '30%', delay: '3.7s' },
+      { top: '74%', left: '68%', delay: '0.4s' },
+      { top: '80%', left: '77%', delay: '5.3s' },
+      { top: '86%', left: '52%', delay: '2.9s', violet: true },
+      { top: '63%', left: '88%', delay: '4.8s' },
     ]
 
     /** Frame-wide watermark: a bagua star-wheel in the top-right and ink ridges along the floor. */
@@ -356,20 +597,6 @@ window.__ModuleLoader__.load({
               ),
             ),
           ),
-          h(
-            'g',
-            { style: { stroke: 'currentColor' }, strokeWidth: 1.1, opacity: 0.55 },
-            h('path', { d: 'M452 148 L492 126 L536 144 L524 184' }),
-            h('circle', { cx: 452, cy: 148, r: 2.3, style: { fill: 'currentColor' }, stroke: 'none' }),
-            h('circle', { cx: 492, cy: 126, r: 1.7, style: { fill: 'currentColor' }, stroke: 'none' }),
-            h('circle', { cx: 536, cy: 144, r: 2, style: { fill: 'currentColor' }, stroke: 'none' }),
-            h('circle', { cx: 524, cy: 184, r: 1.4, style: { fill: 'currentColor' }, stroke: 'none' }),
-          ),
-          h('path', {
-            d: 'M118 452l5 13 13 5-13 5-5 13-5-13-13-5 13-5z',
-            style: { fill: 'currentColor' },
-            opacity: 0.7,
-          }),
         ),
         h(
           'svg',
@@ -688,6 +915,10 @@ window.__ModuleLoader__.load({
       // 回车发送的太极闪屏：挂在 frame 级 overlay，避免被会话容器裁切。
       ctx.slots.inject('shell.overlay', () =>
         ctx.slots.register({ name: 'shell.overlay', id: 'hermes-send-taiji', order: 45 }, SendTaijiOverlay),
+      )
+      // 今日占卜签卡：由侧栏品牌行的小按钮触发，画面挂在 frame 级 overlay。
+      ctx.slots.inject('shell.overlay', () =>
+        ctx.slots.register({ name: 'shell.overlay', id: 'hermes-fortune', order: 40 }, FortunePanel),
       )
       // 空白会话不出太极：用空占位 shadow 掉官方品牌位，聊天里只在发送时闪太极。
       ctx.slots.inject('conversation.hero.brand.mark', () =>
