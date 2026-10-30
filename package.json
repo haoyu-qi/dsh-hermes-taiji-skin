@@ -1,7 +1,7 @@
 {
   "name": "@local/dsh-hermes-skin",
-  "version": "1.3.0",
-  "description": "深度求索 · 太极皮肤：五秒开机先天八卦 + 四向行书箴言、发送键与回车动画的太极、侧栏今日占卜一签、水墨星轨双主题 (DeepSeek Taiji Skin: five-second bagua boot animation, taiji send button and send burst, daily divination, and an ink-and-gold theme for the DSH Web GUI)",
+  "version": "1.4.0",
+  "description": "深度求索 · 太极皮肤：五秒开机先天八卦 + 四向行书箴言、发送键与回车动画的太极、侧栏占卜令牌与收下符咒/今日卦象、水墨星轨双主题 (DeepSeek Taiji Skin: five-second bagua boot animation, taiji send button and send burst, a daily divination token with talisman cast and hexagram slip, and an ink-and-gold theme for the DSH Web GUI)",
   "type": "module",
   "license": "MIT",
   "author": "Qijinchun (haoyu-qi)",

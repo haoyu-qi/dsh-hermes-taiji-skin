@@ -2,7 +2,7 @@
 
 给 DSH Web GUI 自己穿的一套皮肤：把参考图里的「月华白 / 曜金 / 烟紫 / 云藤紫 / 墨岩灰」、太极、八卦、星轨与山水，落成可安装的 Cordis 插件。启动时先落一张五秒钟的开场：中间八卦，上下左右四句行书。
 
-一个插件装齐全部视觉：**五秒开机动画**（中央先天八卦盘 + 上/下/左/右四句行书）、**回车发送时的一记太极**、**发送键太极**、侧栏**今日占卜**一签、月华白/曜金/烟紫双主题、侧栏太极印、背景题字与山水星轨。
+一个插件装齐全部视觉：**五秒开机动画**（中央先天八卦盘 + 上/下/左/右四句行书）、**回车发送时的一记太极**、**发送键太极**、侧栏**占卜令牌**与今日一签（收下时一纸**符咒**飞渡、右下角落成**今日卦象**）、月华白/曜金/烟紫双主题、侧栏太极印、背景题字与山水星轨。
 
 > 仓库：<https://github.com/haoyu-qi/dsh-hermes-taiji-skin>
 
@@ -38,6 +38,7 @@
 | 烟紫 | `#8E7FA8` | 链接、思考中、次级星芒 |
 | 云藤紫 | `#72618C` | 链接与深潜标签的可读色 |
 | 墨岩灰 | `#3A3342` | 正文、主按钮、太极印 |
+| 朱砂 | `#A6473D` | 符咒的敕令、六爻与卦名小印 |
 
 暗色主题「玄夜」使用同一套语义令牌的另一组值：墨底 `#141118`、月金 `#D9BE86`、浅檀 `#E9DCC0`。两套色板都通过 `ctx.theme.overrideTokens` 叠加，跟随「设置 → 通用 → 外观」的浅色/深色/跟随系统，不强制改用户的主题偏好。
 
@@ -55,10 +56,10 @@
 - **发送太极**：只有在 composer 里按回车、且草稿非空并被真正提交清空时，frame 中央才闪一记太极——0.15s 内浮起，八卦环转 150°，1.3s 内上浮淡出；`pointer-events: none`，不挡任何操作。空格输入、Shift+Enter 换行、空草稿回车、点发送按钮都不会触发。
 - **发送键太极**：曜金发送键上的官方箭头换成白/金两仪太极，整个 34px 圆键就是太极盘；只在发送态生效，生成中的停止键与停止方块保持原样。用 CSS `:has()` 在 composer bar 内定位，不改官方 DOM。
 - **山水**：底部 9% 不透明度的水墨山脊与一线金水。
-- **背景题字**：整页背景画正中，两列竖排行书——右起 `天行健，君子以自强不息`，左为 `地势坤，君子以厚德载物`；字号 `clamp(20px,4.5vh,44px)`、字距 `.16em`，墨色约 15%（深色约 18%），浮在八卦星轮与山水之上、随主题换墨，指针穿透。
+- **背景题字**：整页偏左（`left: clamp(300px,24vw,500px)`、纵向 46%），两列竖排行书——右列 `天行健` / `君子以自强不息` 分作上下两句，左列 `地势坤` / `君子以厚德载物` 同样分句（句间留 `.85em`），并整体下移 `4.2em` 与右列错开；字号 `clamp(20px,4.5vh,44px)`、字距 `.16em`，墨色约 15%（深色约 18%），浮在八卦星轮与山水之上、随主题换墨，指针穿透。
 - **箴言**：输入框下方 `✦ 命运可见 · 智慧可行 · 自在而生`。
 - **字标**：`深度求索`（宋体）／`DEEPSEEK` 两行锁定。
-- **今日占卜**：「深度求索」字标右侧一枚曜金描边的「占卜」小钮；点开是居中的今日签卡——日期、八卦卦名与三爻、签诗、解签、宜／忌。按当天日期取签（同一天重复点开结果不变），点背景、Esc 或「收下」收起。
+- **今日占卜**：「深度求索」字标右侧一枚竖排**令牌**——17×24px，上圆下平、双金线框、顶部穿绳孔，`占`/`卜` 二字 8px 竖刻（官方品牌行固定 24px 且 `.brand` 裁切，令牌不能再高）。点开是居中的今日签卡——日期、八卦卦名与三爻、签诗、解签、宜／忌；点背景或 Esc 收起。点「收下」则走一套完整的收签仪式：签卡收起后，一纸朱砂符咒（敕令、符纹、六爻、卦名朱印）自画面中央落下，停约 0.6 秒后飞向右下并淡出（1.7 秒），同时在右下角落成一枚「今日卦象」小签——六爻重卦、卦名（巽为风等八正卦）与签级；小签留在页面上，悬停后点右上角 × 收起。符咒与卦象都尊重 `prefers-reduced-motion`（只淡入淡出，不飞不转）。
 - 尊重 `prefers-reduced-motion`：星轨、呼吸、闪烁全部停止。
 
 ## 核验
@@ -67,20 +68,21 @@
 - Host bundle 安装结果：`application: applied`，Loader 条目 `include:hermes-skin` 为 `active`。
 - **Desktop 的启动图在应用启动时冻结**（Electron 主进程缓存 `boot injections`），首次安装后需要退出并重新打开 DeepSeek Harness 一次，Client 半才会挂载；之后修改 `client.js` 会由 `client-hmr` 热替换，无需再次重启。
 - 侧栏单槽位：本包以 `priority: -100` shadow 官方品牌（官方 priority 0 显示 inactive）；`conversation.hero.brand.mark` 也以 `-100` 注册了一个返回 `null` 的占位，因此空白会话标题前不再出现任何太极印。
-- 活体槽位：`conversation.composer.dock` 中 `hermes-motto`（order 20）与 `hermes-send-taiji`（order 21）均为 `active`；`shell.overlay` 中 `hermes-ambient`（order -10，内含中央背景题字）、`hermes-fortune`（order 40）、`hermes-send-taiji`（order 45）与 `hermes-boot`（order 50）均为 `active`；`sidebar.brand.name` 的皮肤字标（priority -100）为 `active`，「占卜」钮随它一起渲染。
+- 活体槽位：`conversation.composer.dock` 中 `hermes-motto`（order 20）与 `hermes-send-taiji`（order 21）均为 `active`；`shell.overlay` 中 `hermes-ambient`（order -10，内含中央背景题字）、`hermes-fortune`（order 40）、`hermes-send-taiji`（order 45）与 `hermes-boot`（order 50）均为 `active`；`sidebar.brand.name` 的皮肤字标（priority -100）为 `active`，占卜令牌随它一起渲染；右下角卦象小签也由 `hermes-fortune` 这一个槽位承载。
 - 静态核验：以 `vm` + 伪 `React`/`document`/伪定时器触发 `apply()` 并渲染——`BaguaPlate` 输出 8 组三爻（每组 3 根）+ 8 枚菱形星点 + 太极金环；开机生命周期 0s 入场、4.4s 切淡出、5.0s 返回 `null`；发送太极只在「回车 + 草稿非空 + 随后草稿清空」时出现，空格、Shift+Enter、空草稿回车均为 `null`，1.5s 后自动收起；样式表花括号闭合、`${BRUSH}` 已内联。
 - 新增三项的静态核验：发送键太极是纯 CSS 规则（`[data-slot="conversation.composer.bar"] button[class*="_primary"]:has(svg path)`，仅在箭头 svg 存在时生效，不参与组件渲染）；占卜签由 `FORTUNE_LOTS` × 日期取模的纯函数生成；星点坐标 12 个全部落在避开星轮的左侧与底部空区。
-- 视觉核验：本机没有浏览器控制能力，无法截图；以实际界面为准。
+- 收签流的静态核验：令牌实测 17×24，正好收进官方 24px 品牌行；点「收下」后 `casting` 挂 1.7 秒定时器、到点卸载；`accepted` 保留到点 × 或刷新；`PURE_HEXAGRAM` 覆盖八支签，六爻由同一三爻上下相叠（乾为天…兑为泽），与三爻签一一对应。
+- 视觉核验：用无头 Chromium（1440×900 @2x，浅色/深色各一套）把真实 client 组件渲染进仿 DSH 外壳，截取 base / 签卡 / 收下 450ms / 收下 2s 四态与令牌、题字、符咒、卦象四张特写；行楷（Xingkai SC）确认生效，console/pageerror 均为 0。截图只作本机迭代用，不入仓库。
 
 ## 现在应该看到
 
 1. 启动或刷新页面：先落五秒开机动画——正中先天八卦盘，八卦环缓转 45°，上/下/左/右四句行书依次扫入，4.4 秒开始淡出、5 秒整消失；点按任意处或 Esc／Enter 可提前跳过，空格不会触发。
-2. 侧栏左上角：曜金细环的太极印 + 宋体「深度求索 / DEEPSEEK」字标；字标右侧一枚曜金描边的「占卜」小钮，点开看今日一签（同日不变，Esc／点背景／「收下」收起）。
+2. 侧栏左上角：曜金细环的太极印 + 宋体「深度求索 / DEEPSEEK」字标；字标右侧一枚金线竖排的「占卜」令牌，点开看今日一签（同日不变，Esc／点背景收起）。点「收下」：签卡先收，画面中央落下一纸朱砂符咒，约 1 秒后飞向右下淡出，右下角留下一枚「今日卦象」小签（六爻、卦名、签级），悬停可点 × 收起。
 3. 新建会话标题前：不再有太极印，只留标题与留白。
 4. 输入框里打一句话、按回车发送：屏幕中央会闪一记八卦太极（约 1.3 秒），然后消失；打字时空格/换行/点发送按钮都不闪。
 5. 发送键：曜金圆键上是一枚白/金两仪太极（箭头已换掉）；生成中它变回停止方块，旁边另有停止键，发送逻辑不变。
 6. 输入框下沿：`✦ 命运可见 · 智慧可行 · 自在而生`。
-7. 页面中央背景：极淡的两列竖排行书——右列 `天行健，君子以自强不息`，左列 `地势坤，君子以厚德载物`——作为整页背景画的一部分。
+7. 页面偏左的背景：极淡的两列竖排行书——右列 `天行健` / `君子以自强不息` 分两句，左列 `地势坤` / `君子以厚德载物` 分两句并整体下移，和右列错开，作为整页背景画的一部分。
 8. 整体：月华白纸面、墨色主按钮、曜金发送键、烟紫链接与次级文本；右上角 22% 的八卦星轮水印（星点已避开轮面、轮子随窗口缩放）、底部 9% 水墨山脊与星点。
 9. 切到深色（设置 → 通用 → 外观 → 深色）：玄夜墨底 + 月金 + 浅檀主按钮，同一套元素换色。
 
@@ -96,10 +98,12 @@
 - 开机动画只在每次页面载入（启动或刷新）时播放一次：`BootCurtain` 的初值用 `sessionStorage` + `performance.timeOrigin` 记了一份「本页面已播」标记，所以 `client-hmr` 热替换同一份文档不会重播，只有真正刷新/重开才再开场。嫌五秒长可改 `client.js` 里 `BOOT_MS`；完全不想要就删掉 `apply()` 中 `hermes-boot` 的注册。四句字号在 `.hermes-boot-line--top/--bottom`（目前 `clamp(20px, min(4.5vh, 3.4vw), 48px)`）与 `.hermes-boot-line--left/--right`（`clamp(17px, 3.6vh, 40px)`），想再大/再小直接改这两处；字号变大时记得同步收上下留白（`top/bottom` 的 `8.5vh`）和两侧竖排的内缩（`3vw`）。
 - 行书字体栈 `BRUSH` 优先 macOS 自带 `Xingkai SC`（华文行楷），其次 `Zhi Mang Xing`（志莽行书，需自行安装，更像手写行草）、`Hannotate SC`（手札体）、`Kaiti SC`（楷体）。想更接近毛笔手迹，把 `"Zhi Mang Xing"` 提到栈首。
 - 右下角「轻触任意处 · 跳过」提示如需隐藏，删掉 `client.js` 里 `hermes-boot-hint` 那个节点即可。
-- 背景题字随 `hermes-ambient` 渲染在 `shell.overlay`，每个页面（含空白新会话）都能看到；竖排两列、右起，字号 `clamp(20px,4.5vh,44px)`（按视口高度收缩），深浅主题用 `--hermes-inscription` 两组 alpha；觉得太重就调低 alpha，想改大小改字号 clamp，想换回横排把 `.hermes-inscription` 的 `flex-direction` 改为 `column` 并去掉 `.hermes-inscription-line` 的 `writing-mode` 即可。
+- 背景题字随 `hermes-ambient` 渲染在 `shell.overlay`，每个页面（含空白新会话）都能看到；竖排两列、右起，每列拆成上下两句（句间 `.85em`），左列再落低 `4.2em` 与右列错开，整体 `left: clamp(300px,24vw,500px)` 偏左、纵向 46%；字号 `clamp(20px,4.5vh,44px)`（按视口高度收缩），深浅主题用 `--hermes-inscription` 两组 alpha；觉得太重就调低 alpha，想改大小改字号 clamp，想换回横排把 `.hermes-inscription` 的 `flex-direction` 改为 `column`、去掉 `.hermes-inscription-line` 的 `writing-mode`，并把两列里的上下句 span 合并即可。
 - 星点坐标在 `STARS`（12 个百分比位置），现在全部落在 `left ≤ 38%`（左上/左中）或 `top ≥ 60%`（底部）的空区，避开右上星轮和开场中央八卦；星轮大小在 `.hermes-ambient-orb` 的 `width:min(560px,46vw,62vh)`，想再大要把左侧星点继续往边上收。
 - 发送键太极用 `[data-slot="conversation.composer.bar"] button[class*="_primary"]:has(svg path)` 定位（另加 `path[d^="M8.3125"]` 兜底），只替换发送态箭头；DSH 若改动 composer 结构或发送图标，这两条 CSS 要跟着改；想换回官方箭头删掉这两条规则即可。
-- 今日占卜数据在 `FORTUNE_LOTS`（8 支八卦签：卦名/三爻/等级/签诗/解签/宜忌），`fortuneOfDay()` 用 `YYYYMMDD` 做 seed 取模，所以同一天结果固定；想每点一次换一签，把 seed 换成 `Math.random()` 即可。侧栏品牌身份在官方 DOM 里是 `aria-hidden="true"`，这枚按钮对读屏不可见（装饰性质）。
+- 今日占卜数据在 `FORTUNE_LOTS`（8 支八卦签：卦名/三爻/等级/签诗/解签/宜忌），`fortuneOfDay()` 用 `YYYYMMDD` 做 seed 取模，所以同一天结果固定；想每点一次换一签，把 seed 换成 `Math.random()` 即可。侧栏品牌身份在官方 DOM 里是 `aria-hidden="true"`，这枚令牌对读屏不可见（装饰性质）。
+- 占卜令牌的尺寸是被官方布局锁死的：侧栏 `.logoRow` 60px、`.brandName` 与 `.brandIdentity` 高 24px，`.brand` 还带 `overflow:hidden`；令牌高 24px 已是上限，再高会被裁掉。想更醒目只能加宽（目前 17px）或把字标缩短；不要用 `transform` 做 hover 上浮，顶部同样会被裁。
+- 符咒与卦象：`TalismanCast` 是纯装饰（`aria-hidden`，`pointer-events:none`），1700ms 后由 `FortunePanel` 卸载；`StoredHexagram` 用 `PURE_HEXAGRAM` 把当日三爻叠成六爻，八支签恰好对应乾为天…兑为泽八正卦。想延长/缩短仪式改 `.hermes-talisman-sheet` 的 1700ms 与 `FortunePanel` 里同名的 1700ms 定时器（两处要一起改）；想换飞行方向改 `@keyframes hermes-talisman-cast` 末帧的 `translate3d(36vw,30vh,0)`；不想要卦象小签就删掉 `StoredHexagram` 的渲染行。
 
 ## 许可
 

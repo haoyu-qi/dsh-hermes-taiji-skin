@@ -145,7 +145,7 @@ window.__ModuleLoader__.load({
       '--hermes-gold': { light: '#B08A46', dark: '#D9BE86' },
       '--hermes-violet': { light: '#8E7FA8', dark: '#C0A9DD' },
       '--hermes-art': { light: '#6D6473', dark: '#B7ACC0' },
-      /* faint ink for the background-center inscription */
+      /* faint ink for the left-hand background inscription */
       '--hermes-inscription': { light: '#3A334226', dark: '#EFE6F22E' },
     }
 
@@ -154,12 +154,20 @@ window.__ModuleLoader__.load({
 .hermes-brand-zh{font-family:${SERIF};font-size:17px;font-weight:500;line-height:17px;letter-spacing:.12em;color:var(--dsw-alias-label-primary);white-space:nowrap}
 .hermes-brand-en{font-size:6.5px;font-weight:500;line-height:7px;letter-spacing:.34em;color:var(--hermes-gold);opacity:.95;white-space:nowrap;transform:translateX(.08em)}
 .hermes-brand-row{display:inline-flex;align-items:center;gap:10px;min-width:0}
-.hermes-fortune-trigger{display:inline-flex;align-items:center;justify-content:center;flex:none;height:22px;padding:0 8px;border:1px solid var(--hermes-gold);border-radius:11px;background:transparent;color:var(--hermes-gold);font-family:${SERIF};font-size:10px;line-height:1;letter-spacing:.16em;white-space:nowrap;cursor:pointer;user-select:none;transition:background-color .15s ease,color .15s ease}
-.hermes-fortune-trigger:hover{background:var(--dsw-alias-interactive-bg-hover-accent);color:var(--dsw-alias-label-primary)}
+/* 占卜钮：一枚袖珍令牌——上圆下平、双金线框、顶部穿绳孔，占/卜 二字竖刻。
+   侧栏品牌行只有 24px 高（官方 .brandName 固定 24px、外层 .brand overflow:hidden），
+   所以令牌必须严格收在 24px 内，不能再高。 */
+.hermes-fortune-trigger{position:relative;display:inline-flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;flex:none;box-sizing:border-box;width:17px;height:24px;padding:4px 0 1px;border:1px solid var(--hermes-gold);border-radius:6px 6px 2px 2px;background:var(--dsw-alias-bg-layer-1);background:linear-gradient(180deg,color-mix(in srgb,var(--hermes-gold) 24%,var(--dsw-alias-bg-layer-1)),var(--dsw-alias-bg-layer-1) 46%,var(--dsw-alias-bg-layer-2));color:var(--hermes-gold);font-family:${SERIF};font-size:8px;font-weight:500;line-height:1;letter-spacing:0;white-space:nowrap;cursor:pointer;user-select:none;box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--hermes-gold) 26%,transparent),inset 0 -2px 4px color-mix(in srgb,var(--hermes-gold) 16%,transparent),0 1px 2px rgba(20,17,24,.14);transition:color .18s ease,transform .18s ease,box-shadow .18s ease}
+.hermes-fortune-trigger::before{content:"";position:absolute;top:2.4px;left:50%;width:2px;height:2px;margin-left:-1px;border-radius:50%;background:color-mix(in srgb,var(--dsw-alias-bg-base) 70%,var(--hermes-gold));box-shadow:0 0 0 .6px color-mix(in srgb,var(--hermes-gold) 55%,transparent)}
+.hermes-fortune-trigger-glyph{display:block;font-size:8px;line-height:8px}
+.hermes-fortune-trigger:hover{color:var(--dsw-alias-label-primary);box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--hermes-gold) 42%,transparent),0 0 10px color-mix(in srgb,var(--hermes-gold) 28%,transparent),0 2px 4px rgba(20,17,24,.16)}
 .hermes-fortune-trigger:focus-visible{outline:2px solid var(--hermes-gold);outline-offset:2px}
 .hermes-motto{display:inline-flex;align-items:center;gap:7px;color:var(--hermes-art);font-size:11px;line-height:16px;letter-spacing:.18em;opacity:.9;white-space:nowrap;user-select:none}
 .hermes-motto-star{color:var(--hermes-gold);font-size:10px;line-height:1;opacity:.95}
-.hermes-inscription{position:absolute;top:48%;left:50%;transform:translate(-50%,-50%);display:flex;flex-direction:row-reverse;align-items:flex-start;gap:.55em;color:var(--hermes-inscription);font-family:${BRUSH};font-weight:400;white-space:nowrap;user-select:none;pointer-events:none}
+/* 背景题字：偏左，两列；每列拆上句/下句，左列再落低一截与右列错开。 */
+.hermes-inscription{position:absolute;top:46%;left:clamp(300px,24vw,500px);transform:translateY(-50%);display:flex;flex-direction:row-reverse;align-items:flex-start;gap:.72em;color:var(--hermes-inscription);font-family:${BRUSH};font-weight:400;white-space:nowrap;user-select:none;pointer-events:none}
+.hermes-inscription-col{display:flex;flex-direction:column;align-items:flex-start;gap:.85em}
+.hermes-inscription-col--stagger{margin-top:4.2em}
 .hermes-inscription-line{display:block;writing-mode:vertical-rl;text-orientation:upright;font-size:clamp(20px,4.5vh,44px);line-height:1.2;letter-spacing:.16em;padding-top:.16em}
 .hermes-ambient{position:fixed;inset:0;z-index:0;overflow:hidden;pointer-events:none;user-select:none}
 .hermes-ambient-orb{position:absolute;top:-6vh;right:-4vw;width:min(560px,46vw,62vh);height:auto;aspect-ratio:1;color:var(--hermes-gold);opacity:.22;animation:hermes-drift 34s ease-in-out infinite}
@@ -222,6 +230,26 @@ window.__ModuleLoader__.load({
 .hermes-fortune-note{font-size:10px;letter-spacing:.14em;color:var(--dsw-alias-label-caption);font-family:var(--dsw-font-family)}
 .hermes-fortune-close{cursor:pointer;background:transparent;border:1px solid var(--hermes-gold);border-radius:999px;color:var(--hermes-gold);font:inherit;font-size:11px;letter-spacing:.16em;padding:6px 14px;transition:background-color .15s ease,color .15s ease}
 .hermes-fortune-close:hover{background:var(--dsw-alias-interactive-bg-hover-accent);color:var(--dsw-alias-label-primary)}
+/* ——— 收下：一纸符咒落下来、飞向右下，落成一枚今日卦象签 ——— */
+.hermes-talisman{position:fixed;inset:0;z-index:8700;display:flex;align-items:center;justify-content:center;overflow:hidden;pointer-events:none;user-select:none}
+.hermes-talisman-sheet{position:relative;display:flex;flex-direction:column;align-items:center;gap:8px;width:116px;padding:15px 12px 13px;box-sizing:border-box;background:linear-gradient(180deg,#F8ECC9 0%,#F3E2B8 52%,#EED9A5 100%);color:#A6473D;border:1px solid rgba(176,138,70,.6);border-radius:2px;box-shadow:0 20px 54px rgba(20,17,24,.3),inset 0 0 0 3px rgba(255,252,246,.55),inset 0 0 26px rgba(176,138,70,.18);font-family:${SERIF};animation:hermes-talisman-cast 1700ms cubic-bezier(.22,.7,.28,1) both}
+.hermes-talisman-sheet::before,.hermes-talisman-sheet::after{content:"";position:absolute;left:6px;right:6px;height:1px;background:rgba(166,71,61,.28)}
+.hermes-talisman-sheet::before{top:8px}
+.hermes-talisman-sheet::after{bottom:8px}
+.hermes-talisman-command{font-size:13px;line-height:1;letter-spacing:.22em;text-indent:.22em;color:#A6473D;opacity:.92}
+.hermes-talisman-rune{display:block;width:56px;height:70px;color:#A6473D;opacity:.92}
+.hermes-talisman-hex{display:block;width:50px;height:58px;color:#A6473D}
+.hermes-talisman-seal{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;margin-top:1px;background:#A6473D;color:#F8ECC9;font-family:${SERIF};font-size:16px;line-height:1;box-shadow:inset 0 0 0 2px rgba(248,236,201,.35)}
+/* 右下角落定的卦象签：一直留到点 × 收起或刷新 */
+.hermes-hexagram{position:fixed;right:22px;bottom:24px;z-index:8400;display:flex;flex-direction:column;align-items:center;gap:9px;width:102px;padding:13px 10px 11px;box-sizing:border-box;background:linear-gradient(180deg,var(--dsw-alias-bg-layer-1),var(--dsw-alias-bg-layer-2));color:var(--dsw-alias-label-primary);font-family:${SERIF};border:1px solid color-mix(in srgb,var(--hermes-gold) 52%,var(--dsw-alias-border-l1));border-radius:12px;box-shadow:0 16px 40px rgba(20,17,24,.18);pointer-events:none;animation:hermes-hexagram-in 720ms cubic-bezier(.2,.8,.3,1) 1020ms both}
+.hermes-hexagram::before{content:"";position:absolute;top:6px;left:50%;width:2.6px;height:2.6px;margin-left:-1.3px;border-radius:50%;background:var(--hermes-gold);opacity:.55}
+.hermes-hexagram-head{font-size:9px;letter-spacing:.24em;text-indent:.24em;color:var(--hermes-gold)}
+.hermes-hexagram-glyph{display:block;color:var(--hermes-gold)}
+.hermes-hexagram-name{font-size:13px;letter-spacing:.14em;text-indent:.14em;line-height:1.2}
+.hermes-hexagram-grade{font-size:9px;letter-spacing:.16em;color:var(--dsw-alias-label-tertiary)}
+.hermes-hexagram-close{position:absolute;top:3px;right:4px;display:flex;align-items:center;justify-content:center;width:16px;height:16px;padding:0;border:none;background:transparent;color:var(--dsw-alias-label-caption);font:inherit;font-size:12px;line-height:1;cursor:pointer;opacity:.3;pointer-events:auto;transition:opacity .15s ease,color .15s ease}
+.hermes-hexagram:hover .hermes-hexagram-close{opacity:.6}
+.hermes-hexagram-close:hover{color:var(--dsw-alias-label-primary);opacity:1}
 .hermes-boot-hint{position:absolute;right:clamp(20px,3vw,46px);bottom:clamp(14px,2.2vh,30px);font-size:11px;line-height:1.4;letter-spacing:.2em;color:var(--hermes-art,#6D6473);opacity:0;animation:hermes-boot-hint-in 700ms ease 2400ms both}
 @keyframes hermes-boot-in{from{opacity:0}to{opacity:1}}
 @keyframes hermes-boot-out{from{opacity:1}to{opacity:0}}
@@ -236,7 +264,10 @@ window.__ModuleLoader__.load({
 @keyframes hermes-send-fade{0%{opacity:0}22%,62%{opacity:.9}100%{opacity:0}}
 @keyframes hermes-fortune-in{from{opacity:0}to{opacity:1}}
 @keyframes hermes-fortune-rise{from{opacity:0;transform:translateY(10px) scale(.985)}to{opacity:1;transform:none}}
-@media (prefers-reduced-motion: reduce){.hermes-ambient-orb,.hermes-ambient-star,.hermes-bagua-ring,.hermes-bagua-glow{animation:none!important}.hermes-boot-core,.hermes-boot-line,.hermes-boot-hint{animation:none!important;filter:none!important;clip-path:none!important;opacity:1!important}.hermes-boot-core{transform:translate(-50%,-50%)!important}.hermes-boot-hint{opacity:.55!important}.hermes-send-plate{animation:hermes-send-fade 900ms ease both}.hermes-fortune,.hermes-fortune-card{animation:none!important}}
+@keyframes hermes-talisman-cast{0%{opacity:0;transform:translate3d(0,-26px,0) rotate(-7deg) scale(.72)}12%{opacity:1;transform:translate3d(0,0,0) rotate(2.2deg) scale(1.02)}24%{transform:translate3d(0,0,0) rotate(-.8deg) scale(1)}58%{opacity:1;transform:translate3d(0,0,0) rotate(0) scale(1)}100%{opacity:0;transform:translate3d(36vw,30vh,0) rotate(9deg) scale(.32)}}
+@keyframes hermes-talisman-fade{0%{opacity:0}18%,72%{opacity:1}100%{opacity:0}}
+@keyframes hermes-hexagram-in{from{opacity:0;transform:translate3d(10px,10px,0) scale(.94)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion: reduce){.hermes-ambient-orb,.hermes-ambient-star,.hermes-bagua-ring,.hermes-bagua-glow{animation:none!important}.hermes-boot-core,.hermes-boot-line,.hermes-boot-hint{animation:none!important;filter:none!important;clip-path:none!important;opacity:1!important}.hermes-boot-core{transform:translate(-50%,-50%)!important}.hermes-boot-hint{opacity:.55!important}.hermes-send-plate{animation:hermes-send-fade 900ms ease both}.hermes-fortune,.hermes-fortune-card{animation:none!important}.hermes-talisman-sheet{animation:hermes-talisman-fade 700ms ease both}.hermes-hexagram{animation:none!important;opacity:1!important}}
 `
 
     const TRIGRAMS = [
@@ -336,13 +367,27 @@ window.__ModuleLoader__.load({
       )
     }
 
-    /** Background-center inscription: 天行健 / 地势坤, drawn into the ambient artwork. */
+    /**
+     * Background inscription, pushed to the left: two vertical columns,
+     * each split into 上句 / 下句, with the left column dropped lower so the
+     * two columns are staggered instead of sitting on one baseline.
+     */
     function Inscription() {
       return h(
         'div',
         { className: 'hermes-inscription' },
-        h('span', { className: 'hermes-inscription-line' }, '天行健，君子以自强不息'),
-        h('span', { className: 'hermes-inscription-line' }, '地势坤，君子以厚德载物'),
+        h(
+          'div',
+          { className: 'hermes-inscription-col' },
+          h('span', { className: 'hermes-inscription-line' }, '天行健'),
+          h('span', { className: 'hermes-inscription-line' }, '君子以自强不息'),
+        ),
+        h(
+          'div',
+          { className: 'hermes-inscription-col hermes-inscription-col--stagger' },
+          h('span', { className: 'hermes-inscription-line' }, '地势坤'),
+          h('span', { className: 'hermes-inscription-line' }, '君子以厚德载物'),
+        ),
       )
     }
 
@@ -450,7 +495,100 @@ window.__ModuleLoader__.load({
       )
     }
 
-    /** The 「占卜」 chip beside the sidebar wordmark. */
+    /** 八正卦：同一三爻上下相叠，得乾为天、坤为地…… */
+    const PURE_HEXAGRAM = {
+      乾: '乾为天',
+      坤: '坤为地',
+      震: '震为雷',
+      巽: '巽为风',
+      坎: '坎为水',
+      离: '离为火',
+      艮: '艮为山',
+      兑: '兑为泽',
+    }
+
+    function hexagramName(reading) {
+      return PURE_HEXAGRAM[reading.gua] || reading.gua + '卦'
+    }
+
+    /** 六爻重卦：上卦、下卦同取今日三爻，落成一张卦象。 */
+    function HexagramGlyph({ pattern, className }) {
+      return h(
+        'svg',
+        { className: className || 'hermes-hexagram-glyph', width: 46, height: 54, viewBox: '0 0 46 54', fill: 'none', 'aria-hidden': 'true' },
+        trigramLines(23, 4, 36, 2.8, 7, pattern),
+        trigramLines(23, 33, 36, 2.8, 7, pattern),
+      )
+    }
+
+    /** 收下时的一纸符咒：敕令、朱砂符纹、六爻与卦名朱印。 */
+    function TalismanCast({ reading }) {
+      return h(
+        'div',
+        { className: 'hermes-talisman', role: 'presentation', 'aria-hidden': 'true' },
+        h(
+          'div',
+          { className: 'hermes-talisman-sheet' },
+          h('span', { className: 'hermes-talisman-command' }, '敕令'),
+          h(
+            'svg',
+            { className: 'hermes-talisman-rune', viewBox: '0 0 52 76', fill: 'none', 'aria-hidden': 'true' },
+            h('path', {
+              d: 'M26 3c5 5 1 9 6 13s7 9 2 14-11 5-12 13 7 10 7 16 4 8 4 8',
+              stroke: 'currentColor',
+              strokeWidth: 1.8,
+              strokeLinecap: 'round',
+            }),
+            h('path', {
+              d: 'M13 18c7 2 9 8 4 12s-9 4-7 11',
+              stroke: 'currentColor',
+              strokeWidth: 1.5,
+              strokeLinecap: 'round',
+              opacity: 0.8,
+            }),
+            h('path', {
+              d: 'M39 18c-7 2-9 8-4 12s9 4 7 11',
+              stroke: 'currentColor',
+              strokeWidth: 1.5,
+              strokeLinecap: 'round',
+              opacity: 0.8,
+            }),
+            h('path', {
+              d: 'M15 55c4-3 8-3 10 0s6 3 10 0',
+              stroke: 'currentColor',
+              strokeWidth: 1.4,
+              strokeLinecap: 'round',
+              opacity: 0.75,
+            }),
+            h('circle', { cx: 26, cy: 33, r: 1.8, fill: 'currentColor', opacity: 0.85 }),
+          ),
+          h(HexagramGlyph, { pattern: reading.pattern, className: 'hermes-talisman-hex' }),
+          h('span', { className: 'hermes-talisman-seal' }, reading.gua),
+        ),
+      )
+    }
+
+    /** 收下后留在右下角的今日卦象签；悬停可点 × 收起。 */
+    function StoredHexagram({ reading, onClose }) {
+      return h(
+        'aside',
+        {
+          className: 'hermes-hexagram',
+          'aria-label': '今日卦象：' + hexagramName(reading) + ' ' + reading.grade,
+        },
+        h(
+          'button',
+          { type: 'button', className: 'hermes-hexagram-close', onClick: onClose, title: '收起卦象', 'aria-label': '收起卦象' },
+          '×',
+        ),
+        h('span', { className: 'hermes-hexagram-head' }, '今日卦象'),
+        h(HexagramGlyph, { pattern: reading.pattern }),
+        h('span', { className: 'hermes-hexagram-name' }, hexagramName(reading)),
+        h('span', { className: 'hermes-hexagram-grade' }, reading.grade),
+      )
+    }
+
+    /** The 「占卜」 token tablet beside the sidebar wordmark: two glyphs, carved vertically. */
     function FortuneTrigger() {
       const open = (event) => {
         event.preventDefault()
@@ -467,19 +605,26 @@ window.__ModuleLoader__.load({
           className: 'hermes-fortune-trigger',
           role: 'button',
           tabIndex: 0,
-          title: '今日运势',
-          'aria-label': '今日运势',
+          title: '今日运势 · 占卜',
+          'aria-label': '今日运势 · 占卜',
           onClick: open,
           onKeyDown,
           onPointerDown: (event) => event.stopPropagation(),
         },
-        '占卜',
+        h('span', { className: 'hermes-fortune-trigger-glyph', 'aria-hidden': 'true' }, '占'),
+        h('span', { className: 'hermes-fortune-trigger-glyph', 'aria-hidden': 'true' }, '卜'),
       )
     }
 
-    /** Frame-level divination card: today's grade, lot poem, and 宜/忌. */
+    /**
+     * Frame-level divination card: today's grade, lot poem, and 宜/忌.
+     * 「收下」 is not just a close: it casts the reading into a talisman that
+     * flies to the bottom-right and settles there as today's hexagram slip.
+     */
     function FortunePanel() {
       const [reading, setReading] = React.useState(null)
+      const [casting, setCasting] = React.useState(null)
+      const [accepted, setAccepted] = React.useState(null)
 
       React.useEffect(() => {
         const opener = () => setReading(fortuneOfDay())
@@ -498,56 +643,81 @@ window.__ModuleLoader__.load({
         return () => window.removeEventListener('keydown', onKey)
       }, [reading])
 
-      if (reading === null) return null
+      // 符咒只演 1.7 秒；到点自行退场，卦象签已经留在右下角。
+      React.useEffect(() => {
+        if (casting === null) return undefined
+        const timer = setTimeout(() => setCasting(null), 1700)
+        return () => clearTimeout(timer)
+      }, [casting])
+
       const close = () => setReading(null)
+      const accept = () => {
+        if (reading === null) return
+        setCasting({ ...reading, stamp: Date.now() })
+        setAccepted(reading)
+        setReading(null)
+      }
       const keepOpen = (event) => event.stopPropagation()
 
+      const card =
+        reading === null
+          ? null
+          : h(
+              'div',
+              {
+                className: 'hermes-fortune',
+                role: 'presentation',
+                onPointerDown: (event) => {
+                  if (event.target === event.currentTarget) close()
+                },
+              },
+              h(
+                'div',
+                {
+                  className: 'hermes-fortune-card',
+                  role: 'dialog',
+                  'aria-modal': 'true',
+                  'aria-label': '今日运势',
+                  onPointerDown: keepOpen,
+                },
+                h(
+                  'div',
+                  { className: 'hermes-fortune-head' },
+                  h('span', { className: 'hermes-fortune-kicker' }, '今日占卜'),
+                  h('span', { className: 'hermes-fortune-date' }, reading.dateText),
+                ),
+                h(
+                  'div',
+                  { className: 'hermes-fortune-core' },
+                  h(FortuneTrigram, { pattern: reading.pattern }),
+                  h('span', { className: 'hermes-fortune-title' }, reading.gua + '卦'),
+                  h('span', { className: 'hermes-fortune-grade' }, reading.grade),
+                ),
+                reading.poem.map((line, index) => h('p', { key: 'poem-' + index, className: 'hermes-fortune-poem' }, line)),
+                h('p', { className: 'hermes-fortune-read' }, reading.read),
+                h(
+                  'div',
+                  { className: 'hermes-fortune-tags' },
+                  h('span', { className: 'hermes-fortune-tag hermes-fortune-tag--good' }, '宜 ' + reading.good),
+                  h('span', { className: 'hermes-fortune-tag hermes-fortune-tag--bad' }, '忌 ' + reading.bad),
+                ),
+                h(
+                  'div',
+                  { className: 'hermes-fortune-foot' },
+                  h('span', { className: 'hermes-fortune-note' }, '每日一签 · 图个心安'),
+                  h('button', { type: 'button', className: 'hermes-fortune-close', onClick: accept }, '收下'),
+                ),
+              ),
+            )
+
+      if (card === null && casting === null && accepted === null) return null
+
       return h(
-        'div',
-        {
-          className: 'hermes-fortune',
-          role: 'presentation',
-          onPointerDown: (event) => {
-            if (event.target === event.currentTarget) close()
-          },
-        },
-        h(
-          'div',
-          {
-            className: 'hermes-fortune-card',
-            role: 'dialog',
-            'aria-modal': 'true',
-            'aria-label': '今日运势',
-            onPointerDown: keepOpen,
-          },
-          h(
-            'div',
-            { className: 'hermes-fortune-head' },
-            h('span', { className: 'hermes-fortune-kicker' }, '今日占卜'),
-            h('span', { className: 'hermes-fortune-date' }, reading.dateText),
-          ),
-          h(
-            'div',
-            { className: 'hermes-fortune-core' },
-            h(FortuneTrigram, { pattern: reading.pattern }),
-            h('span', { className: 'hermes-fortune-title' }, reading.gua + '卦'),
-            h('span', { className: 'hermes-fortune-grade' }, reading.grade),
-          ),
-          reading.poem.map((line, index) => h('p', { key: 'poem-' + index, className: 'hermes-fortune-poem' }, line)),
-          h('p', { className: 'hermes-fortune-read' }, reading.read),
-          h(
-            'div',
-            { className: 'hermes-fortune-tags' },
-            h('span', { className: 'hermes-fortune-tag hermes-fortune-tag--good' }, '宜 ' + reading.good),
-            h('span', { className: 'hermes-fortune-tag hermes-fortune-tag--bad' }, '忌 ' + reading.bad),
-          ),
-          h(
-            'div',
-            { className: 'hermes-fortune-foot' },
-            h('span', { className: 'hermes-fortune-note' }, '每日一签 · 图个心安'),
-            h('button', { type: 'button', className: 'hermes-fortune-close', onClick: close }, '收下'),
-          ),
-        ),
+        React.Fragment,
+        null,
+        card,
+        casting === null ? null : h(TalismanCast, { key: casting.stamp, reading: casting }),
+        accepted === null ? null : h(StoredHexagram, { reading: accepted, onClose: () => setAccepted(null) }),
       )
     }
 
