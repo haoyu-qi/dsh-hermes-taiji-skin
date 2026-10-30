@@ -1,0 +1,3 @@
+- insert:
+    - id: hermes-skin
+      name: '@local/dsh-hermes-skin'

@@ -1,0 +1,56 @@
+{
+  "name": "@local/dsh-hermes-skin",
+  "version": "1.2.0",
+  "description": "DeepSeek Harness 皮肤：五秒开机先天八卦 + 四向行书箴言、回车发送太极动画、水墨星轨双主题 (Five-second bagua boot animation with brush-calligraphy poem, send taiji, and an ink-and-gold theme for the DSH Web GUI)",
+  "type": "module",
+  "license": "MIT",
+  "author": "Qijinchun (haoyu-qi)",
+  "homepage": "https://github.com/haoyu-qi/dsh-hermes-skin#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/haoyu-qi/dsh-hermes-skin.git"
+  },
+  "bugs": {
+    "url": "https://github.com/haoyu-qi/dsh-hermes-skin/issues"
+  },
+  "keywords": [
+    "dsh",
+    "deepseek-harness",
+    "cordis",
+    "plugin",
+    "skin",
+    "theme",
+    "bagua",
+    "calligraphy"
+  ],
+  "exports": {
+    ".": "./index.js",
+    "./client": "./client.js",
+    "./locale/*.json": "./locale/*.json",
+    "./icon": "./icon.svg"
+  },
+  "files": [
+    "index.js",
+    "client.js",
+    "cordis.patch.yml",
+    "locale/*.json",
+    "icon.svg",
+    "README.md",
+    "LICENSE"
+  ],
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "platform": "web",
+      "immediately": true,
+      "inject": [
+        "@deepseek-ai/dsh-client-ui-theme",
+        "@deepseek-ai/dsh-client-ui-layout",
+        "@deepseek-ai/dsh-client-ui-sidebar",
+        "@deepseek-ai/dsh-client-ui-conversation"
+      ]
+    }
+  }
+}
