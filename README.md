@@ -1,33 +1,33 @@
-# 深度求索 · 皮肤（DeepSeek Skin）
+# 深度求索 · 太极皮肤（DeepSeek Taiji Skin）
 
 给 DSH Web GUI 自己穿的一套皮肤：把参考图里的「月华白 / 曜金 / 烟紫 / 云藤紫 / 墨岩灰」、太极、八卦、星轨与山水，落成可安装的 Cordis 插件。启动时先落一张五秒钟的开场：中间八卦，上下左右四句行书。
 
 一个插件装齐全部视觉：**五秒开机动画**（中央先天八卦盘 + 上/下/左/右四句行书）、**回车发送时的一记太极**、月华白/曜金/烟紫双主题、侧栏太极印、背景题字与山水星轨。
 
-> 仓库：<https://github.com/haoyu-qi/dsh-hermes-skin>
+> 仓库：<https://github.com/haoyu-qi/dsh-hermes-taiji-skin>
 
 ## 安装
 
 1. 克隆仓库：
 
    ```bash
-   git clone https://github.com/haoyu-qi/dsh-hermes-skin.git
+   git clone https://github.com/haoyu-qi/dsh-hermes-taiji-skin.git
    ```
 
 2. 在 DSH 里安装这个目录（走 `plugin_manager install_bundle`，会要求一次授权）：
 
-   > 安装插件：`/绝对路径/dsh-hermes-skin`
+   > 安装插件：`/绝对路径/dsh-hermes-taiji-skin`
 
    本机是把该目录以 `link:` 链进 `~/.dsh/profiles/desktop` 的，两种装法等价。
 
 3. 首次安装后退出并重开一次 DeepSeek Harness（Desktop 启动时会缓存 boot 注入）；之后修改 `client.js` 由 `client-hmr` 热替换，刷新页面即可看到更新。
-4. 停用：设置 → 插件 → 「深度求索 · 皮肤」停用即整体还原，也可在 `apply()` 里删掉对应槽位注册。
+4. 停用：设置 → 插件 → 「深度求索 · 太极皮肤」停用即整体还原，也可在 `apply()` 里删掉对应槽位注册。
 
 **要求**：DSH Desktop 的 Web GUI（带 Cordis 插件系统）。
 
 **字体**：行书优先 macOS 自带 `Xingkai SC`（华文行楷），其次 `Zhi Mang Xing`（志莽行书，可选安装）、`Hannotate SC`、`Kaiti SC`；没有这些字体的系统会退到系统楷体，观感略有差异。
 
-包名：`@local/dsh-hermes-skin`（Host 空壳 + Client 半，profile 级生效；本仓库根目录本身即安装包）。
+包名：`@local/dsh-hermes-skin`（Host 空壳 + Client 半，profile 级生效；本仓库根目录本身即安装包。仓库与显示名带 Taiji，安装 id 为了不打断当前 profile 里的既有安装而保持不变）。
 
 ## 视觉系统
 
