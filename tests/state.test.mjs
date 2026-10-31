@@ -1,6 +1,6 @@
 import { test } from 'node:test'
 import assert from 'node:assert/strict'
-import { modelChoices, activityOf, effortMode, validPreferences } from '../src/state.mjs'
+import { modelChoices, activityOf, effortMode, validPreferences, rotationOf } from '../src/state.mjs'
 function catalog(ids,current='off') {return {current:{provider:'deepseek',model:'v4',reasoningEffort:current},groups:[{id:'deepseek',models:[{id:'v4',reasoning:{efforts:ids.map(id=>({id,name:id})),defaultEffort:'high'}}]}]}}
 test('three genuine DeepSeek levels map to off / high / max',()=>{
   const choices=modelChoices(catalog(['off','high','max']))
@@ -34,4 +34,16 @@ test('invalid persisted settings safely fall back and preserve explicit false sw
   assert.equal(validPreferences({mode:'unknown',motion:false,fortune:false,bind:'yes'}).mode,'quiet')
   assert.equal(validPreferences({motion:false}).motion,false)
   assert.equal(validPreferences({bind:'yes'}).bind,true)
+})
+test('rotation follows confirmed efforts even while idle; thinking increases speed',()=>{
+  assert.equal(rotationOf('off','thinking').rotating,false)
+  assert.equal(rotationOf('high','idle').duration,'90s')
+  assert.equal(rotationOf('max','idle').duration,'48s')
+  assert.equal(rotationOf('max','thinking').duration,'24s')
+  assert.equal(rotationOf('high','thinking').duration,'55s')
+})
+test('reading, tool work, human confirmation and reduced motion stop the wheel',()=>{
+  for(const state of ['output','tools','waiting'])assert.equal(rotationOf('max',state).rotating,false)
+  assert.equal(rotationOf('max','thinking',false).rotating,false)
+  assert.equal(rotationOf('custom-effort','thinking').rotating,false)
 })

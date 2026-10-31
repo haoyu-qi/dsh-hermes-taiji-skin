@@ -1,6 +1,6 @@
 {
   "name": "@local/dsh-hermes-skin",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "DeepSeek 乾坤问道：与真实推理状态联动的纸墨金主题、三档视觉深度、每日卦象与太极开场。",
   "type": "module",
   "license": "MIT",
@@ -68,6 +68,7 @@
   "devDependencies": {
     "@phosphor-icons/react": "^2.1.10",
     "esbuild": "^0.28.2",
+    "happy-dom": "^21.0.4",
     "react": "^19.3.1",
     "react-dom": "^19.3.1"
   }

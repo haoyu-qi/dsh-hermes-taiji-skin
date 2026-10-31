@@ -3,7 +3,7 @@
     let preferences = validPreferences(null)
     try { preferences = validPreferences(JSON.parse(localStorage.getItem(preferenceKey))) } catch {}
     const listeners = new Set()
-    let visual = { mode: 'quiet', activity: 'idle', hasContent: false, connected: false }
+    let visual = { mode: 'quiet', activity: 'idle', effort: null, hasContent: false, connected: false }
     let modelResolver = null
     let resolverRevision = 0
     const notify = () => listeners.forEach(fn => fn())
@@ -91,7 +91,14 @@
       useDialog(Boolean(value?.node), value?.dialogRef || fallback, () => value?.close())
       return value?.node || null
     }
-    function QiankunControls({ sessionId, session, input }) {
+    function QiankunControls(props) {
+      return typeof props.useSession === 'function' ? h(QiankunSessionControls, props) : h(QiankunControlsBody, props)
+    }
+    function QiankunSessionControls(props) {
+      const session = props.useSession(value => value)
+      return h(QiankunControlsBody, { ...props, session: props.session || session })
+    }
+    function QiankunControlsBody({ sessionId, session, input }) {
       const prefs = usePreferences()
       const reduced = useReducedMotion()
       const { directory, snapshot } = useModelDirectory(sessionId || session?.sessionId)
@@ -109,9 +116,9 @@
       const activity = activityOf(session, outputSeen.current)
       if (activity === 'output') outputSeen.current = true
       React.useEffect(() => {
-        visual = { mode, activity, hasContent: session?.blank === false, connected: Boolean(session) }
+        visual = { mode, activity, effort: choices.effective || null, hasContent: session?.blank === false, connected: Boolean(session) }
         notify()
-      }, [mode, activity, session?.blank, Boolean(session)])
+      }, [mode, activity, choices.effective, session?.blank, Boolean(session)])
       React.useEffect(() => () => { visual = { ...visual, activity: 'idle', connected: false }; notify() }, [])
       React.useEffect(() => { request.current++; setBusy(false); setError(''); return () => { request.current++ } }, [directory])
       const choose = async id => {
@@ -140,7 +147,7 @@
             h('div', { className: 'qiankun-settings-head' }, h('div', null, h('small', null, 'DEEPSEEK / 乾坤问道'), h('h2', null, '动静之间，自有乾坤')), h('button', { type: 'button', className: 'qiankun-dismiss', onClick: () => setOpen(false), 'aria-label': '关闭设置' }, '×')),
             h('div', { className: 'qiankun-modes', role: 'group', 'aria-label': '思考深度' }, MODES.map(m => h('button', {
               key: m.id, type: 'button', className: 'qiankun-mode', disabled: selecting, 'aria-pressed': mode === m.id, onClick: () => choose(m.id),
-            }, h('strong', null, m.title), h('span', null, m.note), h('small', null, prefs.bind && directory && choices[m.id].effort ? choices[m.id].visualOnly ? '视觉沉浸 · 沿用 ' + choices[m.id].effort.name : '模型推理 · ' + choices[m.id].effort.name : '仅视觉氛围')))),
+            }, mode === m.id && h('span', { className: 'qiankun-selected' }, '已选'), h('strong', null, m.title), h('span', null, m.note), h('small', null, prefs.bind && directory && choices[m.id].effort ? choices[m.id].visualOnly ? '视觉沉浸 · 沿用 ' + choices[m.id].effort.name : '模型推理 · ' + choices[m.id].effort.name : '仅视觉氛围')))),
             h('p', { className: 'qiankun-setting-note' }, directory ? '以模型实际支持的档位为准。正文输出后，动效自动收敛。' : '当前宿主未提供推理档位，切换只改变视觉氛围。'),
             error && h('p', { role: 'alert', className: 'qiankun-error' }, error),
             snapshot.status === 'error' && h('button', { type: 'button', className: 'qiankun-action', onClick: () => directory?.load().catch(() => {}) }, '重新获取模型档位'),
@@ -155,8 +162,26 @@
         h('span', { className: 'qiankun-status-dot', 'aria-hidden': true }),
         { idle: '命运可见 · 智慧可行 · 自在而生', thinking: '阴阳流转 · 推演之中', output: '思绪成文 · 静阅其间', tools: '行有所依 · 工具执行中', waiting: '静候你的回应' }[value.activity])
     }
+    function QiankunDailyGood() {
+      const prefs = usePreferences()
+      const [reading, setReading] = React.useState(fortuneOfDay)
+      React.useEffect(() => {
+        let timer
+        const refresh = () => {
+          setReading(fortuneOfDay())
+          clearTimeout(timer)
+          const now = new Date()
+          timer = setTimeout(refresh, new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1).getTime() - now.getTime() + 1000)
+        }
+        refresh()
+        document.addEventListener('visibilitychange', refresh)
+        return () => { clearTimeout(timer); document.removeEventListener('visibilitychange', refresh) }
+      }, [])
+      return prefs.fortune && h('span', { className: 'qiankun-daily-good', title: '今日宜：' + reading.good, 'aria-label': '今日宜：' + reading.good }, h('b', null, '今日宜'), h('span', null, reading.good))
+    }
     function QiankunAmbient() {
       const prefs = usePreferences(), value = useVisual(), reduced = useReducedMotion()
+      const rotation = rotationOf(value.effort, value.activity, prefs.motion && !reduced)
       const ref = React.useRef(null)
       React.useEffect(() => {
         const root = document.documentElement
@@ -166,7 +191,7 @@
         const observer = typeof ResizeObserver === 'function' ? new ResizeObserver(update) : null
         if (sidebar) observer?.observe(sidebar)
         window.addEventListener('resize', update)
-        const attrs = ['data-qiankun', 'data-qiankun-mode', 'data-qiankun-state', 'data-qiankun-motion', 'data-qiankun-content', 'data-qiankun-fortune']
+        const attrs = ['data-qiankun', 'data-qiankun-mode', 'data-qiankun-state', 'data-qiankun-motion', 'data-qiankun-content', 'data-qiankun-fortune', 'data-qiankun-rotating', 'data-qiankun-reasoning']
         const previous = attrs.map(name => root.getAttribute(name))
         return () => { observer?.disconnect(); window.removeEventListener('resize', update); attrs.forEach((name, i) => previous[i] === null ? root.removeAttribute(name) : root.setAttribute(name, previous[i])) }
       }, [])
@@ -175,8 +200,9 @@
         root.dataset.qiankun = 'true'; root.dataset.qiankunMode = value.mode
         root.dataset.qiankunState = value.activity; root.dataset.qiankunMotion = prefs.motion && !reduced ? 'on' : 'off'
         root.dataset.qiankunContent = value.hasContent ? 'yes' : 'no'; root.dataset.qiankunFortune = prefs.fortune ? 'on' : 'off'
+        root.dataset.qiankunRotating = rotation.rotating ? 'on' : 'off'; root.dataset.qiankunReasoning = rotation.level
       }, [prefs, value, reduced])
-      return h('div', { className: 'qiankun-ambient', 'aria-hidden': true, ref },
+      return h('div', { className: 'qiankun-ambient', 'aria-hidden': true, ref, style: { '--q-rotation-speed': rotation.duration } },
         h('div', { className: 'qiankun-landscape', style: { backgroundImage: `url("${QIANKUN_ART}")` } }),
         h('div', { className: 'qiankun-orb' }, h(BaguaPlate, { compact: true })),
         h('div', { className: 'qiankun-orb-echo' }, h(BaguaPlate, { compact: true })),
@@ -207,7 +233,7 @@
       }, [phase, motion])
       React.useEffect(() => {
         if (!casting) return
-        const timer = setTimeout(() => setCasting(null), motion ? 1700 : 200)
+        const timer = setTimeout(() => setCasting(null), motion ? 2400 : 200)
         return () => clearTimeout(timer)
       }, [casting, motion])
       React.useEffect(() => { if (phase === 'shown' || phase === 'reading') ref.current?.querySelector('[data-fortune-action]')?.focus() }, [phase])
@@ -229,7 +255,10 @@
               h('div', { className: 'qiankun-slip' }, h(HexagramGlyph, { pattern: reading.pattern }), h('strong', null, reading.gua), h('span', null, reading.grade)),
               h('p', { role: 'status' }, phase === 'rising' ? '起卦 · 静候一念' : '卦象已显，愿有所启。')),
             h('footer', { className: 'qiankun-reading-foot' }, h('span', null, '每日一签 · 图个心安'), h('button', { type: 'button', className: 'qiankun-action', 'data-fortune-action': true, disabled: phase === 'rising', onClick: phase === 'reading' ? accept : () => setPhase('reading') }, phase === 'reading' ? '收下' : phase === 'rising' ? '起卦中…' : '解卦')))),
-        casting && h('div', { className: 'qiankun-cast' }, h(TalismanCast, { key: casting.stamp, reading: casting })),
+        casting && h('div', { className: 'qiankun-cast', key: casting.stamp },
+          h('div', { className: 'qiankun-edict-aura', 'aria-hidden': true }, h(BaguaPlate, { compact: true })),
+          h('div', { className: 'qiankun-edict-motes', 'aria-hidden': true }, STARS.slice(0, 8).map((star, i) => h('i', { key: i, style: { '--mote-index': i } }))),
+          h(TalismanCast, { reading: casting })),
         accepted && h('aside', { className: 'qiankun-stored', 'aria-label': '今日卦象' },
           h('button', { className: 'qiankun-stored-close', type: 'button', 'aria-label': '收起今日卦象', onClick: () => setAccepted(null) }, '×'),
           h('button', { type: 'button', className: 'qiankun-stored-open', onClick: () => { setReading(accepted); setPhase('reading') } },

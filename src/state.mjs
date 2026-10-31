@@ -10,6 +10,12 @@ export function effortMode(id) {
   if (['max', 'xhigh', 'ultra'].includes(id)) return 'immersive'
   return null
 }
+// Idle speed follows the confirmed model effort, independently of the decorative theme.
+export function rotationOf(effort, activity, motion = true) {
+  const level = effortMode(effort)
+  if (!motion || !level || level === 'quiet' || ['output', 'waiting', 'tools'].includes(activity)) return { level: level || 'quiet', duration: '0s', rotating: false }
+  return { level, duration: level === 'immersive' ? activity === 'thinking' ? '24s' : '48s' : activity === 'thinking' ? '55s' : '90s', rotating: true }
+}
 export function modelChoices(snapshot) {
   const current = snapshot?.current
   const model = snapshot?.groups?.find(g => g.id === current?.provider)?.models?.find(m => m.id === current?.model)

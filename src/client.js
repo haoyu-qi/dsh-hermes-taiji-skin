@@ -57,7 +57,7 @@ window.__ModuleLoader__.load({
       '--dsw-alias-button-floating-fill': { light: '#FDFAF4', dark: '#241F2D' },
       '--dsw-alias-button-floating-hover': { light: '#F3ECE0', dark: '#302938' },
       '--dsw-alias-button-ghost-active-border': { light: '#B58A43', dark: '#D9BE86' },
-      '--dsw-alias-button-ghost-active-fill': { light: '#F1E8DA', dark: '#332C3E' },
+      '--dsw-alias-button-ghost-active-fill': { light: '#E9D7B4', dark: '#463721' },
       '--dsw-alias-button-ghost-active-hover': { light: '#EBE0CF', dark: '#3A3247' },
       '--dsw-alias-button-primary-dimmed': { light: '#EDE4D4', dark: '#3A3247' },
       '--dsw-alias-button-primary-hover': { light: '#544A5E', dark: '#F4EBDD' },
@@ -118,7 +118,7 @@ window.__ModuleLoader__.load({
       '--dsw-specific-menu': { light: '#FBF7F0F0', dark: '#262030F0' },
       '--dsw-specific-selector': { light: '#F1E9DC', dark: '#2A2433' },
       '--dsw-specific-sidebar-fill': { light: '#F3EDE2', dark: '#100D14' },
-      '--dsw-specific-sidebar-nav-item-active': { light: '#EAE0CF', dark: '#2A2433' },
+      '--dsw-specific-sidebar-nav-item-active': { light: '#E6D5B2', dark: '#423522' },
       '--dsw-specific-sidebar-nav-item-active-accent': { light: '#F0E2C6', dark: '#382D20' },
       '--dsw-specific-sidebar-nav-item-hover': { light: '#EFE7DA', dark: '#221C2A' },
       '--dsw-specific-tip': { light: '#F0E8DB', dark: '#241F2D' },
@@ -355,6 +355,7 @@ window.__ModuleLoader__.load({
           h('span', { className: 'hermes-brand-en' }, 'DEEPSEEK'),
         ),
         h(FortuneTrigger),
+        h(QiankunDailyGood),
       )
     }
 
