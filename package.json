@@ -1,7 +1,7 @@
 {
   "name": "@local/dsh-hermes-skin",
-  "version": "1.4.0",
-  "description": "深度求索 · 太极皮肤：五秒开机先天八卦 + 四向行书箴言、发送键与回车动画的太极、侧栏占卜令牌与收下符咒/今日卦象、水墨星轨双主题 (DeepSeek Taiji Skin: five-second bagua boot animation, taiji send button and send burst, a daily divination token with talisman cast and hexagram slip, and an ink-and-gold theme for the DSH Web GUI)",
+  "version": "2.0.0",
+  "description": "DeepSeek 乾坤问道：与真实推理状态联动的纸墨金主题、三档视觉深度、每日卦象与太极开场。",
   "type": "module",
   "license": "MIT",
   "author": "Qijinchun (haoyu-qi)",
@@ -36,7 +36,12 @@
     "locale/*.json",
     "icon.svg",
     "README.md",
-    "LICENSE"
+    "LICENSE",
+    "assets/ink-landscape.webp",
+    "assets/GENERATION.md",
+    "src/",
+    "scripts/build.mjs",
+    "V2.md"
   ],
   "dsh": {
     "bundle": {
@@ -52,5 +57,18 @@
         "@deepseek-ai/dsh-client-ui-conversation"
       ]
     }
+  },
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "dev": "node scripts/preview.mjs",
+    "preview": "node scripts/preview.mjs",
+    "test": "node --test tests/*.test.mjs",
+    "check": "node --check client.js && node --check index.js"
+  },
+  "devDependencies": {
+    "@phosphor-icons/react": "^2.1.10",
+    "esbuild": "^0.28.2",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1"
   }
 }

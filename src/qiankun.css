@@ -1,0 +1,155 @@
+/* 乾坤问道 V2. Semantic surfaces stay owned by the DSH theme service. */
+[data-qiankun]{--q-border:color-mix(in srgb,var(--hermes-gold) 48%,transparent);--q-shadow:0 12px 40px #38334410;--q-art:.2;--q-orb:.12;--q-speed:60s}
+[data-qiankun] button{font-family:inherit}
+[data-qiankun] [data-composer-card]{border:1px solid var(--q-border);box-shadow:var(--q-shadow);transition:border-color .6s,box-shadow .6s;background:color-mix(in srgb,var(--hermes-paper) 96%,transparent)}
+[data-qiankun] [data-slot="sidebar.nav.item"][aria-current=page]{background:var(--dsw-specific-sidebar-nav-item-active);color:var(--hermes-ink)}
+.qiankun-ambient{position:fixed;inset:0;z-index:0;overflow:hidden;pointer-events:none;user-select:none}
+.qiankun-landscape,.qiankun-mist{position:absolute;inset:0;pointer-events:none}
+.qiankun-landscape{background-position:center bottom;background-repeat:no-repeat;background-size:cover;opacity:var(--q-art);filter:var(--qiankun-landscape-filter);mask-image:linear-gradient(transparent 10%,#000 70%);transition:opacity 1.4s ease}
+.qiankun-mist{background:linear-gradient(transparent 65%,color-mix(in srgb,var(--hermes-paper) 22%,transparent) 85%,transparent);opacity:0;transition:opacity 1.2s}
+.qiankun-orb,.qiankun-orb-echo{position:absolute;right:2vw;top:4vh;width:min(390px,29vw,44vh);aspect-ratio:1;opacity:var(--q-orb);color:var(--hermes-gold);transition:opacity 1.2s,filter 1.2s}
+.qiankun-orb .hermes-bagua-ring{transform-origin:100px 100px;animation:hermes-spin var(--q-speed) linear infinite;animation-play-state:paused}
+.qiankun-orb-echo{opacity:0;transform:scale(1.13);filter:blur(.3px)}
+.qiankun-orb-echo .hermes-bagua-ring{transform-origin:100px 100px;animation:hermes-spin 100s linear infinite reverse;animation-play-state:paused}
+.qiankun-ambient .hermes-inscription{left:clamp(270px,25vw,410px);top:42%;opacity:.45;font-size:clamp(18px,3.3vh,32px)}
+.qiankun-ambient .hermes-inscription-line{font-size:clamp(18px,3.3vh,32px)}
+.qiankun-mote{position:absolute;width:2px;height:2px;border-radius:50%;background:var(--hermes-gold);opacity:.1;animation:q-mote 8s ease-in-out infinite;animation-play-state:paused}
+[data-qiankun-mode=balanced]{--q-art:.3;--q-orb:.18;--q-speed:70s}
+[data-qiankun-mode=immersive]{--q-art:.36;--q-orb:.21;--q-speed:45s}
+[data-qiankun-state=thinking][data-qiankun-motion=on] [data-composer-card]{animation:q-input-breathe 4s ease-in-out infinite}
+[data-qiankun-state=thinking][data-qiankun-mode=balanced][data-qiankun-motion=on] .qiankun-orb .hermes-bagua-ring,
+[data-qiankun-state=thinking][data-qiankun-mode=immersive][data-qiankun-motion=on] .qiankun-orb .hermes-bagua-ring,
+[data-qiankun-state=thinking][data-qiankun-mode=immersive][data-qiankun-motion=on] .qiankun-orb-echo .hermes-bagua-ring{animation-play-state:running}
+[data-qiankun-state=thinking][data-qiankun-mode=balanced] .qiankun-orb{opacity:.25;filter:drop-shadow(0 0 8px color-mix(in srgb,var(--hermes-gold) 22%,transparent))}
+[data-qiankun-state=thinking][data-qiankun-mode=immersive] .qiankun-orb{opacity:.34;filter:drop-shadow(0 0 18px color-mix(in srgb,var(--hermes-gold) 35%,transparent))}
+[data-qiankun-state=thinking][data-qiankun-mode=immersive] .qiankun-orb-echo{opacity:.08}
+[data-qiankun-state=thinking][data-qiankun-mode=immersive] .qiankun-mist{opacity:.7}
+[data-qiankun-state=thinking][data-qiankun-mode=immersive][data-qiankun-motion=on] .qiankun-mote{animation-play-state:running}
+[data-qiankun-state=thinking][data-qiankun-mode=immersive][data-qiankun-motion=on] [data-composer-card]{animation:q-input-breathe 3s ease-in-out infinite;border-color:var(--hermes-gold)}
+[data-qiankun-content=yes]{--q-art:.1;--q-orb:.07}
+[data-qiankun-content=yes] .qiankun-ambient .hermes-inscription{opacity:.2}
+[data-qiankun-state=output] .qiankun-orb,[data-qiankun-state=tools] .qiankun-orb{opacity:.07;filter:none}
+[data-qiankun-state=output] .qiankun-landscape{opacity:.1}
+[data-qiankun-fortune=off] .hermes-fortune-trigger{display:none}
+.qiankun-trigger,.qiankun-action{display:inline-flex;align-items:center;justify-content:center;gap:7px;min-height:30px;padding:5px 12px;box-sizing:border-box;border:1px solid var(--q-border);border-radius:99px;background:transparent;color:var(--hermes-ink);font:12px/1.4 system-ui;cursor:pointer;white-space:nowrap}
+.qiankun-trigger-mark{display:flex;align-items:center}
+.qiankun-trigger:hover,.qiankun-action:hover{background:color-mix(in srgb,var(--hermes-gold) 9%,transparent)}
+.qiankun-trigger:focus-visible,.qiankun-action:focus-visible,.qiankun-dismiss:focus-visible,.qiankun-stored button:focus-visible,.qiankun-mode:focus-visible{outline:2px solid var(--hermes-gold);outline-offset:3px}
+.qiankun-action:disabled,.qiankun-mode:disabled{opacity:.5;cursor:wait}
+.qiankun-action--primary{background:var(--hermes-ink);color:var(--hermes-paper);border-color:var(--hermes-ink)}
+.qiankun-action--primary:hover{background:var(--dsw-alias-button-primary-hover)}
+.qiankun-status{display:inline-flex;gap:8px;align-items:center;font:11px/1.5 system-ui;color:var(--hermes-art);letter-spacing:.1em;padding:2px 0;max-width:100%}
+.qiankun-status-dot{width:3px;height:3px;background:var(--hermes-gold);border-radius:50%}
+.qiankun-dialog-backdrop{position:fixed;inset:0;display:flex;justify-content:center;align-items:center;padding:20px;background:#14111845;backdrop-filter:blur(6px);z-index:8800;color:var(--hermes-ink)}
+.qiankun-settings{width:min(620px,100%);max-height:calc(100dvh - 40px);overflow:auto;border:1px solid var(--q-border);border-radius:18px;background:var(--hermes-paper);padding:28px;box-shadow:0 24px 80px #14111833}
+.qiankun-settings-head{display:flex;align-items:flex-start;gap:16px;justify-content:space-between}
+.qiankun-settings small{font:10px/1.6 system-ui;letter-spacing:.1em;color:var(--hermes-gold)}
+.qiankun-settings h2{font:24px/1.5 "Songti SC","STSong","SimSun",serif;font-weight:400;letter-spacing:.08em;margin:8px 0 24px}
+.qiankun-dismiss{flex:none;display:grid;place-items:center;width:30px;height:30px;background:transparent;color:var(--hermes-art);border:1px solid var(--dsw-alias-border-l1);border-radius:50%;font:20px/1 system-ui;cursor:pointer}
+.qiankun-modes{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.qiankun-mode{display:flex;flex-direction:column;align-items:flex-start;gap:10px;padding:16px 12px;background:transparent;border:1px solid var(--dsw-alias-border-l1);color:var(--hermes-ink);border-radius:10px;cursor:pointer;text-align:left}
+.qiankun-mode strong{font:15px/1.5 system-ui;font-weight:500}
+.qiankun-mode>span{font:11px/1.6 system-ui;color:var(--hermes-art)}
+.qiankun-mode small{font-size:10px;letter-spacing:0}
+.qiankun-mode[aria-pressed=true]{border-color:var(--hermes-gold);background:color-mix(in srgb,var(--hermes-gold) 8%,transparent)}
+.qiankun-setting-note{font:11px/1.8 system-ui;color:var(--hermes-art);margin:15px 0}
+.qiankun-options{display:grid;grid-template-columns:1fr 1fr;gap:14px;padding:20px 0;border-top:1px solid var(--dsw-alias-border-l1);font:12px/1.5 system-ui}
+.qiankun-options label{display:flex;align-items:center;gap:8px;cursor:pointer}
+.qiankun-options input{accent-color:var(--hermes-gold);width:15px;height:15px;margin:0}
+.qiankun-settings-foot{display:flex;justify-content:space-between;gap:12px;padding-top:10px}
+.qiankun-error{color:var(--dsw-alias-state-error-primary);font:12px/1.6 system-ui}
+/* Daily reading: generous paper surface, real Chinese text, scroll on short windows. */
+.qiankun-fortune{background:#14111838;backdrop-filter:blur(5px);padding:24px}
+.qiankun-reading{position:relative;isolation:isolate;overflow:auto;box-sizing:border-box;max-height:calc(100dvh - 48px);width:min(720px,100%);border:1px solid var(--hermes-gold);border-radius:22px;background:var(--hermes-paper);color:var(--hermes-ink);padding:26px 36px;box-shadow:0 24px 80px #14111838;font-family:"Songti SC","STSong","SimSun",serif;animation:q-reading-in .35s ease both}
+.qiankun-reading-art{position:absolute;inset:0;z-index:-1;pointer-events:none;opacity:.15;background-position:center;background-size:cover;filter:var(--qiankun-landscape-filter)}
+.qiankun-reading-head{display:flex;align-items:center;gap:12px;justify-content:space-between;border-bottom:1px solid var(--q-border);padding:0 0 15px;font:12px/1.5 system-ui}
+.qiankun-reading-head>span{color:var(--hermes-gold);letter-spacing:.2em;font-family:inherit;font-size:15px}
+.qiankun-reading-head time{color:var(--hermes-art);margin-left:auto;font-size:11px;letter-spacing:.04em}
+.qiankun-reading-core{display:flex;align-items:center;flex-direction:column;gap:10px;padding:28px 0 18px}
+.qiankun-reading-core h2{font:36px/1.4 "Songti SC","STSong","SimSun",serif;font-weight:500;margin:0;letter-spacing:.16em;text-indent:.16em}
+.qiankun-reading-core .hermes-fortune-trigram{width:64px;height:36px}
+.qiankun-reading-core .hermes-fortune-grade{padding:4px 18px;font-size:13px;color:var(--hermes-gold);border-color:var(--q-border)}
+.qiankun-poem{text-align:center;padding:12px 0 20px}
+.qiankun-poem p{margin:0;font:clamp(20px,2.6vw,30px)/1.9 "Songti SC","STSong","SimSun",serif;letter-spacing:.12em}
+.qiankun-interpretation{text-align:center;font:16px/1.9 "Songti SC","STSong","SimSun",serif;letter-spacing:.06em;color:var(--dsw-alias-label-secondary);margin:0 0 20px}
+.qiankun-tags{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-bottom:24px}
+.qiankun-tags>span{display:flex;align-items:center;gap:10px;padding:7px 18px;border:1px solid var(--q-border);border-radius:999px;font-size:14px;color:var(--hermes-gold)}
+.qiankun-tags>span+span{color:var(--dsw-alias-label-deep-diving);border-color:color-mix(in srgb,var(--hermes-violet) 50%,transparent)}
+.qiankun-tags b{font-weight:400;padding-right:10px;border-right:1px solid currentColor}
+.qiankun-reading-foot{display:flex;justify-content:space-between;align-items:center;gap:15px;padding:16px 0 0;border-top:1px solid var(--q-border);font:12px/1.5 system-ui;color:var(--hermes-art)}
+.qiankun-reading-foot .qiankun-action{min-height:36px;min-width:88px;font:16px/1.4 "Songti SC","STSong","SimSun",serif;color:var(--hermes-gold)}
+.qiankun-reading--slip{width:min(420px,100%);padding:22px}
+.qiankun-slip-stage{display:flex;flex-direction:column;align-items:center;padding:28px 0 20px;gap:20px;overflow:hidden}
+.qiankun-slip{width:120px;height:260px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:22px;background:color-mix(in srgb,var(--hermes-gold) 8%,var(--hermes-paper));border:1px solid var(--hermes-gold);outline:1px solid var(--q-border);outline-offset:-7px;border-radius:9px 9px 2px 2px;box-shadow:0 12px 40px #38334416;animation:q-slip-in .9s cubic-bezier(.22,.7,.28,1) both}
+.qiankun-slip .hermes-hexagram-glyph{color:var(--hermes-gold)}
+.qiankun-slip strong{font:32px/1.4 "Songti SC","SimSun",serif}
+.qiankun-slip span{color:var(--hermes-gold);font:13px/1.5 system-ui;letter-spacing:.2em}
+.qiankun-slip-stage p{font:12px/1.7 system-ui;color:var(--hermes-art);margin:0}
+.qiankun-stored{position:fixed;z-index:8400;right:22px;bottom:22px;width:112px;box-sizing:border-box;border:1px solid var(--q-border);background:var(--hermes-paper);border-radius:12px;box-shadow:0 10px 30px #38334413;animation:q-reading-in .6s ease both}
+.qiankun-stored-open{display:flex;flex-direction:column;align-items:center;gap:9px;width:100%;padding:17px 12px 13px;border:0;background:none;cursor:pointer;color:var(--hermes-ink);border-radius:12px}
+.qiankun-stored-open small{font:10px/1.5 system-ui;color:var(--hermes-gold);letter-spacing:.16em}
+.qiankun-stored-open strong{font:14px/1.5 "Songti SC","SimSun",serif;font-weight:400}
+.qiankun-stored-open>span{font:10px/1.5 system-ui;color:var(--hermes-art)}
+.qiankun-stored-close{position:absolute;z-index:1;right:0;top:0;width:24px;height:24px;border:0;background:transparent;color:var(--hermes-art);font:16px/1 system-ui;cursor:pointer;border-radius:4px}
+.qiankun-cast .hermes-talisman-sheet{width:120px;min-height:260px;justify-content:space-between;padding:18px 14px;border-color:var(--hermes-gold)}
+/* Four-part opening: mist, yin-yang, trigram ring, convergence. */
+.qiankun-boot{position:fixed;inset:0;z-index:9000;isolation:isolate;overflow:hidden;color:var(--hermes-ink);background:var(--dsw-alias-bg-base);animation:q-boot-screen 4.2s ease both;outline:none}
+.qiankun-boot-landscape{position:absolute;inset:0;background-size:cover;background-position:center bottom;opacity:.45;filter:var(--qiankun-landscape-filter);z-index:-1;animation:q-ink-gather 1.4s ease both}
+.qiankun-boot-core{position:absolute;width:min(40vh,34vw,440px);aspect-ratio:1;left:50%;top:50%;transform:translate(-50%,-50%);filter:drop-shadow(0 0 20px color-mix(in srgb,var(--hermes-gold) 35%,transparent));animation:q-taiji-form 1.6s ease both}
+.qiankun-boot-core .hermes-bagua-ring{transform-origin:100px 100px;animation:q-bagua-arrive 2.2s ease .5s both}
+.qiankun-boot-core .hermes-bagua-ring>g{animation:q-trigram 1.4s ease both}
+.qiankun-boot-core .hermes-bagua-ring>g:nth-of-type(2n){animation-delay:.4s}
+.qiankun-boot-core .hermes-bagua-ring>g:nth-of-type(2n+1){animation-delay:.8s}
+.qiankun-boot p{position:absolute;margin:0;font-family:"Xingkai SC","STXingkai","华文行楷","KaiTi",serif;font-weight:400;line-height:1.5;letter-spacing:.16em;animation:q-ink-gather 1.2s ease .5s both}
+.qiankun-boot-top,.qiankun-boot-bottom{left:50%;transform:translateX(-50%);white-space:nowrap;font-size:clamp(17px,2.8vw,40px)}
+.qiankun-boot-top{top:9vh}.qiankun-boot-bottom{bottom:9vh}
+.qiankun-boot-left,.qiankun-boot-right{top:50%;transform:translateY(-50%);writing-mode:vertical-rl;font-size:clamp(16px,2.6vh,30px);max-height:70vh}
+.qiankun-boot-left{left:14vw}.qiankun-boot-right{right:14vw}
+.qiankun-boot-skip{position:absolute;right:24px;bottom:20px;padding:8px 12px;border:1px solid var(--q-border);border-radius:99px;color:var(--hermes-art);background:var(--hermes-paper);font:11px/1.4 system-ui;cursor:pointer}
+@keyframes q-input-breathe{0%,100%{box-shadow:0 8px 28px #3833440a}50%{box-shadow:0 0 22px color-mix(in srgb,var(--hermes-gold) 16%,transparent)}}
+@keyframes q-mote{0%,100%{opacity:.08;transform:translateY(0)}50%{opacity:.35;transform:translateY(-9px)}}
+@keyframes q-reading-in{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+@keyframes q-slip-in{from{opacity:0;transform:translate(25vw,25vh) scale(.3) rotate(8deg)}to{opacity:1;transform:none}}
+@keyframes q-ink-gather{from{opacity:0;filter:blur(8px)}to{opacity:1;filter:blur(0)}}
+@keyframes q-taiji-form{from{opacity:0;transform:translate(-50%,-50%) scale(.75);filter:blur(10px)}to{opacity:1;transform:translate(-50%,-50%) scale(1)}}
+@keyframes q-bagua-arrive{from{opacity:0;transform:rotate(-40deg) scale(.85)}to{opacity:1;transform:rotate(0) scale(1)}}
+@keyframes q-trigram{from{opacity:0}to{opacity:1}}
+@keyframes q-boot-screen{0%{opacity:0}12%,83%{opacity:1}100%{opacity:0}}
+@media(max-width:800px){.qiankun-ambient .hermes-inscription{display:none}.qiankun-orb,.qiankun-orb-echo{right:-12vw;width:55vw;top:5vh}.qiankun-reading{padding:20px;border-radius:16px}.qiankun-reading-head{gap:8px}.qiankun-reading-head time{font-size:9px;letter-spacing:0}.qiankun-reading-head>span{font-size:12px}.qiankun-reading-core h2{font-size:30px}.qiankun-interpretation{font-size:14px}.qiankun-poem p{font-size:22px}.qiankun-tags{gap:8px}.qiankun-tags>span{font-size:12px;padding:6px 12px}.qiankun-settings{padding:20px}.qiankun-settings h2{font-size:21px}.qiankun-modes{grid-template-columns:1fr}.qiankun-mode{gap:5px;padding:12px}.qiankun-mode strong{font-size:14px}.qiankun-options{grid-template-columns:1fr}.qiankun-boot-core{width:55vw}.qiankun-boot-left{left:3vw}.qiankun-boot-right{right:3vw}.qiankun-boot-top,.qiankun-boot-bottom{font-size:clamp(10px,2.6vw,21px);letter-spacing:.04em}.qiankun-stored{right:12px;bottom:12px;width:90px}.qiankun-stored-open{gap:5px;padding:14px 8px 10px}.qiankun-stored-open strong{font-size:12px}.qiankun-status{font-size:10px;letter-spacing:.02em}}
+[data-qiankun-motion=off] .qiankun-ambient *,[data-qiankun-motion=off] .qiankun-reading,[data-qiankun-motion=off] .qiankun-reading *,[data-qiankun-motion=off] .qiankun-stored,[data-qiankun-motion=off] [data-composer-card]{animation:none!important;transition:none!important}
+[data-qiankun-motion=off] .hermes-talisman-sheet{animation:none!important}
+[data-qiankun-motion=off] .hermes-send{display:none}
+@media(prefers-reduced-motion:reduce){.qiankun-ambient *,.qiankun-reading,.qiankun-reading *,.qiankun-stored,[data-qiankun] [data-composer-card]{animation:none!important;transition:none!important}.qiankun-boot,.hermes-send{display:none}}
+.qiankun-landscape{left:var(--q-left,0px)}
+.qiankun-ambient .hermes-inscription{left:calc(var(--q-left,0px) + 60px)}
+[data-qiankun]{--q-art:.34}
+[data-qiankun-mode=balanced]{--q-art:.44}
+[data-qiankun-mode=immersive]{--q-art:.5}
+[data-qiankun-content=yes]{--q-art:.1}
+.qiankun-orb,.qiankun-orb-echo{--hermes-ink:var(--hermes-gold)}
+.qiankun-slip-stage{position:relative;isolation:isolate}
+.qiankun-ritual-aura{position:absolute;z-index:-1;width:300px;height:300px;bottom:-64px;color:var(--hermes-gold);--hermes-ink:var(--hermes-gold);opacity:.18;transform:perspective(600px) rotateX(65deg);pointer-events:none}
+.qiankun-reading-head>span,.qiankun-reading-core .hermes-fortune-grade,.qiankun-reading-foot .qiankun-action,.qiankun-tags>span:first-child{color:var(--dsw-alias-state-warn-label)}
+.qiankun-poem p{font-family:"KaiTi","STKaiti","Songti SC",serif;font-weight:500}
+.qiankun-reading--open{display:flex;flex-direction:column;min-height:min(650px,calc(100dvh - 48px))}
+.qiankun-reading--open .qiankun-reading-foot{margin-top:auto}
+@media(max-width:800px){.qiankun-reading--open{min-height:0}}
+.qiankun-boot-left,.qiankun-boot-right{height:70vh;white-space:nowrap}
+.qiankun-boot-core{width:min(52vh,43vw,560px)}
+@media(max-width:800px){.qiankun-boot-core{width:55vw}.qiankun-boot-left,.qiankun-boot-right{font-size:clamp(13px,2.2vh,20px)}}
+.qiankun-boot-landscape{animation:q-landscape-gather 1.4s ease both}
+@keyframes q-landscape-gather{from{opacity:0}to{opacity:.5}}
+.qiankun-orb .hermes-taiji-flow{transform-origin:100px 100px;animation:hermes-spin 120s linear infinite reverse;animation-play-state:paused}
+[data-qiankun-state=thinking][data-qiankun-mode=balanced][data-qiankun-motion=on] .qiankun-orb .hermes-taiji-flow,
+[data-qiankun-state=thinking][data-qiankun-mode=immersive][data-qiankun-motion=on] .qiankun-orb .hermes-taiji-flow{animation-play-state:running}
+.qiankun-reading-art{background-size:100% auto;background-repeat:no-repeat;background-position:center 38%;opacity:.36}
+.qiankun-reading-watermark{position:absolute;z-index:-1;right:12px;top:70px;width:180px;aspect-ratio:1;opacity:.17;--hermes-ink:var(--hermes-gold);pointer-events:none}
+@media(min-width:801px){.qiankun-reading-core h2{font-size:44px;font-weight:600}.qiankun-poem p{font-size:34px;font-weight:600;line-height:1.8}.qiankun-interpretation{font-size:18px;max-width:600px;align-self:center}.qiankun-tags>span{font-size:16px;padding:8px 18px}.qiankun-tags b{display:grid;place-items:center;flex:none;width:28px;height:28px;padding:0;border:0;border-radius:50%;background:var(--hermes-gold);color:var(--hermes-paper)}.qiankun-tags>span+span b{background:var(--hermes-violet)}.qiankun-reading-head>span{font-size:17px}.qiankun-reading-head time{font-size:12px}}
+@media(max-width:800px){.qiankun-reading-watermark{width:120px;right:4px;opacity:.07}}
+.qiankun-reading-art{mask-image:linear-gradient(#000 0%,#000 53%,transparent 68%)}
+@media(min-width:801px){.qiankun-interpretation{max-width:520px}}
+.qiankun-ambient,.qiankun-cast{pointer-events:none!important}
+.qiankun-dialog-backdrop,.qiankun-fortune,.qiankun-boot,.qiankun-stored{pointer-events:auto}
+.qiankun-boot-core .hermes-bagua-ring>g{animation-delay:calc(var(--q-trigram-index,0) * 100ms + 400ms)!important}
+.qiankun-reading,.qiankun-settings{overscroll-behavior:contain}
+.qiankun-interpretation{text-wrap:balance}
