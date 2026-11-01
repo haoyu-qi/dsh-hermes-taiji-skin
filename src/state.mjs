@@ -37,10 +37,10 @@ export function activityOf(session, outputSeen = false) {
   if (session.runningCalls?.length) return 'tools'
   return 'thinking'
 }
-export const DEFAULT_PREFS = { mode: 'quiet', follow: true, bind: true, motion: true, fortune: true, boot: true }
+export const DEFAULT_PREFS = { mode: 'quiet', follow: true, bind: true, motion: true, fortune: true, boot: true, blessing: true }
 export function validPreferences(input) {
   const value = { ...DEFAULT_PREFS }
   if (input && MODES.some(m => m.id === input.mode)) value.mode = input.mode
-  for (const name of ['follow', 'bind', 'motion', 'fortune', 'boot']) if (typeof input?.[name] === 'boolean') value[name] = input[name]
+  for (const name of ['follow', 'bind', 'motion', 'fortune', 'boot','blessing']) if (typeof input?.[name] === 'boolean') value[name] = input[name]
   return value
 }

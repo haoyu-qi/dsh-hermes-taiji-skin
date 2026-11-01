@@ -1,7 +1,7 @@
 {
   "name": "@local/dsh-hermes-skin",
-  "version": "2.0.1",
-  "description": "DeepSeek 乾坤问道：与真实推理状态联动的纸墨金主题、三档视觉深度、每日卦象与太极开场。",
+  "version": "3.0.0",
+  "description": "乾坤问道 V3：八位传统神明加持、真实推理状态联动、每日卦象与纸墨金主题。",
   "type": "module",
   "license": "MIT",
   "author": "Qijinchun (haoyu-qi)",
@@ -41,7 +41,12 @@
     "assets/GENERATION.md",
     "src/",
     "scripts/build.mjs",
-    "V2.md"
+    "V2.md",
+    "assets/deities/",
+    "V3.md",
+    "docs/images/",
+    "design-qa.md",
+    "design-qa-v2.md"
   ],
   "dsh": {
     "bundle": {
@@ -63,13 +68,15 @@
     "dev": "node scripts/preview.mjs",
     "preview": "node scripts/preview.mjs",
     "test": "node --test tests/*.test.mjs",
-    "check": "node --check client.js && node --check index.js"
+    "check": "node --check client.js && node --check index.js",
+    "prepare:deities": "node scripts/prepare-deities.mjs"
   },
   "devDependencies": {
     "@phosphor-icons/react": "^2.1.10",
     "esbuild": "^0.28.2",
     "happy-dom": "^21.0.4",
     "react": "^19.3.1",
-    "react-dom": "^19.3.1"
+    "react-dom": "^19.3.1",
+    "sharp": "^0.35.5"
   }
 }

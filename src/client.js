@@ -824,6 +824,12 @@ window.__ModuleLoader__.load({
       }, 'hermes-skin: skin stylesheet')
 
       connectModelDirectory(ctx)
+      ctx.slots.inject('conversation.input.right', () =>
+        ctx.slots.register({ name: 'conversation.input.right', id: 'qiankun-blessing-anchor', order: 90 }, QiankunBlessingAnchor),
+      )
+      ctx.slots.inject('shell.overlay', () =>
+        ctx.slots.register({ name: 'shell.overlay', id: 'qiankun-blessing', order: 43 }, QiankunBlessingLayer),
+      )
 
       ctx.slots.inject('shell.overlay', () =>
         ctx.slots.register({ name: 'shell.overlay', id: 'qiankun-settings', order: 42 }, QiankunSettingsLayer),

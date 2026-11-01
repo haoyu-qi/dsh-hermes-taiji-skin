@@ -1,0 +1,29 @@
+/* 八位神明：all copy and interaction surfaces are actual DOM. */
+.qiankun-blessing-anchor{display:none}
+[data-qiankun] [data-composer-card]:has(.qiankun-blessing-anchor){padding-top:55px}
+.qiankun-blessing-layer{position:fixed;inset:0;z-index:8550;pointer-events:none!important}
+.qiankun-blessing-entry{position:fixed;display:flex;align-items:center;gap:8px;pointer-events:auto;z-index:1}
+.qiankun-blessing-button,.qiankun-blessing-badge{display:inline-flex;align-items:center;justify-content:center;gap:7px;min-height:30px;border:1px solid var(--hermes-gold);border-radius:99px;background:var(--hermes-paper);color:var(--hermes-ink);padding:4px 12px;font:12px/1.5 system-ui;cursor:pointer;white-space:nowrap}
+.qiankun-blessing-button:hover{box-shadow:0 0 15px color-mix(in srgb,var(--hermes-gold) 22%,transparent)}
+.qiankun-blessing-seal{display:grid;place-items:center;min-width:17px;height:20px;padding:0 2px;border:1px solid #a64b3c;border-radius:3px;color:#a64b3c;font:12px/1 "KaiTi","STKaiti",serif}
+.qiankun-blessing-badge{padding:3px 9px;border-color:var(--q-border);font-size:10px;color:var(--hermes-art)}
+.qiankun-blessing-badge .qiankun-blessing-seal{border-color:var(--hermes-gold);color:var(--hermes-gold);font-size:10px}
+.qiankun-blessing-outside{position:fixed;inset:0;pointer-events:auto}
+.qiankun-blessing-card{position:fixed;isolation:isolate;box-sizing:border-box;overflow:auto;overscroll-behavior:contain;border:1px solid #b58a43;border-radius:18px;background:#fbf7ef;color:#383344;--hermes-paper:#fbf7ef;--hermes-ink:#383344;pointer-events:auto;box-shadow:0 18px 60px #3833442b,inset 0 0 0 4px #b58a4310;animation:q-blessing-open .65s ease both}
+.qiankun-blessing-close{position:absolute;z-index:2;top:10px;right:10px;background:#fbf7efde;color:#8c692f;border-color:#b58a4344}
+.qiankun-blessing-art{display:block;width:100%;height:260px;object-fit:cover;object-position:center 12%;mask-image:linear-gradient(#000 65%,transparent 100%);border-radius:17px 17px 0 0}
+.qiankun-blessing-copy{position:relative;margin-top:-13px;padding:0 22px 20px;text-align:center}
+.qiankun-blessing-name{font:10px/1.6 system-ui;letter-spacing:.15em;color:#8c692f}
+.qiankun-blessing-copy h2{font:28px/1.5 "Songti SC","STSong","SimSun",serif;font-weight:600;letter-spacing:.12em;margin:5px 0 12px}
+.qiankun-blessing-wish{font:17px/1.8 "KaiTi","STKaiti",serif;margin:0 0 9px;text-wrap:balance;color:#383344}
+.qiankun-blessing-note{font:12px/1.8 system-ui;margin:0 0 17px;color:#766d7c;text-wrap:balance}
+.qiankun-blessing-accept{width:100%;min-height:36px;color:#8c692f;border-color:#b58a43;background:transparent;font:14px/1.5 system-ui}
+.qiankun-blessing-copy small{display:block;font:10px/1.6 system-ui;color:#766d7c;margin-top:12px}
+.qiankun-blessing-button:focus-visible,.qiankun-blessing-badge:focus-visible,.qiankun-blessing-card button:focus-visible{outline:2px solid #b58a43;outline-offset:3px}
+[data-qiankun-blessing=off] [data-composer-card]:has(.qiankun-blessing-anchor){padding-top:24px}
+@keyframes q-blessing-open{from{opacity:0;transform:translateY(7px) scale(.98);filter:drop-shadow(0 0 12px #b58a4340)}to{opacity:1;transform:none;filter:none}}
+.qiankun-blessing-layer[data-motion=off] *{animation:none!important;transition:none!important}
+@media(max-width:600px){.qiankun-blessing-entry{gap:5px}.qiankun-blessing-badge>span:last-child{display:none}.qiankun-blessing-button{font-size:11px;min-height:28px;padding:3px 10px}.qiankun-blessing-art{height:230px}.qiankun-blessing-copy{padding:0 18px 18px}}
+@media(prefers-reduced-motion:reduce){.qiankun-blessing-layer *{animation:none!important;transition:none!important}}
+.qiankun-blessing-outside{z-index:2}
+.qiankun-blessing-card{z-index:3}

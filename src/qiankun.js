@@ -152,7 +152,7 @@
             error && h('p', { role: 'alert', className: 'qiankun-error' }, error),
             snapshot.status === 'error' && h('button', { type: 'button', className: 'qiankun-action', onClick: () => directory?.load().catch(() => {}) }, '重新获取模型档位'),
             h('div', { className: 'qiankun-options' },
-              [['follow', '跟随实际模型档位'], ['bind', '切换时同步模型推理'], ['motion', '主题动态效果'], ['fortune', '每日卦象'], ['boot', '首次开场动画']].map(([key, label]) => h('label', { key }, h('input', { type: 'checkbox', checked: prefs[key], onChange: e => setPreferences({ [key]: e.target.checked }) }), label))),
+              [['follow', '跟随实际模型档位'], ['bind', '切换时同步模型推理'], ['motion', '主题动态效果'], ['fortune', '每日卦象'], ['blessing', '神明加持'], ['boot', '首次开场动画']].map(([key, label]) => h('label', { key }, h('input', { type: 'checkbox', checked: prefs[key], onChange: e => setPreferences({ [key]: e.target.checked }) }), label))),
             reduced && h('p', { className: 'qiankun-setting-note' }, '已遵从系统“减少动态效果”设置。'),
             h('div', { className: 'qiankun-settings-foot' }, h('button', { type: 'button', className: 'qiankun-action', disabled: !prefs.motion || reduced, onClick: () => { setOpen(false); replayListeners.forEach(fn => fn()) } }, '重看开场'), prefs.fortune && h('button', { type: 'button', className: 'qiankun-action', onClick: () => { setOpen(false); openFortune() } }, '今日一卦'), h('button', { type: 'button', className: 'qiankun-action qiankun-action--primary', onClick: () => setOpen(false) }, '回到问道'))))))
     }
@@ -191,13 +191,13 @@
         const observer = typeof ResizeObserver === 'function' ? new ResizeObserver(update) : null
         if (sidebar) observer?.observe(sidebar)
         window.addEventListener('resize', update)
-        const attrs = ['data-qiankun', 'data-qiankun-mode', 'data-qiankun-state', 'data-qiankun-motion', 'data-qiankun-content', 'data-qiankun-fortune', 'data-qiankun-rotating', 'data-qiankun-reasoning']
+        const attrs = ['data-qiankun', 'data-qiankun-mode', 'data-qiankun-state', 'data-qiankun-motion', 'data-qiankun-content', 'data-qiankun-fortune', 'data-qiankun-rotating', 'data-qiankun-reasoning', 'data-qiankun-blessing']
         const previous = attrs.map(name => root.getAttribute(name))
         return () => { observer?.disconnect(); window.removeEventListener('resize', update); attrs.forEach((name, i) => previous[i] === null ? root.removeAttribute(name) : root.setAttribute(name, previous[i])) }
       }, [])
       React.useEffect(() => {
         const root = document.documentElement
-        root.dataset.qiankun = 'true'; root.dataset.qiankunMode = value.mode
+        root.dataset.qiankunBlessing = prefs.blessing ? 'on' : 'off'; root.dataset.qiankun = 'true'; root.dataset.qiankunMode = value.mode
         root.dataset.qiankunState = value.activity; root.dataset.qiankunMotion = prefs.motion && !reduced ? 'on' : 'off'
         root.dataset.qiankunContent = value.hasContent ? 'yes' : 'no'; root.dataset.qiankunFortune = prefs.fortune ? 'on' : 'off'
         root.dataset.qiankunRotating = rotation.rotating ? 'on' : 'off'; root.dataset.qiankunReasoning = rotation.level

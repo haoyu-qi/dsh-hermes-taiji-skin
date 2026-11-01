@@ -14,4 +14,4 @@ http.createServer(async(req,res)=>{
   const file=path.resolve(root,'.'+url)
   if(!file.startsWith(root+path.sep)){res.writeHead(403);res.end();return}
   try{res.setHeader('Content-Type',types[path.extname(file)]||'application/octet-stream');res.end(fs.readFileSync(file))}catch{res.writeHead(404);res.end()}
-}).listen(port,host,()=>console.log(`Qiankun V2 preview: http://${host}:${port}`))
+}).listen(port,host,()=>console.log(`Qiankun V3 preview: http://${host}:${port}`))
