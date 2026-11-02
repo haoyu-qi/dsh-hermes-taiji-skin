@@ -252,7 +252,7 @@
               h('div', { className: 'qiankun-tags' }, h('span', null, h('b', null, '宜'), reading.good), h('span', null, h('b', null, '忌'), reading.bad)))
             : h('div', { className: 'qiankun-slip-stage', 'data-phase': phase },
               h('div', { className: 'qiankun-ritual-aura', 'aria-hidden': true }, h(BaguaPlate, { compact: true })),
-              h('div', { className: 'qiankun-slip' }, h(HexagramGlyph, { pattern: reading.pattern }), h('strong', null, reading.gua), h('span', null, reading.grade)),
+              h('div', { className: 'qiankun-slip' }, h(HexagramGlyph, { pattern: reading.pattern, upper: reading.upper }), h('strong', null, reading.gua), h('span', null, reading.grade)),
               h('p', { role: 'status' }, phase === 'rising' ? '起卦 · 静候一念' : '卦象已显，愿有所启。')),
             h('footer', { className: 'qiankun-reading-foot' }, h('span', null, '每日一签 · 图个心安'), h('button', { type: 'button', className: 'qiankun-action', 'data-fortune-action': true, disabled: phase === 'rising', onClick: phase === 'reading' ? accept : () => setPhase('reading') }, phase === 'reading' ? '收下' : phase === 'rising' ? '起卦中…' : '解卦')))),
         casting && h('div', { className: 'qiankun-cast', key: casting.stamp },
@@ -262,7 +262,7 @@
         accepted && h('aside', { className: 'qiankun-stored', 'aria-label': '今日卦象' },
           h('button', { className: 'qiankun-stored-close', type: 'button', 'aria-label': '收起今日卦象', onClick: () => setAccepted(null) }, '×'),
           h('button', { type: 'button', className: 'qiankun-stored-open', onClick: () => { setReading(accepted); setPhase('reading') } },
-            h('small', null, '今日卦象'), h(HexagramGlyph, { pattern: accepted.pattern }), h('strong', null, hexagramName(accepted)), h('span', null, accepted.grade))))
+            h('small', null, '今日卦象'), h(HexagramGlyph, { pattern: accepted.pattern, upper: accepted.upper }), h('strong', null, hexagramName(accepted)), h('span', null, accepted.grade))))
     }
     let bootPlayed = false
     function QiankunBoot() {

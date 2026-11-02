@@ -27,3 +27,41 @@
 @media(prefers-reduced-motion:reduce){.qiankun-blessing-layer *{animation:none!important;transition:none!important}}
 .qiankun-blessing-outside{z-index:2}
 .qiankun-blessing-card{z-index:3}
+/* 加持特效：金光衬底、神明显圣（放大虚化）、金尘、题字、飞印。 */
+.qiankun-blessing-cast{position:fixed;inset:0;z-index:0;pointer-events:none}
+.qiankun-blessing-glow{position:fixed;inset:0;background:radial-gradient(circle at 50% 36%,#b58a4330,transparent 60%);opacity:0;animation:q-bless-glow 2.6s ease both}
+.qiankun-blessing-apparition{position:fixed;left:50%;top:36%;width:min(300px,42vw);aspect-ratio:8/9;transform:translate(-50%,-50%);object-fit:cover;object-position:center 12%;border-radius:14px;opacity:0;filter:blur(12px) brightness(1.12);box-shadow:0 0 60px #b58a4346,0 18px 70px #3833442e;mask-image:linear-gradient(#000 68%,transparent 98%);animation:q-bless-apparition 2.6s cubic-bezier(.22,.7,.28,1) both;pointer-events:none}
+.qiankun-blessing-motes{position:fixed;left:50%;top:36%}
+.qiankun-blessing-motes i{position:absolute;width:3px;height:3px;border-radius:50%;background:#b58a43;box-shadow:0 0 6px #b58a43;--angle:calc(var(--mote-index)*45deg);transform:rotate(var(--angle)) translateX(40px);animation:q-bless-mote 2.6s ease both;animation-delay:calc(var(--mote-index)*60ms)}
+.qiankun-blessing-word{position:fixed;left:50%;top:72%;transform:translate(-50%,-50%);font:24px/1.6 "KaiTi","STKaiti",serif;letter-spacing:.32em;text-indent:.32em;color:#8c692f;text-shadow:0 0 12px #b58a4366;white-space:nowrap;opacity:0;animation:q-bless-word 2.6s ease both}
+.qiankun-blessing-word i{font-style:normal;display:inline-grid;place-items:center;min-width:22px;height:26px;margin-right:.45em;vertical-align:-4px;border:1px solid #a64b3c;border-radius:3px;color:#a64b3c;font-size:.7em;letter-spacing:0}
+.qiankun-blessing-stamp{position:fixed;left:50%;top:36%;z-index:1;display:grid;place-items:center;width:32px;height:40px;border:1px solid #a64b3c;border-radius:4px;color:#a64b3c;background:#fbf7ef;font:20px/1 "KaiTi","STKaiti",serif;box-shadow:0 0 14px #b58a4340;animation:q-bless-stamp 2.6s cubic-bezier(.22,.7,.28,1) both}
+@keyframes q-bless-glow{0%{opacity:0}20%,60%{opacity:1}100%{opacity:0}}
+@keyframes q-bless-apparition{0%{opacity:0;transform:translate(-50%,-50%) scale(.78);filter:blur(14px) brightness(1.18) saturate(1.08)}20%{opacity:.96;transform:translate(-50%,-50%) scale(.97);filter:blur(0px) brightness(1.04) saturate(1)}58%{opacity:.88;transform:translate(-50%,-50%) scale(1.1);filter:blur(2px) brightness(1.1)}100%{opacity:0;transform:translate(-50%,-50%) scale(1.32);filter:blur(13px) brightness(1.22)}}
+@keyframes q-bless-mote{0%{opacity:0}25%{opacity:.7}100%{opacity:0;transform:rotate(var(--angle)) translateX(150px) translateY(-26px)}}
+@keyframes q-bless-word{0%{opacity:0;transform:translate(-50%,-46%);filter:blur(6px)}26%,66%{opacity:1;transform:translate(-50%,-50%);filter:blur(0)}100%{opacity:0;transform:translate(-50%,-56%);filter:blur(2px)}}
+@keyframes q-bless-stamp{0%{opacity:0;transform:translate(-50%,-50%) scale(2.4) rotate(-12deg)}16%{opacity:1;transform:translate(-50%,-50%) scale(1) rotate(0)}30%{transform:translate(-50%,-50%) scale(1.07)}52%{opacity:1}100%{opacity:0;transform:translate(calc(-50% + var(--bx,240px)),calc(-50% + var(--by,-140px))) scale(.42) rotate(-10deg)}}
+[data-qiankun-motion=off] .qiankun-blessing-cast{display:none}
+/* 妈祖神文按钮：竖排行楷、鎏金流转、金芒闪烁。 */
+.qiankun-blessing-mazu-btn{min-height:34px;padding:3px 9px;border-color:color-mix(in srgb,#b58a43 85%,transparent);background:linear-gradient(160deg,#fdf9f0,#f6ecd8);position:relative;overflow:visible}
+.qiankun-blessing-mazu-btn::after{content:"";position:absolute;inset:-3px;border-radius:99px;box-shadow:0 0 14px 2px #b58a4340,0 0 34px 8px #b58a431e;opacity:0;animation:q-mazu-halo 3.2s ease-in-out infinite;pointer-events:none}
+.qiankun-blessing-mazu{position:relative;display:inline-flex;flex-direction:column;align-items:center;gap:1px;padding:1px 0;font:15px/1.15 "Xingkai SC","STXingkai","KaiTi","STKaiti",serif;font-weight:400;letter-spacing:0;background:linear-gradient(115deg,#8c692f 0%,#e8c98c 26%,#fff3d6 42%,#b58a43 58%,#e8c98c 78%,#8c692f 100%);background-size:260% 100%;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent;animation:q-mazu-sheen 3s linear infinite;filter:drop-shadow(0 0 3px #b58a4359)}
+.qiankun-blessing-mazu b{font-weight:400}
+.qiankun-blessing-mazu::before,.qiankun-blessing-mazu::after{content:"";position:absolute;width:4px;height:4px;border-radius:50%;background:radial-gradient(circle,#fff8e6,#b58a43 55%,transparent 75%);opacity:0;pointer-events:none}
+.qiankun-blessing-mazu::before{right:-7px;top:2px;animation:q-mazu-star 3s ease-in-out .4s infinite}
+.qiankun-blessing-mazu::after{left:-7px;bottom:3px;animation:q-mazu-star 3s ease-in-out 1.9s infinite}
+@keyframes q-mazu-sheen{0%{background-position:130% 0}100%{background-position:-130% 0}}
+@keyframes q-mazu-halo{0%,100%{opacity:0}45%,60%{opacity:1}}
+@keyframes q-mazu-star{0%,18%,100%{opacity:0;transform:scale(.4)}8%{opacity:1;transform:scale(1.15)}}
+/* 沉浸模式星轮回影与主轮重叠成重影，取消回影层。 */
+.qiankun-orb-echo{display:none!important}
+/* 右下今日卦象小签：常驻更轻更小，悬停微展。 */
+.qiankun-stored{right:16px;bottom:16px;width:84px;border-radius:10px;box-shadow:0 6px 20px #38334410;transition:transform .25s ease,box-shadow .25s ease}
+.qiankun-stored:hover{transform:translateY(-2px);box-shadow:0 10px 26px #3833441a}
+.qiankun-stored-open{gap:6px;padding:11px 8px 9px}
+.qiankun-stored-open small{font-size:9px;letter-spacing:.14em}
+.qiankun-stored-open strong{font-size:12px}
+.qiankun-stored-open>span{font-size:9px}
+.qiankun-stored .hermes-hexagram-glyph{width:32px;height:38px}
+.qiankun-stored-close{width:20px;height:20px;top:2px;right:2px;font:14px/1 system-ui}
+@media(max-width:800px){.qiankun-stored{width:72px;right:10px;bottom:10px}.qiankun-stored .hermes-hexagram-glyph{width:26px;height:30px}.qiankun-stored-open{padding:9px 6px 7px;gap:5px}}
