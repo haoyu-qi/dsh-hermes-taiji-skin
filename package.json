@@ -1,7 +1,19 @@
 {
   "name": "@local/dsh-hermes-skin",
-  "version": "1.4.0",
-  "description": "深度求索 · 太极皮肤：五秒开机先天八卦 + 四向行书箴言、发送键与回车动画的太极、侧栏占卜令牌与收下符咒/今日卦象、水墨星轨双主题 (DeepSeek Taiji Skin: five-second bagua boot animation, taiji send button and send burst, a daily divination token with talisman cast and hexagram slip, and an ink-and-gold theme for the DSH Web GUI)",
+  "version": "3.0.0",
+  "description": "深度求索 · 乾坤问道 V3：在 V2 宣纸墨金皮肤（思考氛围/每日占卜/四段开机）之上内嵌紫微斗数开源排盘引擎——模型名旁的「紫微推演」模式与入盘、每个对话与工作区各有一张十二宫命理盘、侧栏会话行的紫微速览入口 (DeepSeek Hermes Skin V3: the paper-and-gold ink skin plus the embedded open-source Ziwei Dou Shu chart engine — a ziwei reasoning mode beside the model label, a twelve-palace chart for every conversation and workspace, and a per-session chart entry in the sidebar)",
+  "scripts": {
+    "build": "node tools/build.mjs",
+    "build:engine": "node tools/build-engine.mjs",
+    "test": "node tools/build.mjs && node tools/test-engine.mjs && node tools/build.mjs --check"
+  },
+  "dependencies": {
+    "iztro": "^2.5.8",
+    "lunar-javascript": "^1.7.3"
+  },
+  "devDependencies": {
+    "esbuild": "^0.25.10"
+  },
   "type": "module",
   "license": "MIT",
   "author": "Qijinchun (haoyu-qi)",
@@ -21,7 +33,9 @@
     "skin",
     "theme",
     "bagua",
-    "calligraphy"
+    "calligraphy",
+    "divination",
+    "thinking-depth"
   ],
   "exports": {
     ".": "./index.js",

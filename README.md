@@ -1,10 +1,31 @@
-# 深度求索 · 太极皮肤（DeepSeek Taiji Skin）
+# 深度求索 · 乾坤问道（DeepSeek Hermes Skin）
 
-给 DSH Web GUI 自己穿的一套皮肤：把参考图里的「月华白 / 曜金 / 烟紫 / 云藤紫 / 墨岩灰」、太极、八卦、星轨与山水，落成可安装的 Cordis 插件。启动时先落一张五秒钟的开场：中间八卦，上下左右四句行书。
+给 DSH Web GUI（DeepSeek Harness）穿的一套可安装皮肤。V2 把 V1.4「太极皮肤」的静态装饰改成一套**有反馈的视觉语言**；**V3 内嵌了紫微斗数开源排盘引擎**，让「命运可见」从装饰变成可用的能力：模型名旁多了一枚「紫微」徽记与**紫微推演**模式（一键把命盘档案带进提问），**每个对话、每个工作区、每台机器**各有一张十二宫**命理盘**。
 
-一个插件装齐全部视觉：**五秒开机动画**（中央先天八卦盘 + 上/下/左/右四句行书）、**回车发送时的一记太极**、**发送键太极**、侧栏**占卜令牌**与今日一签（收下时一纸**符咒**飞渡、右下角落成**今日卦象**）、月华白/曜金/烟紫双主题、侧栏太极印、背景题字与山水星轨。
+- 版本：**3.0.0**（乾坤问道 V3 = V2 视觉语言 + 紫微命理盘）
+- 包名：`@local/dsh-hermes-skin`，显示名「深度求索 · 乾坤问道」
+- 安装形态：一个 Cordis **client** 插件；源码在 `src/client.js`，`client.js` 是构建产物（见「引擎与构建」）
+- 仓库：<https://github.com/haoyu-qi/dsh-hermes-taiji-skin>
+- 设计输入：`DeepSeek_乾坤问道主题皮肤_V2优化方案_图文版.docx`（本机 `~/Downloads/`，方案未随仓库分发）；V3 命理能力的需求来自 3.0 规划：「嵌入 ziwei-doushu 项目的能力，在模型边上加一个推理的功能，给每个对话和工作区加上命理盘」
 
-> 仓库：<https://github.com/haoyu-qi/dsh-hermes-taiji-skin>
+一个插件装齐：
+
+| 模块 | 一句话 | 落点 |
+| --- | --- | --- |
+| **紫微推演（V3）** | 输入框上沿「紫微推演」开关 + 「入盘」按钮：把命盘档案 prepend 进草稿，交给模型推演 | `conversation.input.dock` · `ZiweiDockControls` |
+| **模型名徽记（V3）** | 推演开启时模型名旁亮「紫微」金徽（单槽位，非交互） | `conversation.input.model.label` · `ZiweiModelLabel` |
+| **自动带盘（V3）** | 皮肤设置新增开关：回车发送前自动把命盘档案补进草稿 | `conversation.composer.dock` · `ZiweiSendWatch` |
+| **命理盘（V3）** | 十二宫命盘对话框：出生表单、四柱/五行局/命主身主、格局判定、按「本对话/本工作区/常用」三档存档 | `shell.overlay` · `ZiweiPanel` |
+| **命盘入口（V3）** | 会话头「紫微命盘」按钮 + 侧栏会话行悬停「斗」按钮 | `conversation.session.header.utilities` / `sidebar.workspaces.session.row.action` |
+| 思考氛围 | 四枚药丸：浅思 / 深思 / 悟道 / 自动，只改装饰密度，不改模型参数 | `conversation.input.dock` · `SkinDock` |
+| 思考态 | DOM 启发式检测「正在思考」，加速八卦、点亮「推演中」、加强输入框描边 | `shell.overlay` · `ThinkingWatcher` + `html[data-hermes-thinking]` |
+| 皮肤设置 | `⋯` 弹层四开关：动效 / 开机动画 / 每日卦象 / **发送自动带盘** | `SkinDock` 内的 `.hermes-skin-menu` |
+| 每日占卜 | 令牌 → 起卦签牌（900ms）→ 452px 签卡 → 收下符咒（1700ms）→ 右下角今日卦象 | `shell.overlay` · `FortunePanel` |
+| 开机幕 | 四段时间轴 0 / 800 / 1800 / 3000ms，4.4s 淡出、5s 移除；减动时静态 2.4s | `shell.overlay` · `BootCurtain` |
+| 主界面 | 输入框细金描边与呼吸、侧栏金色选中左缘、背景题字、山水渐隐、八卦水印缩小并内置太极 | CSS + `Ambient` |
+| 旧有仪式 | 回车发送太极、发送键太极、侧栏太极印、字标、箴言 | 与 V1 一致，未改行为 |
+
+> **边界先说清楚**：V2 的氛围药丸仍是**纯视觉**的（`aria-label` 里写着「仅视觉，不改变模型推理参数」）。V3 的「紫微推演」是**真功能**，但它改变的是**草稿文本**（把命盘档案明明白白插进你将要发送的消息开头），不写任何请求参数、不修改宿主请求管线；排盘全部在本机引擎完成，零网络请求。
 
 ## 安装
 
@@ -20,93 +41,333 @@
 
    本机是把该目录以 `link:` 链进 `~/.dsh/profiles/desktop` 的，两种装法等价。
 
-3. 首次安装后退出并重开一次 DeepSeek Harness（Desktop 启动时会缓存 boot 注入）；之后修改 `client.js` 由 `client-hmr` 热替换，刷新页面即可看到更新。
-4. 停用：设置 → 插件 → 「深度求索 · 太极皮肤」停用即整体还原，也可在 `apply()` 里删掉对应槽位注册。
+3. 首次安装后退出并重开一次 DeepSeek Harness（Desktop 启动时会缓存 boot 注入）；之后修改 `src/client.js` 后跑 `npm run build` 重建 `client.js`，由 `client-hmr` 热替换，刷新页面即可看到更新。**仓库里的 `client.js` 是构建产物且已提交**，只为安装即用；日常迭代请改 `src/client.js` 再构建。
+
+4. 停用：设置 → 插件 → 「深度求索 · 乾坤问道」停用即整体还原；也可以在 `apply()` 里删掉对应的槽位注册。
 
 **要求**：DSH Desktop 的 Web GUI（带 Cordis 插件系统）。
 
 **字体**：行书优先 macOS 自带 `Xingkai SC`（华文行楷），其次 `Zhi Mang Xing`（志莽行书，可选安装）、`Hannotate SC`、`Kaiti SC`；没有这些字体的系统会退到系统楷体，观感略有差异。
 
-包名：`@local/dsh-hermes-skin`（Host 空壳 + Client 半，profile 级生效；本仓库根目录本身即安装包。仓库与显示名带 Taiji，安装 id 为了不打断当前 profile 里的既有安装而保持不变）。
+包名沿用 `@local/dsh-hermes-skin`（Host 空壳 + Client 半，profile 级生效；仓库根目录本身即安装包）。仓库与显示名带 Taiji/乾坤问道，安装 id 为了不打断当前 profile 里既有安装而保持不变。
+
+## 引擎与构建（V3 新增）
+
+「命理盘」与「推演」的排盘内核来自开源项目 [Renhuai123/ziwei-doushu](https://github.com/Renhuai123/ziwei-doushu)（MIT，基于倪海厦《天纪》体系；运行时依赖 iztro 与 lunar-javascript，同为 MIT）。
+
+- `vendor/ziwei/`：上游 `lib/ziwei/` 的原样快照（commit `495b79e`，见 `vendor/ziwei/NOTICE.md`），**不做本地修改**；升级时整目录替换并更新 NOTICE 里的 commit 号。未包含其 app 界面、13 维解读数据集（v3/v4，56GB 级）与断语库。
+- `tools/build-engine.mjs`：esbuild 把 `vendor/ziwei`（入口 `tools/engine-entry.ts`，alias 掉 Next.js 的 `server-only`）连同 iztro / lunar-javascript 打成一个 IIFE，**显式挂到 `window.__HermesZiwei__`**（顶层 `var` 在 eval / 模块作用域不会自动成为 window 属性，所以包了一层全局挂载），并带金标准自检（1990-01-01 子时男命 = 水二局 · 命主巨门）。
+- `tools/build.mjs`：拼接 `ziwei-engine.iife.js` + `src/client.js` → `client.js`；`--check` 校验产物与源码一致。
+- `tools/test-engine.mjs`：引擎回归（金标准、确定性、非法日期抛错、格局与摘要）。
+
+```bash
+cd hermes-skin
+npm install --cache ../preview/.npm-cache   # iztro / lunar-javascript / esbuild
+npm test                                    # 构建 + 引擎回归 + 产物一致性
+npm run build                               # 只重建 client.js
+```
+
+`ziwei-engine.iife.js` 是中间产物（已 gitignore），引擎始终内嵌在 `client.js` 里随插件分发，宿主不需要 Node、不需要网络。
+
+### 归属与许可
+
+- 排盘引擎：MIT，来源 <https://github.com/Renhuai123/ziwei-doushu>（`vendor/ziwei/LICENSE.upstream`）；命盘对话框页脚保留一行来源说明。
+- 引擎打包进来的 iztro（MIT）与 lunar-javascript（MIT）随包分发，许可声明见 `vendor/ziwei/NOTICE.md`。
+- 上游的 13 维解读数据集（CC BY 4.0）**没有被使用**：本皮肤只用排盘 + 格局判定，解读交给当前对话里的模型。
+
+## 紫微推演（模型边上的「推理」功能）
+
+### 模型名旁的徽记
+
+`conversation.input.model.label` 是**单槽位**（priority 越低越优先）。皮肤以 priority -100 接管后渲染：
+
+```
+[DeepSeek-V3.2] [1017?] [紫微]      ← 触发器 / 菜单当前行 / 模型选项三处共用
+```
+
+- 官方 `ui-deepseek-model-label-1017` 包同槽位（priority 0）会被遮住；皮肤按其公开口径**复刻了同一颗 1017 角标**（provider ∈ {deepseek-official, deepseek-account} 且 model.id=deepseek-flash 且目录名恰为 `DeepSeek-V4.1-Flash`），保证接管后官方观感不丢失。上游若改口径，停用皮肤即整体还原。
+- 槽位契约要求**非交互**，徽记只是状态显示；开关本体在输入框上沿。
+
+### 推演模式与「入盘」
+
+1. 输入框正上方、思考氛围药丸条旁边多一组「紫微推演」胶囊。点亮后：
+   - 模型名旁亮「紫微」金徽（只对本对话生效，键 `hermes-ziwei-mode:s:<sessionId>`）；
+   - 胶囊旁出现「**入盘**」按钮：把当前命盘档案以 `【紫微命盘·本对话】…【/紫微命盘】` 块**prepend 进草稿**，档案含公历/农历四柱、五行局、命主身主、十二宫星曜亮度四化、大限与格局。再次入盘会**替换**旧档案块，不叠加。
+   - 没有生辰时点「入盘」直接打开命盘对话框并聚焦出生表单。
+2. 草稿是明文可见的：你看到什么，模型就读到什么；删掉档案块再发送即回到普通对话。
+3. 皮肤设置（`⋯`）新增第四开关「**发送自动带盘**」（默认关）：打开后，在推演模式开启、草稿非空且尚未带盘时，**回车发送前**自动补一次档案（capture 阶段监听，先于宿主键位表写入 Lexical 编辑器）。只拦回车路径，不拦发送按钮——想保证带上档案就点「入盘」。
+
+## 命理盘（每个对话、每个工作区）
+
+### 归属与解析链
+
+出生信息（公历年月日时分 + 性别 + 可选姓名）按三档存 `localStorage`：
+
+| 归属 | 键 | 生效范围 |
+| --- | --- | --- |
+| 本对话 | `hermes-ziwei-birth:s:<sessionId>` | 仅该会话 |
+| 本工作区 | `hermes-ziwei-birth:w:<workspaceId>` | 该工作区里的会话（作兜底） |
+| 常用 | `hermes-ziwei-birth:default` | 全局兜底 |
+
+解析链固定为 **本对话 → 所属工作区 → 常用**：在会话头/侧栏行打开时自动带出最近一档已存的生辰，换个会话不用重填。工作区归属用宿主 `useWorkspaces` 快照解析（`workspaces.items.find(w => w.sessionIds.includes(sessionId))`，与宿主同口径）；解析失败只是少一档兜底，不影响其它功能。
+
+### 对话框
+
+会话头「紫微命盘」按钮或侧栏会话行悬停「斗」按钮打开（Esc / 点背景 / 「收起」关闭，焦点管理与签卡一致：自动聚焦、Tab 卡内循环、关闭后归还）：
+
+- **出生表单**：姓名（可选）/ 年 / 月 / 日 / 时 / 分 / 性别，实时排盘；钟点按「23 点后归次日早子时」换算，表单下方实时显示对应时辰。
+- **十二宫盘面**：传统 4×4 布局（上巳午未申、左辰卯寅、右酉戌亥、下寅丑子亥），命宫金框、身宫紫框；每宫宫名 + 地支 + 大限 + 主星（亮度小字）+ 辅/吉/煞星与四化色标（禄金/权朱/科紫/忌墨），空宫标注借对宫星。
+- **中心摘要**：姓名性别、公历（含时辰）、农历 + 四柱、五行局、命主身主、命宫身宫落点、格局 chips（格局判定来自上游 1100+ 行规则库，级别 excellent/caution 分色，悬停见释义）。
+- **页脚**：来源与免责一行（MIT 引擎 + 生辰只存本机 + 仅供文化参考）；按钮「入盘」（本对话页签才有）/「保存生辰」（存到当前页签的归属键）/「收起」。
+- 生辰非法（如 2 月 30 日）引擎直接抛错，表单给出红条提示——上游 2026-10-03 起拒绝不存在的公历日期，本皮肤原样透传。
 
 ## 视觉系统
 
-| 元素 | 色值 | 落点 |
+### 色板
+
+方案给了六色，实现落点如下（浅色主题；深色「玄夜」用同一套语义令牌的另一组值）：
+
+| 方案色 | 方案值 | 实现值与落点 | 状态 |
+| --- | --- | --- | --- |
+| 宣纸白 | `#F8F5EE` | `--dsw-alias-bg-base`（light） | 一致 |
+| 暖米白 | `#F0EADF` | 侧栏实际用 `--dsw-specific-sidebar-fill: #F3EDE2`；层-2 `#F4EEE4`、气泡 `#F0E7D8` 也在同一色域，但 `#F0EADF` 没有逐字使用 | 近似 |
+| 香槟金 | `#B58A43` | `--hermes-gold`（light）；UI 描边/焦点多用 `color-mix(in srgb, var(--hermes-gold) 26%~62%, …)`，很少整块铺满。11–13px 的小号金文字（今日占卜、签级、收下按钮）改用 `--hermes-gold-strong`（浅 `#8F6C2C` / 深 `#D9BE86`）保证 AA 对比度。V3 命盘的四化色标、格局 chips、模型徽记同走这套金/朱/紫/墨语义 | 一致 |
+| 墨紫黑 | `#383344` | `--hermes-ink`（图形、题字、太极、符咒墨色）；**正文/标题**仍是 V1 的 `--dsw-alias-label-primary: #3A3342` | 近似 |
+| 辅助灰紫 | `#766D7C` | `--dsw-alias-label-secondary`、`--hermes-art` | 一致 |
+| 朱砂红 | `#A64B3C` | 签牌朱印（`#A64B3C` 直写）、符咒、`--dsw-alias-state-error-primary` 色域；V3 命盘「权」四化与煞星也用这一族 | 一致 |
+
+深色主题「玄夜」：底 `#141118`、层-1 `#1C1822`、墨色 `#EFE6F2`、金 `#D9BE86`、正文 `#EFE9F1`、辅助 `#B7ACC0`。两套色板都通过 `ctx.theme.overrideTokens` 叠加（107 个 token，含 `--dsw-alias-*`、`--dsw-specific-*`、`--shiki-token-*` 与皮肤自用的 `--hermes-*`），跟随「设置 → 通用 → 外观」的浅色/深色/跟随系统，不强制改用户偏好。
+
+小字与控件的对比度约定：小号金文字用 `--hermes-gold-strong`；页脚说明（每日一签 · 图个心安）用 `--dsw-alias-label-tertiary`；未选中的药丸、齿轮与卦象 `×` 用 `--dsw-alias-label-secondary`（比 tertiary 深一档，避免 10–11px 发灰）。
+
+### 字体：两套规则，别越界
+
+- **UI 一律系统无衬线**（`--dsw-font-family`：`-apple-system` / `PingFang SC` / `system-ui`）。药丸、菜单、按钮、日期、解签正文、命盘星曜列表都用它。
+- **宋体 `SERIF` 只用于品牌与仪式**：`深度求索` 字标、签卡卦名、「收下/入盘/保存」按钮、符咒「敕令」、今日卦象签，以及 V3 的「紫微命盘」标题、宫名、命主姓名与「斗」字钮。
+- **行楷 `BRUSH` 只用于纯装饰书法**：开机幕四句、背景题字。
+
+不要把 14px 级正文或菜单换成衬线/书法字体——会发虚，方案里也明确要求「书法仅用于标题和仪式文案」。
+
+## 思考氛围（四档药丸）
+
+### 位置与 DOM
+
+`SkinDock` 挂在 `conversation.input.dock`（order 20），落成 `.hermes-skindock`，位于输入框**正上方**；V3 起同一行还有「紫微推演」胶囊条（`.hermes-ziwei-bar`，见上文）；箴言仍由 `conversation.composer.dock` 挂在输入框下沿：
+
+```
+.hermes-skindock（输入框正上方）
+├─ .hermes-depthbar        role="group" aria-label="思考氛围（仅视觉，不改变模型推理参数）"
+│  ├─ button.hermes-mode-pill[data-mode=light|balanced|immersive|auto][aria-pressed]
+│  ├─ span.hermes-thinking （思考中；role="status"，三点 + 「推演中」）
+│  ├─ button.hermes-skin-gear（「⋯」）→ .hermes-skin-menu（四开关）
+└─ .hermes-ziwei-bar       role="group" aria-label="紫微推演：把当前对话的命盘档案带入提问"
+   ├─ button.hermes-ziwei-pill[aria-pressed]（紫微推演）
+   └─ button.hermes-ziwei-load（入盘 / 已入盘，推演开启时出现）
+
+.hermes-motto（输入框下沿）  ✦ 命运可见 · 智慧可行 · 自在而生
+```
+
+药丸条与紫微条都是 `padding:3px`、`border-radius:999px`、金 26% 描边、`backdrop-filter: blur(8px)`；选中态金 17% 底 + 内描边 + 点状金点。
+
+### 四档到底改了什么
+
+档位只写 `<html data-hermes-depth>`，由 CSS 变量切换装饰密度；**没有任何 JS 去改模型或请求**。
+
+| 档位 | 药丸 | `data-mode` | 八卦水印不透明度 | 八卦旋转 | 星点 | 背景题字 | 山水 | 输入框 |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| 淡雅 · 浅思 | 浅思 | `light` | `.13` | 静止（`animation:none`） | 隐藏（`display:none`） | `.62` | `.07` | 基础细金描边，无呼吸 |
+| 平衡 · 深思 | 深思 | `balanced` | `.25` | 150s 一圈 | `.5` | `.9` | `.10` | 金色 34% 描边 + 7.5s 呼吸 |
+| 沉浸 · 悟道 | 悟道 | `immersive` | `.34` | 80s 一圈 | `.78` | `1` | `.13` | 金色 52% 描边 + 外发光 + 内金环 + 5.5s 呼吸 |
+| 自动 | 自动 | `auto` | 空闲 `.25`；思考中 `.34` | 空闲 150s；思考中 80s | 空闲 `.5`；思考中 `.78` | 空闲 `.9`；思考中 `1` | 空闲 `.10`；思考中 `.13` | 空闲同深思；思考中同悟道 |
+
+对应 CSS 变量（都在 `html[data-hermes-depth="…"]` 块里声明，改这里即可全局生效）：
+
+| 变量 | 浅思 | 深思 | 悟道 | 自动（空闲 → 思考） |
+| --- | --- | --- | --- | --- |
+| `--hermes-orb-opacity` | .13 | .25 | .34 | .25 → .34 |
+| `--hermes-orb-spin-duration` | `0s`（并 `animation:none`） | `150s` | `80s` | 150s → 80s |
+| `--hermes-star-opacity` | `0`（且 `display:none`） | .5 | .78 | .5 → .78 |
+| `--hermes-inscription-opacity` | .62 | .9 | 1 | .9 → 1 |
+| `--hermes-ridges-opacity` | .07 | .10 | .13 | .10 → .13 |
+
+额外的层次：
+
+- 悟道档给水印加一圈缓慢收放的**光晕**（`.hermes-ambient-orb::after`，`hermes-orb-halo` 6s）。
+- 自动档的「思考 = 沉浸」由 `html[data-hermes-depth="auto"][data-hermes-thinking="on"]` 这一条选择器完成，不需要 JS。
+- 思考中会把水印投影从 34px 放到 48px 金 28%；内圈旋转压到 **28s**（`--hermes-orb-thinking-spin`，深思/悟道/自动档生效，浅思档内圈本就是 `animation:none`）。
+
+**持久化**：`localStorage["hermes-depth"]`，默认 `balanced`；读到未知值也退回 `balanced`；改动会同步到 `<html data-hermes-depth>`。
+
+**注意**：沉浸档/自动档在思考中会增加光晕和描边，但「自动」并不感知任务复杂度——它唯一的状态源就是下面的 thinking 启发式。想让它真正绑定模型推理档位，得等宿主提供正式的能力信号，本皮肤不会伪造。
+
+## 思考态：「推演中」
+
+### 检测（DOM 启发式）
+
+`ThinkingWatcher` 挂在 `shell.overlay`（order -20），`isThinkingNow()` 依次看三组信号：
+
+1. `[data-slot="conversation.composer.bar"]` 内是否存在
+   `button[aria-label*="停止"]`、`button[title*="停止"]`、`button[aria-label*="中止"]`、`button[title*="中止"]`、`[data-state="running"]` 或 `[data-generating="true"]`；
+2. 否则看 `[role="status"]` 或 `[aria-live="polite"]` 的可见文本是否匹配 `思考中|正在思考|推理中|生成中`；
+3. 用 `MutationObserver` 监听 `body`（`childList`+`subtree`+`characterData`，属性只过滤 `aria-label`/`title`/`data-state`/`data-generating`/`class`），**160ms 节流**后重算。
+
+结果写两处：`<html data-hermes-thinking="off|on">` 与 `window` 上的 `CustomEvent("hermes-skin:thinking", { detail: { thinking } })`。组件卸载时删除该属性并断开 observer。
+
+### 界面反馈
+
+- `.hermes-thinking` 药丸：金色 10px、字距 `.18em`，三个 3px 圆点以 `hermes-thinking-wave` 1.2s 错峰（0 / .16s / .32s），带 0.3s 入场。
+- 八卦水印内圈 28s（浅思档不转，除外）、投影 48px 金 28%。
+- 输入框：`html[data-hermes-thinking="on"]` 下描边金 24%、外发光 30px，自动/沉浸档再叠 52% 金边。
+- 动效关时三个点不再跳动（`animation:none`）。
+
+**这是启发式，不是契约**：DSH 改 composer 结构、换停止按钮文案、或状态文案改成英文，都可能漏判/误判；误判只会多点一支「推演中」，不影响任何功能。预览里用 `?thinking=1` 模拟（外壳注入停止按钮与「思考中」状态行），不是真实生成。
+
+## 皮肤设置（⋯ 弹层）
+
+`.hermes-skin-gear`（20px，`⋯`，`aria-expanded`）展开 `.hermes-skin-menu`：绝对定位在药丸条上方（`right:0; bottom:calc(100% + 10px)`），宽 196px，带向上小三角；`role="group"` + `aria-label="皮肤设置"`，标题「乾坤问道 · 皮肤」，下面四行 `button.hermes-skin-toggle[role="switch"][data-flag=…]`，右侧是 `[data-track]` 自绘开关。点外部（`pointerdown`）或按 Esc 关闭；齿轮自身的 `pointerdown` 会 `stopPropagation`，所以再点一次齿轮也能收起。
+
+| 行 | `data-flag` | localStorage | 默认 | 关掉之后 |
+| --- | --- | --- | --- | --- |
+| 动效 | `motion` | `hermes-motion` = `on`/`off` | on | `<html data-hermes-motion="off">`：八卦/星点/光晕/输入框呼吸/思考点/药丸过渡全部停；签卡、遮罩、符咒、卦象、发送太极、签牌与金尘的动画也停，**起卦整段直接跳过**；符咒静态出现后按 1.7s 定时卸载；开机幕转静态 2.4s |
+| 开机动画 | `boot` | `hermes-boot-play` = `on`/`off` | on | 下次载入不再放开机幕（本会话正在播的不会被打断） |
+| 每日卦象 | `daily` | `hermes-daily` = `on`/`off` | on | 侧栏「占卜」令牌不再渲染；签卡、右下角卦象一并隐藏；本地 `hermes-fortune-day` 保留 |
+| 发送自动带盘（V3） | `ziweiAuto` | `hermes-ziwei-auto` = `on`/`off` | **off** | 回车发送不再自动补命盘档案；「入盘」按钮不受影响 |
+
+四个开关一起写 `localStorage`，并广播 `hermes-skin:settings` 与 `hermes-ziwei:change` 事件；`applyRootSettings()` 把 `data-hermes-depth` / `data-hermes-motion` 同步到 `<html>`。
+
+注意：**动效关与系统「减少动态效果」都会跳过起卦**，差别在细节：动效关停掉动画但保留 900ms 的落卡定时与 1.7s 的符咒定时（符咒静止出现/卸载）；`prefers-reduced-motion` 下起卦层直接 `display:none`，符咒退化为 700ms 纯淡入淡出、签卡与卦象无入场动画。V3 命盘的宫格入场动画同样跟随这两条降级路径（`.hermes-ziwei-cell` 动画在 `prefers-reduced-motion` 下由既有媒体查询统一停用）。
+
+## 今日占卜（V2 重塑）
+
+### 入口
+
+「深度求索」字标右侧一枚竖排**令牌** `.hermes-fortune-trigger`：17×24px、上圆下平、双金线框、顶部穿绳孔，`占`/`卜` 两字 8px 竖刻。`role="button"`、`tabIndex=0`，Enter/Space 可开；`aria-label="今日运势 · 占卜"`。每日卦象关掉时整枚令牌不渲染。
+
+### 签卡
+
+- 遮罩 `.hermes-fortune`：`fixed`、`z-index:8600`、`rgba(20,17,24,.4)` + `blur(2px)`；点背景关闭，Esc 关闭。
+- 卡 `.hermes-fortune-card`：`width:min(452px, 100vw - 32px)`、`max-height:calc(100vh - 40px)`、18px 圆角、香槟金 58% 外框 + `inset 7px` 的第二道细金线，宣纸渐变纸面，`role="dialog" aria-modal="true" aria-label="今日运势"`，入场 `hermes-fortune-rise` 360ms。
+- 纸面装饰 `.hermes-fortune-art`（opacity .6）：右上八卦水印环、底部两道水墨山脊 + 一线金水、左上松枝。
+- 内容自上而下：`今日占卜` + 日期 → 三爻卦象 → 卦名 → 签级 → 两句签诗 → 菱形分隔线 → 解读 → 宜/忌 → `每日一签 · 图个心安` + 「收下」。
+
+### 流程与时间
+
+| 阶段 | 画面 | 时长 |
 | --- | --- | --- |
-| 月华白 | `#F8F4EC` / 卡片 `#FDFAF4` | `--dsw-alias-bg-base`、各层表面 |
-| 曜金 | `#B08A46` | 品牌印记、焦点环、发送键、发丝线 |
-| 烟紫 | `#8E7FA8` | 链接、思考中、次级星芒 |
-| 云藤紫 | `#72618C` | 链接与深潜标签的可读色 |
-| 墨岩灰 | `#3A3342` | 正文、主按钮、太极印 |
-| 朱砂 | `#A6473D` | 符咒的敕令、六爻与卦名小印 |
+| 起卦 | 签牌从右下浮起、翻转、定到中央，6 粒金色微尘 | `900ms` |
+| 显卦 | 签牌退场，签卡升起 | 360ms 入场 |
+| 解卦 | 静态阅读；Esc 或点背景收起 | — |
+| 收签 | 朱砂符咒落下、停住、飞向右下 | `1700ms`（定时卸载） |
+| 留签 | 右下角「今日卦象」小签（六爻、卦名、签级、`›`、`×`） | 入场延迟 1020/720ms |
 
-暗色主题「玄夜」使用同一套语义令牌的另一组值：墨底 `#141118`、月金 `#D9BE86`、浅檀 `#E9DCC0`。两套色板都通过 `ctx.theme.overrideTokens` 叠加，跟随「设置 → 通用 → 外观」的浅色/深色/跟随系统，不强制改用户的主题偏好。
+- 同一天内反复点令牌结果固定：`fortuneOfDay()` 用 `YYYYMMDD` 做 seed 取模，8 支签中取一支。
+- **持久化与跨日**：收下时写 `localStorage["hermes-fortune-day"] = YYYY-M-D`；刷新后若仍是当天则恢复小签；每 60s 轮询一次，跨日即清。`×` 清空该键。
 
-## 落到界面上的东西
+## 开机动画
 
-- **主题令牌**：约 90 个 `--dsw-alias-*` / `--dsw-specific-*` / `--shiki-token-*` 覆盖，含发丝线、悬停、代码块、滚动条、状态色、菜单材质。
-- **太极印**：侧栏品牌位（24px）的 SVG；外圈曜金，阴阳随主题换墨/月白。空白会话标题前不再放太极印（空占位留白）。
-- **八卦星轨**：整框右上角一枚 22% 不透明度的八卦星轮水印，轮面只留同心环与先天八卦，轮内零散星座已移除；星轮改为随视口缩放（`width:min(560px,46vw,62vh)`），四周星点全部避到左侧与底部，不再和星轮重叠合并。
-- **五秒开机动画**：每次启动或刷新页面，先落一张满屏月华白开场——正中先天八卦盘：曜金外环、点线环、八组三爻（乾上、巽右上、坎右、艮右下、坤下、震左下、离左、兑左上）、八枚小菱形星点，以及带金环的墨/月白太极；八卦环在五秒内匀速转进 45°。上、下、左、右四向是同一墨色的行书毛笔字：
-  - 上：躲天意，避因果，诸般枷锁困真我；
-  - 下：顺天意，承因果，今日方知我是我；
-  - 左：一朝悟道见真我，何惧昔日旧枷锁；（竖排）
-  - 右：世间枷锁本是梦，无形无相亦无我。（竖排）
-  四句按「上 → 下 → 左 → 右」依次以笔锋扫入（横向自左而右、竖排自上而下，起笔带一点虚焦），第 4.4 秒整幅淡出，5 秒整移除。点按任意处或 Esc／Enter 可提前跳过（空格不参与，也不会再误触）；`prefers-reduced-motion` 下不转不扫，只静态停留五秒。
-- **发送太极**：只有在 composer 里按回车、且草稿非空并被真正提交清空时，frame 中央才闪一记太极——0.15s 内浮起，八卦环转 150°，1.3s 内上浮淡出；`pointer-events: none`，不挡任何操作。空格输入、Shift+Enter 换行、空草稿回车、点发送按钮都不会触发。
-- **发送键太极**：曜金发送键上的官方箭头换成白/金两仪太极，整个 34px 圆键就是太极盘；只在发送态生效，生成中的停止键与停止方块保持原样。用 CSS `:has()` 在 composer bar 内定位，不改官方 DOM。
-- **山水**：底部 9% 不透明度的水墨山脊与一线金水。
-- **背景题字**：整页偏左（`left: clamp(300px,24vw,500px)`、纵向 46%），两列竖排行书——右列 `天行健` / `君子以自强不息` 分作上下两句，左列 `地势坤` / `君子以厚德载物` 同样分句（句间留 `.85em`），并整体下移 `4.2em` 与右列错开；字号 `clamp(20px,4.5vh,44px)`、字距 `.16em`，墨色约 15%（深色约 18%），浮在八卦星轮与山水之上、随主题换墨，指针穿透。
-- **箴言**：输入框下方 `✦ 命运可见 · 智慧可行 · 自在而生`。
-- **字标**：`深度求索`（宋体）／`DEEPSEEK` 两行锁定。
-- **今日占卜**：「深度求索」字标右侧一枚竖排**令牌**——17×24px，上圆下平、双金线框、顶部穿绳孔，`占`/`卜` 二字 8px 竖刻（官方品牌行固定 24px 且 `.brand` 裁切，令牌不能再高）。点开是居中的今日签卡——日期、八卦卦名与三爻、签诗、解签、宜／忌；点背景或 Esc 收起。点「收下」则走一套完整的收签仪式：签卡收起后，一纸朱砂符咒（敕令、符纹、六爻、卦名朱印）自画面中央落下，停约 0.6 秒后飞向右下并淡出（1.7 秒），同时在右下角落成一枚「今日卦象」小签——六爻重卦、卦名（巽为风等八正卦）与签级；小签留在页面上，悬停后点右上角 × 收起。符咒与卦象都尊重 `prefers-reduced-motion`（只淡入淡出，不飞不转）。
-- 尊重 `prefers-reduced-motion`：星轨、呼吸、闪烁全部停止。
+四拍时间轴 `hermes-boot--s0/s1/s2/s3`（混沌初开 → 太极初生 → 八卦归位 → 万象归一），0/800/1800/3000ms，4.4s 淡出、5s 卸载；四句行书（躲天意/顺天意/一朝悟道/世间枷锁）按 1750–2650ms 依次扫入。跳过：点按任意处、Esc 或 Enter（空格不参与）。只在每次页面载入播一次（`sessionStorage` + 模块级标记，client-hmr 热替换不重播）。动效关或 `prefers-reduced-motion` → 静态版 2400ms。
+
+## 主界面抛光
+
+- **输入框**：1px 金 34% 细描边、18px 圆角、`0 18px 46px -20px` 墨色柔影；聚焦金 62% + 3px 光环；深思/自动空闲 7.5s 呼吸，悟道/自动思考 5.5s 呼吸。
+- **侧栏选中**：金色 15% 横向渐变 + 2px 金色内左缘。
+- **背景题字/山水/八卦水印**：与 V2 一致（题字 `top:clamp(64px,11vh,124px); left:clamp(300px,26vw,520px)`，水印 `min(540px,42vw,60vh)` 内置小太极）。
+- **字标与箴言**：`深度求索`/`DEEPSEEK` 双行锁定 + 占卜令牌；`✦ 命运可见 · 智慧可行 · 自在而生`。
+
+## 与官方外壳的边界
+
+V3 只在**新增槽位**上挂组件、只写**草稿文本**，以下是**故意不动**的：
+
+- **模型选择行为**：`conversation.input.model`（选择器本体）不接管；`model.label` 只改标签展示，选择/请求逻辑仍是官方的。
+- **请求管线**：不 fetch、不写请求参数、不接宿主事件；「推演」改变的是用户可见的草稿。
+- **空白会话 hero 文案 / DOM**：不改官方节点，只注入 1 个 `<style>`、覆盖令牌、按槽位渲染组件。
+
+槽位注册（`apply()`）：
+
+| 槽位 | id / priority | order | 组件 |
+| --- | --- | --- | --- |
+| `shell.overlay` | `hermes-thinking` | -20 | `ThinkingWatcher`（无渲染） |
+| `shell.overlay` | `hermes-ambient` | -10 | `Ambient` |
+| `shell.overlay` | `hermes-fortune` | 40 | `FortunePanel` |
+| `shell.overlay` | `hermes-ziwei` | 42 | `ZiweiPanel`（V3 命盘对话框） |
+| `shell.overlay` | `hermes-send-taiji` | 45 | `SendTaijiOverlay` |
+| `shell.overlay` | `hermes-boot` | 50 | `BootCurtain` |
+| `conversation.input.dock` | `hermes-depthdock` | 20 | `SkinDock`（药丸条 + 紫微推演条 + 设置菜单） |
+| `conversation.composer.dock` | `hermes-motto` | 20 | `Motto` |
+| `conversation.composer.dock` | `hermes-send-taiji` | 21 | `SendTaijiTrigger` |
+| `conversation.composer.dock` | `hermes-ziwei-send` | 22 | `ZiweiSendWatch`（回车自动带盘，V3） |
+| `conversation.input.model.label` | priority -100（单槽） | — | `ZiweiModelLabel`（V3） |
+| `conversation.session.header.utilities` | `hermes-ziwei` | 300 | `ZiweiHeaderButton`（V3） |
+| `sidebar.workspaces.session.row.action` | `hermes-ziwei` | 150 | `ZiweiSessionRowAction`（V3） |
+| `conversation.hero.brand.mark` | priority -100 | — | `NoHeroMark`（返回 null） |
+| `sidebar.brand.mark` | priority -100 | — | `TaijiMark` |
+| `sidebar.brand.name` | priority -100 | — | `BrandName`（字标 + 令牌） |
+
+侧栏两个单槽位由官方品牌包以 priority 0 占用；单槽位规则是「priority 越低越优先」。V3 的 `model.label` 同理以 -100 接管（并复刻 1017 角标，见上）。
+
+## 键位、缓存与自定义
+
+| 存储 | 键 | 值 | 说明 |
+| --- | --- | --- | --- |
+| localStorage | `hermes-depth` | `light`/`balanced`/`immersive`/`auto` | 默认 `balanced` |
+| localStorage | `hermes-motion` / `hermes-boot-play` / `hermes-daily` | `on`/`off` | 默认 on |
+| localStorage | `hermes-ziwei-auto` | `on`/`off` | 发送自动带盘，默认 **off** |
+| localStorage | `hermes-ziwei-mode:s:<sessionId>` | `on`/`off` | 推演模式，按对话；无会话时读 `hermes-ziwei-mode:default` |
+| localStorage | `hermes-ziwei-birth:s/w:<id>` / `:default` | JSON `{name?,year,month,day,hour,minute,gender}` | 三档生辰（钟点制，23 点自动归次日） |
+| localStorage | `hermes-fortune-day` | `YYYY-M-D`/空串 | 收下时写；`×` 清空；跨日失效 |
+| sessionStorage | `hermes-boot` | `Math.round(performance.timeOrigin)` | 本页已开场标记 |
+| `<html>` | `data-hermes-depth` / `-motion` / `-thinking` | — | CSS 与预览脚本钩子 |
+| window 事件 | `hermes-skin:settings` / `hermes-skin:thinking` | — | 设置 / 思考态广播 |
+| window 事件 | `hermes-ziwei:change` / `hermes-ziwei:open` | — | V3：模式/生辰/insert 指令 / 打开命盘指令 |
+
+常用调参位置（都在 `src/client.js`）：
+
+| 想改 | 改哪里 |
+| --- | --- | --- |
+| 命盘档案文本 | `ziweiDigest()`（每宫一行，`【紫微命盘…】` 标记与 `stripZiweiDigest` 配套） |
+| 生辰解析链 | `sessionBirthChain()` / `resolveZiweiBirth()` |
+| 钟点→时辰换算 | `clockToChartBirth()`（23 点换日规则） |
+| 盘面布局 | `ZIWEI_GRID_BRANCHES`（4×4 地支矩阵） |
+| 引擎导出面 | `tools/engine-entry.ts` |
+| 引擎版本 | `vendor/ziwei/`（整目录替换 + 更新 NOTICE commit 号 + `npm test` 金标准） |
+| 档位/水印/起卦/开机 | 同 V2（`html[data-hermes-depth]` 块、`FortunePanel` 定时器、`BOOT_*`） |
+| 移除某块 | 删掉 `apply()` 里对应槽位注册 |
 
 ## 核验
 
-- `node --check client.js`、`index.js` 通过；`package.json` / locale JSON / icon SVG 均可解析。
-- Host bundle 安装结果：`application: applied`，Loader 条目 `include:hermes-skin` 为 `active`。
-- **Desktop 的启动图在应用启动时冻结**（Electron 主进程缓存 `boot injections`），首次安装后需要退出并重新打开 DeepSeek Harness 一次，Client 半才会挂载；之后修改 `client.js` 会由 `client-hmr` 热替换，无需再次重启。
-- 侧栏单槽位：本包以 `priority: -100` shadow 官方品牌（官方 priority 0 显示 inactive）；`conversation.hero.brand.mark` 也以 `-100` 注册了一个返回 `null` 的占位，因此空白会话标题前不再出现任何太极印。
-- 活体槽位：`conversation.composer.dock` 中 `hermes-motto`（order 20）与 `hermes-send-taiji`（order 21）均为 `active`；`shell.overlay` 中 `hermes-ambient`（order -10，内含中央背景题字）、`hermes-fortune`（order 40）、`hermes-send-taiji`（order 45）与 `hermes-boot`（order 50）均为 `active`；`sidebar.brand.name` 的皮肤字标（priority -100）为 `active`，占卜令牌随它一起渲染；右下角卦象小签也由 `hermes-fortune` 这一个槽位承载。
-- 静态核验：以 `vm` + 伪 `React`/`document`/伪定时器触发 `apply()` 并渲染——`BaguaPlate` 输出 8 组三爻（每组 3 根）+ 8 枚菱形星点 + 太极金环；开机生命周期 0s 入场、4.4s 切淡出、5.0s 返回 `null`；发送太极只在「回车 + 草稿非空 + 随后草稿清空」时出现，空格、Shift+Enter、空草稿回车均为 `null`，1.5s 后自动收起；样式表花括号闭合、`${BRUSH}` 已内联。
-- 新增三项的静态核验：发送键太极是纯 CSS 规则（`[data-slot="conversation.composer.bar"] button[class*="_primary"]:has(svg path)`，仅在箭头 svg 存在时生效，不参与组件渲染）；占卜签由 `FORTUNE_LOTS` × 日期取模的纯函数生成；星点坐标 12 个全部落在避开星轮的左侧与底部空区。
-- 收签流的静态核验：令牌实测 17×24，正好收进官方 24px 品牌行；点「收下」后 `casting` 挂 1.7 秒定时器、到点卸载；`accepted` 保留到点 × 或刷新；`PURE_HEXAGRAM` 覆盖八支签，六爻由同一三爻上下相叠（乾为天…兑为泽），与三爻签一一对应。
-- 视觉核验：用无头 Chromium（1440×900 @2x，浅色/深色各一套）把真实 client 组件渲染进仿 DSH 外壳，截取 base / 签卡 / 收下 450ms / 收下 2s 四态与令牌、题字、符咒、卦象四张特写；行楷（Xingkai SC）确认生效，console/pageerror 均为 0。截图只作本机迭代用，不入仓库。
+以下是**本次 V3 提交时实际跑过**的（2026-11-02）：
+
+1. `cd hermes-skin && npm test` → 构建通过；`tools/test-engine.mjs` 引擎回归全过（金标准 1990-01-01 子时男 = 水二局·命主巨门·农历己巳年腊月初五；女命口径；同输入恒同输出；2026-02-30 抛 RangeError；格局含府相朝垣；命宫摘要可用）。
+2. `node --check client.js` → 通过；当前产物 sha256 `528cf63b4427b63331a016b962a2b37568f4bfe806ea87c77f495440b88a0c01`（1,077,897 bytes = 引擎 919,201 + 源码 158,579）；`tools/build.mjs --check` 确认产物与源码一致。
+3. **预览构建与截图**：浅/深两套各 27 张、`blankScreenshots: []`、`consoleErrors: 0`、`pageErrors: 0`、`notes: []`；两套 `report.json` 的 `ziwei` 段均为 `engine: true, cells: 12, centerJu: "水二局 · 命主 巨门 · 身主 天机", chips: 3, tabs: [本对话, 本工作区, 常用], birthPersisted: true, modePersisted: "on", modelBadge: "紫微", draftHasDigest: true`。新增截图：`ziwei-panel.png`、`closeup-ziwei-board.png`、`closeup-model-label.png`、`ziwei-loaded-draft.png`（深色同名）。
+4. **交互验收** `cd preview && node verify.mjs` → 退出码 0、**84 项全过**（V2 全量 + V3 新增 20 项）：引擎金标准、ziweiAuto 开关写键、命盘 12 宫/中心摘要/三页签、非法日期报错与恢复、三档生辰分别落键、Esc 收起、侧栏行「斗」按钮开盘、推演开关持久化、模型徽记、入盘（含重复入盘不叠加）、回车自动带盘（合成 keydown 命中 capture 监听）、推演关闭后回车不改写、深色 12 宫。
+5. **没有核验的**：真实 DSH 宿主里的槽位挂载与 `client-hmr`（本轮用仿制外壳；V1 当时宿主结论见旧 README，V2/V3 未重跑）；真实模型生成中的思考态与真实 Lexical 编辑器上的回车自动带盘时序（预览用假 input store + 合成事件验证监听与写入逻辑，真实宿主首跑请先点「入盘」确认）；上游 1017 角标包在真实宿主里的并存观感（按公开口径复刻，未实测双包切换）。
+
+> 预览产物只在本机用于迭代，不入仓库；改了 `src/client.js` 或 `preview/` 脚本后，请重跑 `npm run build`（hermes-skin）与 `node shot.mjs` / `node shot.mjs --theme=dark` / `node verify.mjs`（preview），并以新的 `clientSha` 为准。
 
 ## 现在应该看到
 
-1. 启动或刷新页面：先落五秒开机动画——正中先天八卦盘，八卦环缓转 45°，上/下/左/右四句行书依次扫入，4.4 秒开始淡出、5 秒整消失；点按任意处或 Esc／Enter 可提前跳过，空格不会触发。
-2. 侧栏左上角：曜金细环的太极印 + 宋体「深度求索 / DEEPSEEK」字标；字标右侧一枚金线竖排的「占卜」令牌，点开看今日一签（同日不变，Esc／点背景收起）。点「收下」：签卡先收，画面中央落下一纸朱砂符咒，约 1 秒后飞向右下淡出，右下角留下一枚「今日卦象」小签（六爻、卦名、签级），悬停可点 × 收起。
-3. 新建会话标题前：不再有太极印，只留标题与留白。
-4. 输入框里打一句话、按回车发送：屏幕中央会闪一记八卦太极（约 1.3 秒），然后消失；打字时空格/换行/点发送按钮都不闪。
-5. 发送键：曜金圆键上是一枚白/金两仪太极（箭头已换掉）；生成中它变回停止方块，旁边另有停止键，发送逻辑不变。
-6. 输入框下沿：`✦ 命运可见 · 智慧可行 · 自在而生`。
-7. 页面偏左的背景：极淡的两列竖排行书——右列 `天行健` / `君子以自强不息` 分两句，左列 `地势坤` / `君子以厚德载物` 分两句并整体下移，和右列错开，作为整页背景画的一部分。
-8. 整体：月华白纸面、墨色主按钮、曜金发送键、烟紫链接与次级文本；右上角 22% 的八卦星轮水印（星点已避开轮面、轮子随窗口缩放）、底部 9% 水墨山脊与星点。
-9. 切到深色（设置 → 通用 → 外观 → 深色）：玄夜墨底 + 月金 + 浅檀主按钮，同一套元素换色。
+1. **启动/刷新**：V2 四拍开机照旧；输入框正上方多了一组「紫微推演」胶囊（默认未点亮）。
+2. **会话头右侧**：「斗 · 紫微命盘」按钮；侧栏会话行悬停出现「斗」小按钮。点开 → 880px 命盘对话框：出生表单、十二宫（命宫金框、四化色标）、中心四柱/五行局/格局 chips。
+3. **点「紫微推演」**：模型胶囊里的模型名旁亮起金色「紫微」徽记；旁边多出「入盘」按钮。
+4. **点「入盘」**：草稿开头多出 `【紫微命盘·本对话】…【/紫微命盘】` 档案块（再次入盘会刷新不叠加）；开启「发送自动带盘」后，回车发送前自动补块。
+5. V2 全部行为不变：四档氛围、推演中、每日占卜、符咒卦象、深色玄夜。
 
-## 备注
+## 已知限制
 
-- 侧栏两个单槽位由官方品牌包以 priority 0 占用；本皮肤注册 priority -100 来 shadow（单槽位规则：priority 越低越优先），所以官方品牌在检查器里显示为 inactive。
-- 空白会话标题前的太极印已用 `NoHeroMark`（返回 `null`，priority -100）遮掉；想恢复成 34px 太极印，把 `apply()` 里 `conversation.hero.brand.mark` 的那条注册删掉，或换回原来的 `HeroMark` 组件即可。
-- 发送太极的触发在 `SendTaijiKeywatch`：捕获阶段监听 `keydown`，只认「编辑区内 + 纯 Enter（无 Shift/Cmd/Ctrl/Alt、非输入法合成）+ 草稿非空」，再等 `useInput` 的草稿被提交清空才 `emitSendBurst()`；画面由 `shell.overlay` 里的 `hermes-send-taiji` 承担。想改节奏改 `.hermes-send-plate` 的 1300ms 动画与 1500ms 自动收起；嫌它多余就删掉 `shell.overlay` 里 `hermes-send-taiji` 的注册。
-- 侧栏品牌字标会取代默认品牌名；若只想保留配色与印记，可在 `client.js` 的 `apply()` 里删掉 `sidebar.brand.name` 的注册。
-- 正文字体保持系统无衬线；宋体只用于品牌字标与箴言，行书用于开机动画与中央背景题字，避免 14px 正文换成衬线/书法字体后发虚。
-- 开机动画用的八卦盘是 `BaguaPlate`（先天八卦，`BAGUA_TRIGRAMS` 按「初爻朝内」排），改动只影响开盘画面；侧栏太极印与右上角水印仍是各自独立的图形。
-- 开场的跳过监听（Esc／Enter／点击）只在 `phase !== 'gone'` 期间挂载，5 秒结束即随 effect 清理摘除；因此动画结束后在输入框里敲空格、回车都不会再把开场八卦点亮（旧版把监听留在了已隐藏的组件上，所以按空格会闪一下开场）。空格也不再是跳过键。
-- 开机动画只在每次页面载入（启动或刷新）时播放一次：`BootCurtain` 的初值用 `sessionStorage` + `performance.timeOrigin` 记了一份「本页面已播」标记，所以 `client-hmr` 热替换同一份文档不会重播，只有真正刷新/重开才再开场。嫌五秒长可改 `client.js` 里 `BOOT_MS`；完全不想要就删掉 `apply()` 中 `hermes-boot` 的注册。四句字号在 `.hermes-boot-line--top/--bottom`（目前 `clamp(20px, min(4.5vh, 3.4vw), 48px)`）与 `.hermes-boot-line--left/--right`（`clamp(17px, 3.6vh, 40px)`），想再大/再小直接改这两处；字号变大时记得同步收上下留白（`top/bottom` 的 `8.5vh`）和两侧竖排的内缩（`3vw`）。
-- 行书字体栈 `BRUSH` 优先 macOS 自带 `Xingkai SC`（华文行楷），其次 `Zhi Mang Xing`（志莽行书，需自行安装，更像手写行草）、`Hannotate SC`（手札体）、`Kaiti SC`（楷体）。想更接近毛笔手迹，把 `"Zhi Mang Xing"` 提到栈首。
-- 右下角「轻触任意处 · 跳过」提示如需隐藏，删掉 `client.js` 里 `hermes-boot-hint` 那个节点即可。
-- 背景题字随 `hermes-ambient` 渲染在 `shell.overlay`，每个页面（含空白新会话）都能看到；竖排两列、右起，每列拆成上下两句（句间 `.85em`），左列再落低 `4.2em` 与右列错开，整体 `left: clamp(300px,24vw,500px)` 偏左、纵向 46%；字号 `clamp(20px,4.5vh,44px)`（按视口高度收缩），深浅主题用 `--hermes-inscription` 两组 alpha；觉得太重就调低 alpha，想改大小改字号 clamp，想换回横排把 `.hermes-inscription` 的 `flex-direction` 改为 `column`、去掉 `.hermes-inscription-line` 的 `writing-mode`，并把两列里的上下句 span 合并即可。
-- 星点坐标在 `STARS`（12 个百分比位置），现在全部落在 `left ≤ 38%`（左上/左中）或 `top ≥ 60%`（底部）的空区，避开右上星轮和开场中央八卦；星轮大小在 `.hermes-ambient-orb` 的 `width:min(560px,46vw,62vh)`，想再大要把左侧星点继续往边上收。
-- 发送键太极用 `[data-slot="conversation.composer.bar"] button[class*="_primary"]:has(svg path)` 定位（另加 `path[d^="M8.3125"]` 兜底），只替换发送态箭头；DSH 若改动 composer 结构或发送图标，这两条 CSS 要跟着改；想换回官方箭头删掉这两条规则即可。
-- 今日占卜数据在 `FORTUNE_LOTS`（8 支八卦签：卦名/三爻/等级/签诗/解签/宜忌），`fortuneOfDay()` 用 `YYYYMMDD` 做 seed 取模，所以同一天结果固定；想每点一次换一签，把 seed 换成 `Math.random()` 即可。侧栏品牌身份在官方 DOM 里是 `aria-hidden="true"`，这枚令牌对读屏不可见（装饰性质）。
-- 占卜令牌的尺寸是被官方布局锁死的：侧栏 `.logoRow` 60px、`.brandName` 与 `.brandIdentity` 高 24px，`.brand` 还带 `overflow:hidden`；令牌高 24px 已是上限，再高会被裁掉。想更醒目只能加宽（目前 17px）或把字标缩短；不要用 `transform` 做 hover 上浮，顶部同样会被裁。
-- 符咒与卦象：`TalismanCast` 是纯装饰（`aria-hidden`，`pointer-events:none`），1700ms 后由 `FortunePanel` 卸载；`StoredHexagram` 用 `PURE_HEXAGRAM` 把当日三爻叠成六爻，八支签恰好对应乾为天…兑为泽八正卦。想延长/缩短仪式改 `.hermes-talisman-sheet` 的 1700ms 与 `FortunePanel` 里同名的 1700ms 定时器（两处要一起改）；想换飞行方向改 `@keyframes hermes-talisman-cast` 末帧的 `translate3d(36vw,30vh,0)`；不想要卦象小签就删掉 `StoredHexagram` 的渲染行。
+1. **`model.label` 单槽位接管**：皮肤会遮住官方 `ui-deepseek-model-label-1017` 的角标，已按其公开口径复刻；上游口径变化时本皮肤的复刻不会自动跟随（停用皮肤即还原官方）。
+2. **自动带盘只拦回车**：发送按钮、语音输入、队列补发等路径不自动补块；且 capture 写入依赖宿主在键位表里读到更新后的编辑器内容——真实宿主首跑请用「入盘」验证。合成输入法（isComposing/229）不触发。
+3. **排盘口径**：引擎为上游快照（正月初一换年、闰月默认月中分界、亮度全书派）；上游改口径需手动升级 vendor 目录。六亲相关论断上游即自认偏弱，模型解读请在文化参考语境使用。
+4. **思考检测仍是 DOM 启发式**；氛围药丸仍是纯视觉；「自动」只跟随思考态，不感知任务复杂度。
+5. **没有按档位的粒子/光效风暴**；开机是「每页载入一次」；低性能自适应未实现（只有动效关与系统减动两条路径）。
+6. **状态都在本机浏览器**：生辰、推演开关、卦象都不跨设备同步；隐私模式写失败退回默认。跨时区「今天」以本机为准。
+7. **点按目标偏小**：药丸 18.5px、齿轮 20px、占卜令牌 17×24、侧栏「斗」钮 22×22，低于 WCAG 2.5.8 的 24×24；保持克制未扩热区。
+8. **色板两处与方案不逐字一致**（正文 `#3A3342`、侧栏 `#F3EDE2`）；11–13px 小金字统一用 `--hermes-gold-strong` 保 AA。
+9. **依赖官方 DOM/槽位契约**：`model.label` 的 ownerProps（provider/model/placement/selected）、`session.row.action` 的 `{sessionId, displayTitle}`、`useWorkspaces` 快照形状、composer bar 的 `data-slot` 选择器——DSH 改版时要同步。
+10. **回车发送太极与真实宿主未核验**（预览无真实 `useInput` 供 V2 触发器使用；V3 的假 store 只覆盖皮肤自身逻辑）。
 
 ## 许可
 
 [MIT](LICENSE) © 2026 Qijinchun (haoyu-qi)
 
-字体不随仓库分发，只通过 `font-family` 引用系统已安装的字体；仓库里的 SVG、图形与文案均为本项目原创。
+字体不随仓库分发，只通过 `font-family` 引用系统已安装的字体；仓库里的 SVG、图形与文案均为本项目原创。**内嵌的紫微排盘引擎及其打包依赖另有归属**：引擎 MIT © Renhuai123/ziwei-doushu（`vendor/ziwei/LICENSE.upstream`），iztro / lunar-javascript 亦为 MIT（`vendor/ziwei/NOTICE.md`）。

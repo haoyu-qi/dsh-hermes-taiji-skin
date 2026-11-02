@@ -1,6 +1,6 @@
 {
   "meta": {
-    "title": "DeepSeek Taiji Skin",
-    "description": "An ink-wash, gold and violet Taiji skin for the Web GUI: light and dark design tokens, taiji marks, a bagua star trail with clear skies, a motto with a two-line inscription, a five-second bagua boot curtain, taiji send button and send burst, and a daily divination tablet whose talisman cast leaves a hexagram slip."
+    "title": "DeepSeek Hermes Skin",
+    "description": "A paper-and-gold ink skin: thinking-depth pills, a daily divination ritual (draw, card, talisman cast, hexagram slip), and a four-stage bagua boot curtain. V3 embeds the open-source Ziwei Dou Shu chart engine: a ziwei badge beside the model label with a chart-to-draft reasoning mode, plus a twelve-palace natal chart for every conversation and workspace."
   }
 }
