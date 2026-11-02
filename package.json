@@ -1,7 +1,7 @@
 {
   "name": "@local/dsh-hermes-skin",
-  "version": "3.0.0",
-  "description": "乾坤问道 V3：八位传统神明加持、真实推理状态联动、每日卦象与纸墨金主题。",
+  "version": "3.1.0",
+  "description": "乾坤问道 V3.1：八位传统神明加持、真实推理状态联动、每日卦象与纸墨金主题，并内嵌紫微斗数开源排盘引擎——模型名旁的「紫微」徽记与推演模式、每个对话与工作区各一张十二宫命理盘。",
   "type": "module",
   "license": "MIT",
   "author": "Qijinchun (haoyu-qi)",
@@ -46,7 +46,9 @@
     "V3.md",
     "docs/images/",
     "design-qa.md",
-    "design-qa-v2.md"
+    "design-qa-v2.md",
+    "vendor/",
+    "tools/"
   ],
   "dsh": {
     "bundle": {
@@ -67,9 +69,10 @@
     "build": "node scripts/build.mjs",
     "dev": "node scripts/preview.mjs",
     "preview": "node scripts/preview.mjs",
-    "test": "node --test tests/*.test.mjs",
+    "test": "node scripts/build.mjs && node --test tests/*.test.mjs && node tools/test-engine.mjs",
     "check": "node --check client.js && node --check index.js",
-    "prepare:deities": "node scripts/prepare-deities.mjs"
+    "prepare:deities": "node scripts/prepare-deities.mjs",
+    "build:engine": "node tools/build-engine.mjs"
   },
   "devDependencies": {
     "@phosphor-icons/react": "^2.1.10",
@@ -78,5 +81,9 @@
     "react": "^19.3.1",
     "react-dom": "^19.3.1",
     "sharp": "^0.35.5"
+  },
+  "dependencies": {
+    "iztro": "^2.5.8",
+    "lunar-javascript": "^1.7.3"
   }
 }

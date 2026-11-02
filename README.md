@@ -1,5 +1,19 @@
 # DeepSeek「乾坤问道」主题皮肤
 
+## V3.1.0 · 紫微命盘（与神明加持合并）
+
+3.1 在 V3.0 的八位神明加持之上，内嵌 [紫微斗数开源排盘引擎](https://github.com/Renhuai123/ziwei-doushu)（MIT，基于倪海厦《天纪》体系），把「命运可见」做成可用的能力：
+
+- **模型名旁**：`conversation.input.model.label` 单槽位显示 `模型名 + [1017] + [紫微]`；「紫微推演」开启时亮金徽，并复刻官方 1017 角标避免接管后观感丢失。
+- **推演**：输入区下沿的「紫微推演」开关 +「入盘」按钮，把命盘档案（公历/农历四柱、五行局、命主身主、十二宫星曜亮度四化、格局）以 `【紫微命盘…】【/紫微命盘】` 明文块 prepend 进草稿；皮肤设置里可开「发送自动带盘」，回车前自动补块（只拦回车路径）。
+- **命盘**：会话头「斗 · 紫微命盘」按钮、侧栏会话行悬停「斗」按钮打开 880px 对话框：出生表单实时排盘、传统 4×4 十二宫（命宫金框/身宫紫框/四化色标/空宫借星）、中心摘要与格局 chips；生辰按 **本对话 → 本工作区 → 常用** 三档存本机 localStorage。
+- **引擎**：`vendor/ziwei/` 为上游 `lib/ziwei/` 原样快照（commit `495b79e`，MIT，见 `vendor/ziwei/NOTICE.md`），`tools/build-engine.mjs` 用 esbuild 连同 iztro / lunar-javascript 打成 IIFE（919KB）内嵌进 `client.js`；排盘全在本机完成，零网络请求。上游的断语库、AI 解读 API 与 13 维数据集**未使用**。
+
+![十二宫命盘](docs/images/v3-ziwei-chart.webp)
+
+构建：`npm run build`（会自动重建引擎）→ `npm test`（13 项原有测试 + 1 项紫微集成测试 + 引擎金标准回归）。升级引擎：整目录替换 `vendor/ziwei/` 并更新 NOTICE 的 commit 号。使用与边界详见 [V3.md](V3.md)。
+
+
 ## V3.0.0 · 八位神明加持
 
 输入框右上新增「加持」：文昌帝君、关圣帝君、观音菩萨、福德正神、太上老君、玄天上帝、妈祖、赵公明，共八张工笔画像。每天随机一位，当天结果固定；收下祝愿后保留今日徽记，刷新可恢复。功能与动效都可单独关闭，祝愿不会改变模型能力或推理参数。
@@ -85,6 +99,7 @@
 ## 核验
 
 - `node --check client.js`、`index.js` 通过；`package.json` / locale JSON / icon SVG 均可解析。
+- V3.1 紫微：`npm run build` 自动重建引擎（金标准 1990-01-01 子时男 = 水二局·命主巨门）；`node --test tests/*.test.mjs` 14 项全过（含 `tests/ziwei.test.mjs`：引擎挂载、5 个新槽位、命盘 12 宫、模型徽记与 1017 复刻、推演开关与入盘档案）；`node tools/test-engine.mjs` 引擎回归全过。
 - Host bundle 安装结果：`application: applied`，Loader 条目 `include:hermes-skin` 为 `active`。
 - **Desktop 的启动图在应用启动时冻结**（Electron 主进程缓存 `boot injections`），首次安装后需要退出并重新打开 DeepSeek Harness 一次，Client 半才会挂载；之后修改 `client.js` 会由 `client-hmr` 热替换，无需再次重启。
 - 侧栏单槽位：本包以 `priority: -100` shadow 官方品牌（官方 priority 0 显示 inactive）；`conversation.hero.brand.mark` 也以 `-100` 注册了一个返回 `null` 的占位，因此空白会话标题前不再出现任何太极印。
@@ -130,3 +145,5 @@
 [MIT](LICENSE) © 2026 Qijinchun (haoyu-qi)
 
 字体不随仓库分发，只通过 `font-family` 引用系统已安装的字体；仓库里的 SVG、图形与文案均为本项目原创。
+
+V3.1 内嵌的紫微排盘引擎来自 [Renhuai123/ziwei-doushu](https://github.com/Renhuai123/ziwei-doushu)（MIT，见 `vendor/ziwei/LICENSE.upstream`），打包依赖 iztro 与 lunar-javascript 亦为 MIT（`vendor/ziwei/NOTICE.md`）；命盘对话框页脚保留来源说明。

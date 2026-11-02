@@ -33,11 +33,12 @@ function App(){
   const directorySnapshot=React.useSyncExternalStore(fn=>{directoryListeners.add(fn);return()=>directoryListeners.delete(fn)},()=>modelState)
   const session={sessionId:'preview',blank:layout==='hero',running:state!=='idle',partial:state==='output'?{blocks:[{kind:'text',text:'这是模型开始输出的正文。'}]}:state==='thinking'?{blocks:[{kind:'reasoning',text:'分析中'}]}:null,runningCalls:state==='tools'?[{}]:[],pending:state==='waiting'?[{}]:[]}
   const input={draft,phase:'plain'}
-  const props={sessionId:'preview',session,input,useInput:selector=>selector(input)}
+  const props={sessionId:'preview',session,input,useInput:selector=>selector(input),inputActions:{setDraft,insertText:()=>false}}
   const send=()=>{if(draft.trim()){setDraft('');setState('thinking');setLayout('chat')}}
   return <div className={'shell '+(collapsed?'collapsed':'')}>
     <div className="titlebar"><SidebarSimple size={21}/><span>应用</span><span>编辑</span><span>帮助</span><div/><small>乾坤问道 V3 · 本地预览</small></div>
     {enabled&&selectSlot('shell.overlay','hermes-ambient')}
+    {enabled&&selectSlot('shell.overlay','hermes-ziwei')}
     <aside data-slot="sidebar" className="sidebar">
       <button className="sidebar-toggle" onClick={()=>setCollapsed(!collapsed)} aria-label="折叠侧栏"><SidebarSimple size={20}/></button>
       <div className="brand">{selectSlot('sidebar.brand.mark')}<div>{selectSlot('sidebar.brand.name')}</div></div>
@@ -54,9 +55,9 @@ function App(){
         {layout==='hero'&&<div className="hero"><h1>探索未至之境 <small>预览版</small></h1><p>问道 · 思考 · 创造 · 与更大的可能相遇</p></div>}
         <div data-slot="conversation.composer.bar"><div data-composer-card>
           <textarea aria-label="输入消息" placeholder="描述你想要构建的内容、调用指令、@ 文件或对话…" value={draft} onChange={e=>setDraft(e.target.value)} onKeyDown={e=>{if(e.key==='Enter'&&!e.shiftKey&&!e.ctrlKey&&!e.metaKey&&!e.altKey&&!e.nativeEvent.isComposing){e.preventDefault();send()}}}/>
-          <div className="toolbar"><button aria-label="添加附件"><Plus size={21}/></button><button className="access"><Folder size={16}/>工作区内修改<CaretDown size={13}/></button><div className="depth-slot">{enabled&&selectSlot('conversation.input.left','qiankun-depth',props)}</div><div className="toolbar-spacer"/>{enabled&&selectSlot('conversation.input.right','qiankun-blessing-anchor',props)}<button className="model">GLM-5.3-Flash<CaretDown size={14}/></button><button aria-label="语音输入"><Microphone size={22}/></button><button className={'send '+(state==='idle'?'_primary':'')} aria-label={state==='idle'?'发送':'停止生成'} onClick={()=>state==='idle'?send():setState('idle')}>{state==='idle'?<svg width="24" height="24"><path d="M12 20V4M5 11L12 4L19 11" fill="none" stroke="currentColor" strokeWidth="2"/></svg>:<span className="stop"/>}</button></div>
+          <div className="toolbar"><button aria-label="添加附件"><Plus size={21}/></button><button className="access"><Folder size={16}/>工作区内修改<CaretDown size={13}/></button><div className="depth-slot">{enabled&&selectSlot('conversation.input.left','qiankun-depth',props)}</div><div className="toolbar-spacer"/>{enabled&&selectSlot('conversation.session.header.utilities','hermes-ziwei',props)}{enabled&&selectSlot('conversation.input.right','qiankun-blessing-anchor',props)}<button className="model">{selectSlot('conversation.input.model.label','',{provider:{id:'preview',name:'Preview'},model:{id:'demo',name:'GLM-5.3-Flash'},placement:'trigger',selected:true,sessionId:'preview'})||'GLM-5.3-Flash'}<CaretDown size={14}/></button><button aria-label="语音输入"><Microphone size={22}/></button><button className={'send '+(state==='idle'?'_primary':'')} aria-label={state==='idle'?'发送':'停止生成'} onClick={()=>state==='idle'?send():setState('idle')}>{state==='idle'?<svg width="24" height="24"><path d="M12 20V4M5 11L12 4L19 11" fill="none" stroke="currentColor" strokeWidth="2"/></svg>:<span className="stop"/>}</button></div>
         </div></div>
-        <div className="dock">{enabled&&selectSlot('conversation.composer.dock','hermes-motto',props)}{enabled&&selectSlot('conversation.composer.dock','hermes-send-taiji',props)}</div>
+        <div className="dock">{enabled&&selectSlot('conversation.composer.dock','hermes-motto',props)}{enabled&&selectSlot('conversation.composer.dock','hermes-ziwei-dock',props)}{enabled&&selectSlot('conversation.composer.dock','hermes-send-taiji',props)}{enabled&&selectSlot('conversation.composer.dock','hermes-ziwei-send',props)}</div>
       </section>
     </main>
     {enabled&&selectSlot('shell.overlay','hermes-fortune')}{enabled&&selectSlot('shell.overlay','qiankun-settings')}{enabled&&selectSlot('shell.overlay','qiankun-blessing')}{enabled&&selectSlot('shell.overlay','hermes-send-taiji')}{enabled&&selectSlot('shell.overlay','hermes-boot')}

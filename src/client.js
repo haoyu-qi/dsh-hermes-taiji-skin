@@ -143,6 +143,8 @@ window.__ModuleLoader__.load({
       '--hermes-ink': { light: '#383344', dark: '#EFE6F2' },
       '--hermes-paper': { light: '#FDFAF4', dark: '#1C1822' },
       '--hermes-gold': { light: '#B58A43', dark: '#D9BE86' },
+      /* 小号金文字（11–13px）在纸上需要更深一档才能过 AA */
+      '--hermes-gold-strong': { light: '#8F6C2C', dark: '#D9BE86' },
       '--hermes-violet': { light: '#8E7FA8', dark: '#C0A9DD' },
       '--qiankun-landscape-filter': { light: 'none', dark: 'brightness(.48) saturate(.45)' },
       '--hermes-art': { light: '#766D7C', dark: '#B7ACC0' },
@@ -818,7 +820,7 @@ window.__ModuleLoader__.load({
         const tag = document.createElement('style')
         tag.dataset.plugin = PKG
         tag.dataset.pluginCss = PKG + '/skin.css'
-        tag.textContent = CSS + QIANKUN_CSS
+        tag.textContent = CSS + QIANKUN_CSS + ZIWEI_CSS
         document.head.appendChild(tag)
         return () => tag.remove()
       }, 'hermes-skin: skin stylesheet')
@@ -859,7 +861,23 @@ window.__ModuleLoader__.load({
       ctx.slots.inject('conversation.composer.dock', () => [
         ctx.slots.register({ name: 'conversation.composer.dock', id: 'hermes-motto', order: 20 }, QiankunStatus),
         ctx.slots.register({ name: 'conversation.composer.dock', id: 'hermes-send-taiji', order: 21 }, SendTaijiTrigger),
+        // V3.1 · 紫微推演开关与「入盘」；自动带盘的回车监听。
+        ctx.slots.register({ name: 'conversation.composer.dock', id: 'hermes-ziwei-dock', order: 22 }, ZiweiDockControls),
+        ctx.slots.register({ name: 'conversation.composer.dock', id: 'hermes-ziwei-send', order: 23 }, ZiweiSendWatch),
       ])
+      // V3.1 · 紫微命盘：模型名徽记 / 会话头与侧栏入口 / 命盘对话框。
+      ctx.slots.inject('conversation.input.model.label', () =>
+        ctx.slots.register({ name: 'conversation.input.model.label', priority: -100 }, ZiweiModelLabel),
+      )
+      ctx.slots.inject('conversation.session.header.utilities', () =>
+        ctx.slots.register({ name: 'conversation.session.header.utilities', id: 'hermes-ziwei', order: 300 }, ZiweiHeaderButton),
+      )
+      ctx.slots.inject('sidebar.workspaces.session.row.action', () =>
+        ctx.slots.register({ name: 'sidebar.workspaces.session.row.action', id: 'hermes-ziwei', order: 150 }, ZiweiSessionRowAction),
+      )
+      ctx.slots.inject('shell.overlay', () =>
+        ctx.slots.register({ name: 'shell.overlay', id: 'hermes-ziwei', order: 44 }, ZiweiPanel),
+      )
       ctx.slots.inject('conversation.input.left', () =>
         ctx.slots.register({ name: 'conversation.input.left', id: 'qiankun-depth', order: 30 }, QiankunControls),
       )

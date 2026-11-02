@@ -1,0 +1,100 @@
+/* 紫微斗数：模型徽记 / 推演开关 / 命盘对话框 */
+@keyframes hermes-ziwei-in{0%{opacity:0;transform:translateY(14px) scale(.985)}100%{opacity:1;transform:none}}
+@keyframes hermes-ziwei-cell-in{0%{opacity:0;transform:scale(.96)}100%{opacity:1;transform:none}}
+
+/* ——— V3 · 模型名旁的紫微徽记（conversation.input.model.label 单槽位，非交互） ——— */
+.hermes-modelabel{display:inline-flex;align-items:center;gap:5px;min-width:0}
+.hermes-modelabel-1017{display:inline-block;padding:1px 4px;border-radius:5px;background:var(--dsw-alias-state-business-tertiary,#F2E3C9);color:var(--dsw-alias-label-primary,#3A3342);font-size:9px;line-height:1.25;letter-spacing:.06em}
+.hermes-modelabel-ziwei{display:inline-flex;align-items:center;gap:3px;padding:1px 5px;border-radius:999px;border:1px solid color-mix(in srgb,var(--hermes-gold) 55%,transparent);background:color-mix(in srgb,var(--hermes-gold) 16%,transparent);color:var(--hermes-gold-strong);font-size:9px;line-height:1.3;letter-spacing:.14em}
+.hermes-modelabel-ziwei::before{content:"";width:3px;height:3px;border-radius:50%;background:var(--hermes-gold);box-shadow:0 0 4px color-mix(in srgb,var(--hermes-gold) 80%,transparent)}
+
+/* ——— V3 · 输入框上沿：紫微推演开关与入盘（与思考氛围药丸条同排） ——— */
+.hermes-ziwei-bar{display:inline-flex;align-items:center;gap:4px;padding:3px;border:1px solid color-mix(in srgb,var(--hermes-gold) 26%,var(--dsw-alias-border-l1));border-radius:999px;background:color-mix(in srgb,var(--dsw-alias-bg-layer-1) 68%,transparent);box-shadow:0 2px 10px rgba(20,17,24,.06);backdrop-filter:blur(8px)}
+.hermes-ziwei-pill{display:inline-flex;align-items:center;gap:5px;padding:4px 11px;border:0;border-radius:999px;background:transparent;color:var(--dsw-alias-label-secondary);font:inherit;font-size:10.5px;line-height:1;letter-spacing:.14em;cursor:pointer;transition:background-color .22s ease,color .22s ease,box-shadow .22s ease;white-space:nowrap}
+.hermes-ziwei-pill:hover{color:var(--dsw-alias-label-primary);background:color-mix(in srgb,var(--hermes-gold) 10%,transparent)}
+.hermes-ziwei-pill[aria-pressed="true"]{color:var(--dsw-alias-label-primary);background:color-mix(in srgb,var(--hermes-gold) 17%,var(--dsw-alias-bg-layer-1));box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--hermes-gold) 46%,transparent),0 1px 3px rgba(20,17,24,.08)}
+.hermes-ziwei-pill:focus-visible{outline:2px solid var(--hermes-gold);outline-offset:1px}
+.hermes-ziwei-pill .hermes-mode-dot{opacity:.5}
+.hermes-ziwei-pill[aria-pressed="true"] .hermes-mode-dot{opacity:1}
+.hermes-ziwei-load{display:inline-flex;align-items:center;padding:4px 10px;border:1px solid color-mix(in srgb,var(--hermes-gold) 40%,var(--dsw-alias-border-l1));border-radius:999px;background:color-mix(in srgb,var(--hermes-gold) 10%,transparent);color:var(--hermes-gold-strong);font:inherit;font-size:10px;line-height:1;letter-spacing:.16em;cursor:pointer;white-space:nowrap;transition:box-shadow .2s ease,background-color .2s ease}
+.hermes-ziwei-load:hover{background:color-mix(in srgb,var(--hermes-gold) 18%,transparent);box-shadow:0 0 8px color-mix(in srgb,var(--hermes-gold) 30%,transparent)}
+.hermes-ziwei-load:focus-visible{outline:2px solid var(--hermes-gold);outline-offset:1px}
+.hermes-ziwei-load[disabled]{opacity:.45;cursor:default}
+
+/* ——— V3 · 会话头与侧栏会话行的紫微入口 ——— */
+.hermes-ziwei-headbtn{display:inline-flex;align-items:center;gap:6px;height:26px;padding:0 10px;border:1px solid color-mix(in srgb,var(--hermes-gold) 34%,var(--dsw-alias-border-l1));border-radius:999px;background:transparent;color:var(--dsw-alias-label-secondary);font:inherit;font-size:10.5px;line-height:1;letter-spacing:.12em;cursor:pointer;transition:color .18s ease,border-color .18s ease,background-color .18s ease;white-space:nowrap}
+.hermes-ziwei-headbtn:hover{color:var(--hermes-gold-strong);border-color:color-mix(in srgb,var(--hermes-gold) 60%,transparent);background:color-mix(in srgb,var(--hermes-gold) 10%,transparent)}
+.hermes-ziwei-headbtn:focus-visible{outline:2px solid var(--hermes-gold);outline-offset:2px}
+.hermes-ziwei-glyph{font-family:"Songti SC", "STSong", "Source Han Serif SC", "Noto Serif SC", serif;font-size:11px;line-height:1;color:var(--hermes-gold)}
+.hermes-ziwei-rowact{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;padding:0;border:0;border-radius:6px;background:transparent;color:var(--dsw-alias-label-secondary);font-family:"Songti SC", "STSong", "Source Han Serif SC", "Noto Serif SC", serif;font-size:12px;line-height:1;cursor:pointer;transition:color .15s ease,background-color .15s ease}
+.hermes-ziwei-rowact:hover{color:var(--hermes-gold-strong);background:color-mix(in srgb,var(--hermes-gold) 14%,transparent)}
+.hermes-ziwei-rowact:focus-visible{outline:2px solid var(--hermes-gold);outline-offset:1px}
+
+/* ——— V3 · 紫微命盘对话框（十二宫 · 宣纸金墨） ——— */
+.hermes-ziwei{position:fixed;inset:0;z-index:8500;display:flex;align-items:center;justify-content:center;padding:20px;background:rgba(20,17,24,.42);backdrop-filter:blur(2px);animation:hermes-menu-in .16s ease both}
+.hermes-ziwei-card{position:relative;display:flex;flex-direction:column;width:min(880px,100vw - 32px);max-height:calc(100vh - 40px);box-sizing:border-box;border:1px solid color-mix(in srgb,var(--hermes-gold) 58%,transparent);border-radius:18px;background:linear-gradient(180deg,var(--dsw-alias-bg-layer-1),var(--dsw-alias-bg-base) 30%,var(--dsw-alias-bg-base));box-shadow:0 26px 80px rgba(20,17,24,.34),inset 0 0 0 1px rgba(255,252,246,.5);overflow:hidden;animation:hermes-ziwei-in .28s ease both;outline:none}
+.hermes-ziwei-card::after{content:"";position:absolute;inset:7px;border:1px solid color-mix(in srgb,var(--hermes-gold) 34%,transparent);border-radius:13px;pointer-events:none}
+.hermes-ziwei-card:focus-visible{box-shadow:0 26px 80px rgba(20,17,24,.34),0 0 0 2px var(--hermes-gold)}
+.hermes-ziwei-head{display:flex;align-items:center;gap:10px;flex:none;padding:14px 18px 10px}
+.hermes-ziwei-title{display:flex;align-items:baseline;gap:8px;color:var(--dsw-alias-label-primary);font-family:"Songti SC", "STSong", "Source Han Serif SC", "Noto Serif SC", serif;font-size:17px;letter-spacing:.1em}
+.hermes-ziwei-title small{font-family:var(--dsw-font-family);font-size:10px;letter-spacing:.2em;color:var(--hermes-gold-strong)}
+.hermes-ziwei-tabs{display:inline-flex;gap:2px;margin-left:auto;padding:2px;border:1px solid color-mix(in srgb,var(--hermes-gold) 24%,var(--dsw-alias-border-l1));border-radius:999px;background:color-mix(in srgb,var(--dsw-alias-bg-layer-2) 70%,transparent)}
+.hermes-ziwei-tab{padding:4px 10px;border:0;border-radius:999px;background:transparent;color:var(--dsw-alias-label-secondary);font:inherit;font-size:10px;line-height:1;letter-spacing:.12em;cursor:pointer;white-space:nowrap;transition:background-color .18s ease,color .18s ease}
+.hermes-ziwei-tab[aria-selected="true"]{color:var(--dsw-alias-label-primary);background:color-mix(in srgb,var(--hermes-gold) 18%,var(--dsw-alias-bg-layer-1));box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--hermes-gold) 40%,transparent)}
+.hermes-ziwei-tab:focus-visible{outline:2px solid var(--hermes-gold);outline-offset:1px}
+.hermes-ziwei-body{flex:1;min-height:0;overflow:auto;padding:4px 18px 14px}
+.hermes-ziwei-form{display:flex;flex-wrap:wrap;align-items:flex-end;gap:8px 10px;padding:10px 12px;border:1px solid color-mix(in srgb,var(--hermes-gold) 22%,var(--dsw-alias-border-l1));border-radius:12px;background:color-mix(in srgb,var(--dsw-alias-bg-layer-2) 55%,transparent)}
+.hermes-ziwei-field{display:flex;flex-direction:column;gap:4px}
+.hermes-ziwei-field label{color:var(--dsw-alias-label-caption);font-size:9px;letter-spacing:.22em}
+.hermes-ziwei-input,.hermes-ziwei-select{height:28px;box-sizing:border-box;padding:0 8px;border:1px solid color-mix(in srgb,var(--hermes-gold) 26%,var(--dsw-alias-border-l2));border-radius:8px;background:var(--dsw-alias-bg-layer-1);color:var(--dsw-alias-label-primary);font:inherit;font-size:12px;color-scheme:light dark}
+.hermes-ziwei-input:focus-visible,.hermes-ziwei-select:focus-visible{outline:2px solid var(--hermes-gold);outline-offset:1px}
+.hermes-ziwei-input[type="number"]{width:74px}
+.hermes-ziwei-input[data-field="year"]{width:86px}
+.hermes-ziwei-input[data-field="name"]{width:120px}
+.hermes-ziwei-hint{color:var(--dsw-alias-label-tertiary);font-size:10px;letter-spacing:.06em}
+.hermes-ziwei-seg{display:inline-flex;padding:2px;border:1px solid color-mix(in srgb,var(--hermes-gold) 26%,var(--dsw-alias-border-l2));border-radius:999px;background:var(--dsw-alias-bg-layer-1)}
+.hermes-ziwei-seg button{padding:4px 12px;border:0;border-radius:999px;background:transparent;color:var(--dsw-alias-label-secondary);font:inherit;font-size:11px;line-height:1;cursor:pointer}
+.hermes-ziwei-seg button[aria-pressed="true"]{color:var(--dsw-alias-label-primary);background:color-mix(in srgb,var(--hermes-gold) 18%,transparent)}
+.hermes-ziwei-seg button:focus-visible{outline:2px solid var(--hermes-gold);outline-offset:1px}
+.hermes-ziwei-error{margin:10px 2px 0;padding:8px 12px;border:1px solid color-mix(in srgb,var(--dsw-alias-state-error-primary) 42%,transparent);border-radius:10px;background:color-mix(in srgb,var(--dsw-alias-state-error-primary) 8%,transparent);color:var(--dsw-alias-state-error-primary);font-size:11.5px;line-height:1.7}
+.hermes-ziwei-boardwrap{margin-top:12px}
+.hermes-ziwei-board{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));grid-template-rows:repeat(4,minmax(74px,auto));gap:6px}
+.hermes-ziwei-cell{position:relative;display:flex;flex-direction:column;gap:3px;box-sizing:border-box;min-height:74px;padding:7px 8px 6px;border:1px solid color-mix(in srgb,var(--hermes-gold) 24%,var(--dsw-alias-border-l1));border-radius:10px;background:color-mix(in srgb,var(--dsw-alias-bg-layer-1) 88%,transparent);animation:hermes-ziwei-cell-in .26s ease both}
+.hermes-ziwei-cell--ming{border-color:color-mix(in srgb,var(--hermes-gold) 62%,transparent);box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--hermes-gold) 26%,transparent),0 0 12px color-mix(in srgb,var(--hermes-gold) 12%,transparent)}
+.hermes-ziwei-cell--shen{border-color:color-mix(in srgb,var(--hermes-violet) 46%,transparent)}
+.hermes-ziwei-cellhead{display:flex;align-items:baseline;gap:5px}
+.hermes-ziwei-cellname{font-family:"Songti SC", "STSong", "Source Han Serif SC", "Noto Serif SC", serif;font-size:12px;letter-spacing:.08em;color:var(--dsw-alias-label-primary)}
+.hermes-ziwei-cellname em{font-style:normal;font-family:var(--dsw-font-family);font-size:8.5px;color:var(--hermes-gold-strong);letter-spacing:.16em;margin-left:3px}
+.hermes-ziwei-cellbranch{margin-left:auto;color:var(--hermes-gold-strong);font-size:10px}
+.hermes-ziwei-daxian{position:absolute;top:6px;right:8px;color:var(--dsw-alias-label-tertiary);font-size:9px;letter-spacing:.06em}
+.hermes-ziwei-stars{display:flex;flex-wrap:wrap;gap:2px 7px;margin-top:2px}
+.hermes-ziwei-star{font-size:10.5px;line-height:1.5;color:var(--dsw-alias-label-primary)}
+.hermes-ziwei-star small{font-size:9px;color:var(--dsw-alias-label-tertiary)}
+.hermes-ziwei-star--minor{color:var(--dsw-alias-label-secondary);font-size:9.5px}
+.hermes-ziwei-star--lucky{color:var(--hermes-gold-strong)}
+.hermes-ziwei-star--sha{color:var(--dsw-alias-state-error-primary)}
+.hermes-ziwei-si{display:inline-block;margin-left:1px;padding:0 2.5px;border-radius:4px;font-size:9px;line-height:1.4}
+.hermes-ziwei-si--lu{background:color-mix(in srgb,var(--hermes-gold) 26%,transparent);color:var(--hermes-gold-strong)}
+.hermes-ziwei-si--quan{background:color-mix(in srgb,var(--dsw-alias-state-error-primary) 22%,transparent);color:var(--dsw-alias-state-error-primary)}
+.hermes-ziwei-si--ke{background:color-mix(in srgb,var(--hermes-violet) 24%,transparent);color:var(--hermes-violet)}
+.hermes-ziwei-si--ji{background:color-mix(in srgb,var(--dsw-alias-label-primary) 14%,transparent);color:var(--dsw-alias-label-secondary)}
+.hermes-ziwei-empty{color:var(--dsw-alias-label-tertiary);font-size:9.5px;letter-spacing:.1em}
+.hermes-ziwei-center{grid-column:2 / span 2;grid-row:2 / span 2;display:flex;flex-direction:column;gap:6px;justify-content:center;box-sizing:border-box;padding:10px 14px;border:1px solid color-mix(in srgb,var(--hermes-gold) 30%,var(--dsw-alias-border-l1));border-radius:10px;background:color-mix(in srgb,var(--hermes-gold) 5%,var(--dsw-alias-bg-layer-2) 60%)}
+.hermes-ziwei-center-name{font-family:"Songti SC", "STSong", "Source Han Serif SC", "Noto Serif SC", serif;font-size:15px;letter-spacing:.12em;color:var(--dsw-alias-label-primary);text-align:center}
+.hermes-ziwei-center-ju{text-align:center;color:var(--hermes-gold-strong);font-size:10.5px;letter-spacing:.2em}
+.hermes-ziwei-center-rows{display:grid;grid-template-columns:auto 1fr;gap:2px 10px;font-size:10.5px;line-height:1.7;color:var(--dsw-alias-label-secondary)}
+.hermes-ziwei-center-rows b{font-weight:400;color:var(--dsw-alias-label-caption);letter-spacing:.18em;white-space:nowrap}
+.hermes-ziwei-center-rows span{color:var(--dsw-alias-label-primary)}
+.hermes-ziwei-chips{display:flex;flex-wrap:wrap;gap:4px;justify-content:center;margin-top:2px}
+.hermes-ziwei-chip{padding:2px 8px;border:1px solid color-mix(in srgb,var(--hermes-gold) 40%,transparent);border-radius:999px;color:var(--hermes-gold-strong);font-size:9.5px;letter-spacing:.1em;white-space:nowrap}
+.hermes-ziwei-chip--excellent{border-color:color-mix(in srgb,var(--dsw-alias-state-success-primary) 45%,transparent);color:var(--dsw-alias-state-success-primary)}
+.hermes-ziwei-chip--caution{border-color:color-mix(in srgb,var(--dsw-alias-state-warn-primary) 45%,transparent);color:var(--dsw-alias-state-warn-primary)}
+.hermes-ziwei-foot{display:flex;flex-wrap:wrap;align-items:center;gap:8px;flex:none;padding:10px 18px 14px;border-top:1px solid color-mix(in srgb,var(--hermes-gold) 18%,transparent)}
+.hermes-ziwei-note{margin-right:auto;color:var(--dsw-alias-label-tertiary);font-size:9.5px;letter-spacing:.08em;max-width:46ch;line-height:1.6}
+.hermes-ziwei-btn{height:30px;padding:0 16px;border:1px solid color-mix(in srgb,var(--hermes-gold) 46%,transparent);border-radius:999px;background:color-mix(in srgb,var(--hermes-gold) 9%,transparent);color:var(--hermes-gold-strong);font-family:"Songti SC", "STSong", "Source Han Serif SC", "Noto Serif SC", serif;font-size:12px;letter-spacing:.14em;cursor:pointer;white-space:nowrap;transition:background-color .18s ease,box-shadow .18s ease}
+.hermes-ziwei-btn:hover{background:color-mix(in srgb,var(--hermes-gold) 18%,transparent);box-shadow:0 0 10px color-mix(in srgb,var(--hermes-gold) 26%,transparent)}
+.hermes-ziwei-btn:focus-visible{outline:2px solid var(--hermes-gold);outline-offset:2px}
+.hermes-ziwei-btn[disabled]{opacity:.45;cursor:default;box-shadow:none}
+.hermes-ziwei-btn--ghost{font-family:var(--dsw-font-family);font-size:11px;letter-spacing:.1em;color:var(--dsw-alias-label-secondary);border-color:var(--dsw-alias-border-l2);background:transparent}
+.hermes-ziwei-btn--ghost:hover{color:var(--dsw-alias-label-primary);background:var(--dsw-alias-interactive-bg-hover);box-shadow:none}
+@media (max-width:720px){.hermes-ziwei-board{grid-template-rows:repeat(4,minmax(96px,auto));gap:4px}.hermes-ziwei-cell{padding:5px 6px}.hermes-ziwei-star{font-size:9.5px}.hermes-ziwei-center{padding:8px}}
