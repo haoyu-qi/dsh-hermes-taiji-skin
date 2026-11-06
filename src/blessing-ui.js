@@ -76,24 +76,19 @@
       }
       const accept=()=>{const value={...record,accepted:true};saveBlessing(value);setRecord(value);setOpen(false);if(prefs.motion&&!reduced)setCast(true)}
       const width=Math.min(340,viewport.width-24)
-      const estimatedHeight=Math.min(550,viewport.height-24)
+      const estimatedHeight=Math.min(width*1.25,viewport.height-24)
       const left=Math.max(12,Math.min(viewport.width-width-12,anchor.right-width))
       const top=anchor.top>estimatedHeight+24?anchor.top-estimatedHeight-10:Math.max(12,Math.min(viewport.height-estimatedHeight-12,anchor.top+50))
       return h('div',{className:'qiankun-blessing-layer','data-motion':prefs.motion&&!reduced?'on':'off'},
         h('div',{className:'qiankun-blessing-entry',style:{top:Math.max(8,anchor.top+12),right:Math.max(12,viewport.width-anchor.right+18),maxWidth:Math.max(95,anchor.width-32)}},
-          h('button',{type:'button',className:'qiankun-blessing-button qiankun-blessing-mazu-btn',onClick:show,title:'每天随机一位，当天结果固定','aria-haspopup':'dialog','aria-expanded':open,'aria-label':'随机神明加持'},h('span',{className:'qiankun-blessing-mazu','aria-hidden':true},h('b',null,'妈'),h('b',null,'祖')))),
+          h('button',{type:'button',className:'qiankun-blessing-button qiankun-blessing-mazu-btn',onClick:show,title:'每天随机一位，当天结果固定','aria-haspopup':'dialog','aria-expanded':open,'aria-label':'随机神明加持'},h('img',{className:'qiankun-blessing-entry-art',src:DEITY_ART[deity?.id||'mazu'],alt:''}))),
         cast&&deity&&h('div',{className:'qiankun-blessing-cast','aria-hidden':true},
           h('div',{className:'qiankun-blessing-glow'}),
           h('img',{className:'qiankun-blessing-apparition',src:DEITY_ART[deity.id],alt:''}),
-          h('div',{className:'qiankun-blessing-motes'},Array.from({length:8},(_,i)=>h('i',{key:i,style:{'--mote-index':i}}))),
-          h('div',{className:'qiankun-blessing-word'},h('i',null,deity.short),deity.name+'加持'),
-          h('div',{className:'qiankun-blessing-stamp',style:{'--bx':((anchor.right-26)-viewport.width/2)+'px','--by':((anchor.top+22)-viewport.height*0.36)+'px'}},deity.short)),
+          h('div',{className:'qiankun-blessing-motes'},Array.from({length:8},(_,i)=>h('i',{key:i,style:{'--mote-index':i}})))),
         open&&deity&&h(React.Fragment,null,
           h('div',{className:'qiankun-blessing-outside',onPointerDown:e=>{e.preventDefault();setOpen(false)},'aria-hidden':true}),
           h('section',{className:'qiankun-blessing-card',ref,role:'dialog','aria-modal':true,'aria-label':deity.title,tabIndex:-1,style:{left,top,width,maxHeight:viewport.height-24}},
-            h('button',{type:'button',className:'qiankun-dismiss qiankun-blessing-close',onClick:()=>setOpen(false),'aria-label':'关闭加持'},'×'),
-            h('img',{className:'qiankun-blessing-art',src:DEITY_ART[deity.id],alt:deity.name+'工笔画像',width:640,height:720}),
-            h('div',{className:'qiankun-blessing-copy'},h('span',{className:'qiankun-blessing-name'},deity.name),h('h2',null,deity.title),h('p',{className:'qiankun-blessing-wish'},deity.wish),h('p',{className:'qiankun-blessing-note'},deity.note),
-              h('button',{type:'button',className:'qiankun-action qiankun-blessing-accept',onClick:accept},record.accepted?'回到问道':'收下祝愿'),
-              h('small',null,'文化祝愿 · 不改变模型能力')))))
+            h('button',{type:'button',className:'qiankun-blessing-accept qiankun-blessing-image-button',onClick:accept,'aria-label':'收下祝愿并关闭画像'},
+              h('img',{className:'qiankun-blessing-art',src:DEITY_ART[deity.id],alt:deity.name+'工笔画像',width:640,height:800})))))
     }

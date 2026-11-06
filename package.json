@@ -1,7 +1,7 @@
 {
   "name": "@local/dsh-hermes-skin",
-  "version": "3.1.1",
-  "description": "乾坤问道 V3.1：八位传统神明加持（收下落印动效）、真实推理状态联动、108 签每日卦象与纸墨金主题，并内嵌紫微斗数开源排盘引擎——模型名旁的「紫微」徽记与推演模式、每个对话与工作区各一张十二宫命理盘。",
+  "version": "3.2.0",
+  "description": "乾坤问道 V3.2：紫微命理参数映射、纯画像加持动效与36位传统神明。",
   "type": "module",
   "license": "MIT",
   "author": "Qijinchun (haoyu-qi)",

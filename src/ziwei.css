@@ -98,3 +98,16 @@
 .hermes-ziwei-btn--ghost{font-family:var(--dsw-font-family);font-size:11px;letter-spacing:.1em;color:var(--dsw-alias-label-secondary);border-color:var(--dsw-alias-border-l2);background:transparent}
 .hermes-ziwei-btn--ghost:hover{color:var(--dsw-alias-label-primary);background:var(--dsw-alias-interactive-bg-hover);box-shadow:none}
 @media (max-width:720px){.hermes-ziwei-board{grid-template-rows:repeat(4,minmax(96px,auto));gap:4px}.hermes-ziwei-cell{padding:5px 6px}.hermes-ziwei-star{font-size:9.5px}.hermes-ziwei-center{padding:8px}}
+/* 命理参数：默认关闭，展开可见映射依据。 */
+.hermes-tuning{display:flex;align-items:center;gap:8px;flex-wrap:wrap;font:11px/1.5 system-ui;color:var(--hermes-art)}
+.hermes-tuning-details{position:relative}
+.hermes-tuning-details summary{cursor:pointer;padding:5px 0}
+.hermes-tuning-explanation{position:absolute;bottom:30px;left:0;z-index:20;width:min(310px,75vw);box-sizing:border-box;padding:15px;border:1px solid var(--hermes-gold);border-radius:12px;background:var(--hermes-paper);color:var(--hermes-ink);box-shadow:0 10px 30px #38334418}
+.hermes-tuning-explanation p{margin:7px 0}
+.hermes-tuning{max-width:100%;min-width:0}
+.hermes-tuning-details{max-width:100%}
+.hermes-tuning-details summary{overflow-wrap:anywhere}
+@media(max-width:600px){
+  .hermes-tuning{flex:1 1 100%;justify-content:center}
+  .hermes-tuning-explanation{position:fixed;left:12px;right:12px;bottom:84px;width:auto;max-height:50vh;overflow:auto}
+}

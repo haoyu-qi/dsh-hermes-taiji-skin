@@ -273,7 +273,8 @@ function writeZiweiStored(key, value) {
         return null
       }
 
-      return h(ZiweiDockBar, { useInput, inputActions, sessionId, useWorkspaces: props.useWorkspaces })
+      const shared = { useInput, inputActions, sessionId, useWorkspaces: props.useWorkspaces }
+      return h(React.Fragment, null, h(ZiweiDockBar, shared), h(ZiweiTuningControls, shared))
     }
 
     function ZiweiDockBar({ useInput, inputActions, sessionId, useWorkspaces }) {

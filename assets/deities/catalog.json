@@ -6,7 +6,9 @@
     "theme": "文思清明",
     "title": "文昌加持",
     "wish": "愿你文思清明，落笔有章。",
-    "note": "先把最重要的问题写清楚。"
+    "note": "先把最重要的问题写清楚。",
+    "batch": 1,
+    "subject": "scholar official with indigo hat, brush and scroll"
   },
   {
     "id": "guansheng",
@@ -15,7 +17,9 @@
     "theme": "笃行有成",
     "title": "关圣加持",
     "wish": "愿你心有定力，行有所成。",
-    "note": "把想清楚的事，向前推进一步。"
+    "note": "把想清楚的事，向前推进一步。",
+    "batch": 1,
+    "subject": "noble red face, long black beard, green robes, guandao resting upright"
   },
   {
     "id": "guanyin",
@@ -24,7 +28,9 @@
     "theme": "安宁从容",
     "title": "观音加持",
     "wish": "愿你心境安宁，从容有序。",
-    "note": "静下心来，照顾好此刻的自己。"
+    "note": "静下心来，照顾好此刻的自己。",
+    "batch": 1,
+    "subject": "serene white veiled bodhisattva, willow and small vase"
   },
   {
     "id": "fude",
@@ -33,7 +39,9 @@
     "theme": "日有所积",
     "title": "福德加持",
     "wish": "愿你脚下有根，日有所积。",
-    "note": "把眼前的小事，踏实做好。"
+    "note": "把眼前的小事，踏实做好。",
+    "batch": 1,
+    "subject": "kind elderly earth god, white beard, ochre robes, staff and ingot"
   },
   {
     "id": "laojun",
@@ -42,7 +50,9 @@
     "note": "先分清主次，再从容落下一步。",
     "theme": "澄心静虑",
     "short": "老君",
-    "title": "老君加持"
+    "title": "老君加持",
+    "batch": 1,
+    "subject": "elderly Taoist sage, white beard, topknot, feather fan"
   },
   {
     "id": "xuantian",
@@ -51,7 +61,9 @@
     "note": "守住目标，把眼前一步走稳。",
     "theme": "行稳致远",
     "short": "玄天",
-    "title": "玄天加持"
+    "title": "玄天加持",
+    "batch": 1,
+    "subject": "dark haired protector, indigo robes and armor, lowered sword, tortoise and snake"
   },
   {
     "id": "mazu",
@@ -60,7 +72,9 @@
     "note": "看清方向，带着准备再出发。",
     "theme": "顺行平安",
     "short": "妈祖",
-    "title": "妈祖加持"
+    "title": "妈祖加持",
+    "batch": 2,
+    "subject": "gentle sea goddess, imperial pearl crown, muted red robes, ceremonial tablet"
   },
   {
     "id": "zhaogongming",
@@ -69,6 +83,316 @@
     "note": "珍惜手中资源，踏实经营今天。",
     "theme": "勤耕有获",
     "short": "公明",
-    "title": "公明加持"
+    "title": "公明加持",
+    "batch": 2,
+    "subject": "black bearded wealth guardian, dark gold robes, ingot and ceremonial baton"
+  },
+  {
+    "id": "yuhuang",
+    "name": "玉皇大帝",
+    "short": "玉皇",
+    "theme": "澄心笃行",
+    "title": "玉皇大帝加持",
+    "wish": "愿你澄心静虑，笃行有成。",
+    "note": "把眼前一步走稳。",
+    "batch": 2,
+    "subject": "heavenly emperor, jade and gold crown with pearl strings, ivory ceremonial robes, jade tablet"
+  },
+  {
+    "id": "ziwei",
+    "name": "紫微大帝",
+    "short": "紫微",
+    "theme": "澄心笃行",
+    "title": "紫微大帝加持",
+    "wish": "愿你澄心静虑，笃行有成。",
+    "note": "把眼前一步走稳。",
+    "batch": 2,
+    "subject": "celestial emperor, violet robes, star crown, pale constellation halo"
+  },
+  {
+    "id": "tianhuang",
+    "name": "勾陈天皇大帝",
+    "short": "勾陈",
+    "theme": "澄心笃行",
+    "title": "勾陈天皇大帝加持",
+    "wish": "愿你澄心静虑，笃行有成。",
+    "note": "把眼前一步走稳。",
+    "batch": 2,
+    "subject": "solemn celestial emperor, ochre armor beneath robes, celestial banner"
+  },
+  {
+    "id": "houtu",
+    "name": "后土皇地祇",
+    "short": "后土",
+    "theme": "澄心笃行",
+    "title": "后土皇地祇加持",
+    "wish": "愿你澄心静虑，笃行有成。",
+    "note": "把眼前一步走稳。",
+    "batch": 2,
+    "subject": "benevolent mature earth empress, warm ochre ceremonial dress, jade crown, mountains"
+  },
+  {
+    "id": "yuanshi",
+    "name": "元始天尊",
+    "short": "元始",
+    "theme": "澄心笃行",
+    "title": "元始天尊加持",
+    "wish": "愿你澄心静虑，笃行有成。",
+    "note": "把眼前一步走稳。",
+    "batch": 3,
+    "subject": "ancient Taoist sage, flowing silver hair, blue ivory robes, pearl in open palm"
+  },
+  {
+    "id": "lingbao",
+    "name": "灵宝天尊",
+    "short": "灵宝",
+    "theme": "澄心笃行",
+    "title": "灵宝天尊加持",
+    "wish": "愿你澄心静虑，笃行有成。",
+    "note": "把眼前一步走稳。",
+    "batch": 3,
+    "subject": "Taoist sage, dark beard, teal robes, ruyi scepter"
+  },
+  {
+    "id": "nanjixianweng",
+    "name": "南极仙翁",
+    "short": "南极",
+    "theme": "澄心笃行",
+    "title": "南极仙翁加持",
+    "wish": "愿你澄心静虑，笃行有成。",
+    "note": "把眼前一步走稳。",
+    "batch": 3,
+    "subject": "joyful elderly longevity immortal, prominent forehead, white beard, peach and crane"
+  },
+  {
+    "id": "dongwanggong",
+    "name": "东王公",
+    "short": "东王",
+    "theme": "澄心笃行",
+    "title": "东王公加持",
+    "wish": "愿你澄心静虑，笃行有成。",
+    "note": "把眼前一步走稳。",
+    "batch": 3,
+    "subject": "mature king immortal, jade green robes, gold crown, walking staff"
+  },
+  {
+    "id": "xiwangmu",
+    "name": "西王母",
+    "short": "西王",
+    "theme": "澄心笃行",
+    "title": "西王母加持",
+    "wish": "愿你澄心静虑，笃行有成。",
+    "note": "把眼前一步走稳。",
+    "batch": 3,
+    "subject": "dignified queen mother, phoenix crown, rose ivory robes, peach branch"
+  },
+  {
+    "id": "doumu",
+    "name": "斗姆元君",
+    "short": "斗姆",
+    "theme": "澄心笃行",
+    "title": "斗姆元君加持",
+    "wish": "愿你澄心静虑，笃行有成。",
+    "note": "把眼前一步走稳。",
+    "batch": 3,
+    "subject": "serene celestial mother, violet gold robes, lotus, stars around head, two natural hands"
+  },
+  {
+    "id": "wenshu",
+    "name": "文殊菩萨",
+    "short": "文殊",
+    "theme": "澄心笃行",
+    "title": "文殊菩萨加持",
+    "wish": "愿你澄心静虑，笃行有成。",
+    "note": "把眼前一步走稳。",
+    "batch": 4,
+    "subject": "wise youthful bodhisattva, gold crown, blue ivory robes, lotus supporting scripture"
+  },
+  {
+    "id": "puxian",
+    "name": "普贤菩萨",
+    "short": "普贤",
+    "theme": "澄心笃行",
+    "title": "普贤菩萨加持",
+    "wish": "愿你澄心静虑，笃行有成。",
+    "note": "把眼前一步走稳。",
+    "batch": 4,
+    "subject": "peaceful bodhisattva, pale gold crown, ivory green robes, lotus ruyi, subtle white elephant motif"
+  },
+  {
+    "id": "dizang",
+    "name": "地藏菩萨",
+    "short": "地藏",
+    "theme": "澄心笃行",
+    "title": "地藏菩萨加持",
+    "wish": "愿你澄心静虑，笃行有成。",
+    "note": "把眼前一步走稳。",
+    "batch": 4,
+    "subject": "compassionate monk bodhisattva, red gold kasaya, shaved head, staff and luminous jewel"
+  },
+  {
+    "id": "mile",
+    "name": "弥勒菩萨",
+    "short": "弥勒",
+    "theme": "澄心笃行",
+    "title": "弥勒菩萨加持",
+    "wish": "愿你澄心静虑，笃行有成。",
+    "note": "把眼前一步走稳。",
+    "batch": 4,
+    "subject": "joyful smiling round monk, open ochre robe, prayer beads and cloth bag"
+  },
+  {
+    "id": "yaoshi",
+    "name": "药师佛",
+    "short": "药师",
+    "theme": "澄心笃行",
+    "title": "药师佛加持",
+    "wish": "愿你澄心静虑，笃行有成。",
+    "note": "把眼前一步走稳。",
+    "batch": 4,
+    "subject": "serene Buddha, blue gold robes, small medicine bowl, lotus seat"
+  },
+  {
+    "id": "amitabha",
+    "name": "阿弥陀佛",
+    "short": "阿弥",
+    "theme": "澄心笃行",
+    "title": "阿弥陀佛加持",
+    "wish": "愿你澄心静虑，笃行有成。",
+    "note": "把眼前一步走稳。",
+    "batch": 4,
+    "subject": "serene Buddha with curled hair, red ivory robes, lotus held in hands"
+  },
+  {
+    "id": "riguang",
+    "name": "日光菩萨",
+    "short": "日光",
+    "theme": "澄心笃行",
+    "title": "日光菩萨加持",
+    "wish": "愿你澄心静虑，笃行有成。",
+    "note": "把眼前一步走稳。",
+    "batch": 5,
+    "subject": "celestial bodhisattva, gold orange robes, crown with small sun disk, lotus"
+  },
+  {
+    "id": "yueguang",
+    "name": "月光菩萨",
+    "short": "月光",
+    "theme": "澄心笃行",
+    "title": "月光菩萨加持",
+    "wish": "愿你澄心静虑，笃行有成。",
+    "note": "把眼前一步走稳。",
+    "batch": 5,
+    "subject": "celestial bodhisattva, pale blue silver robes, moon disk crown, lotus"
+  },
+  {
+    "id": "lvdongbin",
+    "name": "吕洞宾",
+    "short": "吕洞",
+    "theme": "澄心笃行",
+    "title": "吕洞宾加持",
+    "wish": "愿你澄心静虑，笃行有成。",
+    "note": "把眼前一步走稳。",
+    "batch": 5,
+    "subject": "elegant Taoist swordsman scholar, white indigo robes, sword sheathed on back, fly whisk"
+  },
+  {
+    "id": "zhongliquan",
+    "name": "钟离权",
+    "short": "钟离",
+    "theme": "澄心笃行",
+    "title": "钟离权加持",
+    "wish": "愿你澄心静虑，笃行有成。",
+    "note": "把眼前一步走稳。",
+    "batch": 5,
+    "subject": "cheerful bearded immortal, loose ochre robes, large palm leaf fan"
+  },
+  {
+    "id": "zhangguolao",
+    "name": "张果老",
+    "short": "张果",
+    "theme": "澄心笃行",
+    "title": "张果老加持",
+    "wish": "愿你澄心静虑，笃行有成。",
+    "note": "把眼前一步走稳。",
+    "batch": 5,
+    "subject": "elderly white bearded immortal, pale grey robes, bamboo drum and sticks"
+  },
+  {
+    "id": "tieguaili",
+    "name": "铁拐李",
+    "short": "铁拐",
+    "theme": "澄心笃行",
+    "title": "铁拐李加持",
+    "wish": "愿你澄心静虑，笃行有成。",
+    "note": "把眼前一步走稳。",
+    "batch": 5,
+    "subject": "weathered kind immortal, dark robe, iron crutch and double gourd"
+  },
+  {
+    "id": "hexiangu",
+    "name": "何仙姑",
+    "short": "何仙",
+    "theme": "澄心笃行",
+    "title": "何仙姑加持",
+    "wish": "愿你澄心静虑，笃行有成。",
+    "note": "把眼前一步走稳。",
+    "batch": 6,
+    "subject": "graceful dignified female immortal, lotus flower, pale pink green robes"
+  },
+  {
+    "id": "lancaihe",
+    "name": "蓝采和",
+    "short": "蓝采",
+    "theme": "澄心笃行",
+    "title": "蓝采和加持",
+    "wish": "愿你澄心静虑，笃行有成。",
+    "note": "把眼前一步走稳。",
+    "batch": 6,
+    "subject": "androgynous youthful immortal, blue robes, basket of flowers"
+  },
+  {
+    "id": "hanxiangzi",
+    "name": "韩湘子",
+    "short": "韩湘",
+    "theme": "澄心笃行",
+    "title": "韩湘子加持",
+    "wish": "愿你澄心静虑，笃行有成。",
+    "note": "把眼前一步走稳。",
+    "batch": 6,
+    "subject": "young serene immortal, jade blue robes, bamboo flute"
+  },
+  {
+    "id": "caoguojiu",
+    "name": "曹国舅",
+    "short": "曹国",
+    "theme": "澄心笃行",
+    "title": "曹国舅加持",
+    "wish": "愿你澄心静虑，笃行有成。",
+    "note": "把眼前一步走稳。",
+    "batch": 6,
+    "subject": "dignified official immortal, red ivory court robes, ceremonial clappers"
+  },
+  {
+    "id": "erlang",
+    "name": "二郎真君",
+    "short": "二郎",
+    "theme": "澄心笃行",
+    "title": "二郎真君加持",
+    "wish": "愿你澄心静虑，笃行有成。",
+    "note": "把眼前一步走稳。",
+    "batch": 6,
+    "subject": "noble young guardian, small third eye, silver gold armor, lowered three pointed spear"
+  },
+  {
+    "id": "nezha",
+    "name": "哪吒三太子",
+    "short": "哪吒",
+    "theme": "澄心笃行",
+    "title": "哪吒三太子加持",
+    "wish": "愿你澄心静虑，笃行有成。",
+    "note": "把眼前一步走稳。",
+    "batch": 6,
+    "subject": "youthful lotus guardian, red silk ribbons, lotus armor, golden ring held calmly"
   }
 ]

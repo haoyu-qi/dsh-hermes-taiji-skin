@@ -27,13 +27,13 @@ const engine = read(enginePath).trimEnd()
 const art = 'data:image/webp;base64,' + fs.readFileSync(new URL('assets/ink-landscape.webp', root)).toString('base64')
 const state = read('src/state.mjs').replace(/^export /gm, '')
 const deities = JSON.parse(read('assets/deities/catalog.json'))
-if (deities.length !== 8 || new Set(deities.map(d => d.id)).size !== 8) throw new Error('V3 requires eight unique deities')
+if (deities.length !== 36 || new Set(deities.map(d => d.id)).size !== 36) throw new Error('V3.2 requires 36 unique deities')
 const deityArt = Object.fromEntries(deities.map(d => [d.id, 'data:image/webp;base64,' + fs.readFileSync(new URL(`assets/deities/${d.id}.webp`, root)).toString('base64')]))
 const blessingState = read('src/blessings.mjs').replace(/^export /gm, '')
-const runtime = `const QIANKUN_ART = ${JSON.stringify(art)};\nconst QIANKUN_CSS = ${JSON.stringify(read('src/qiankun.css') + '\n' + read('src/blessing.css'))};\nconst ZIWEI_CSS = ${JSON.stringify(read('src/ziwei.css'))};\nconst DEITIES = ${JSON.stringify(deities)};\nconst DEITY_ART = ${JSON.stringify(deityArt)};\n${state}\n${blessingState}\n${read('src/qiankun.js')}\n${read('src/blessing-ui.js')}\n/* ——— V3.1 · 紫微斗数 ——— */\n${read('src/ziwei.js')}`
+const runtime = `const QIANKUN_ART = ${JSON.stringify(art)};\nconst QIANKUN_CSS = ${JSON.stringify(read('src/qiankun.css') + '\n' + read('src/blessing.css'))};\nconst ZIWEI_CSS = ${JSON.stringify(read('src/ziwei.css'))};\nconst DEITIES = ${JSON.stringify(deities)};\nconst DEITY_ART = ${JSON.stringify(deityArt)};\n${read('src/tuning.mjs').replace(/^export /gm, '')}\n${state}\n${blessingState}\n${read('src/qiankun.js')}\n${read('src/blessing-ui.js')}\n/* ——— V3.1 · 紫微斗数 ——— */\n${read('src/ziwei.js')}\n${read('src/tuning-ui.js')}`
 const skin = read('src/client.js').replace('    /* @qiankun-runtime */', () => runtime)
 
 // 引擎 IIFE 必须在顶层（它自己挂 window.__HermesZiwei__），皮肤壳跟在后面。
 const client = engine + '\n;\n' + skin
 fs.writeFileSync(new URL('client.js', root), client)
-console.log('Built self-contained Qiankun V3.1 client: eight blessing portraits + ziwei-doushu chart engine (%d bytes).', Buffer.byteLength(client))
+console.log('Built self-contained Qiankun V3.2 client: 36 blessing portraits + ziwei-doushu chart engine (%d bytes).', Buffer.byteLength(client))

@@ -99,10 +99,11 @@ test('ziwei engine and chart surfaces work inside the merged client', async () =
     const dockNode = win.document.createElement('div')
     win.document.body.append(dockNode)
     const dockRoot = createRoot(dockNode)
+    const draftListeners = new Set()
     const dockProps = {
       sessionId: 's1',
-      useInput: (selector) => selector({ draft }),
-      inputActions: { setDraft: (text) => { draft = String(text ?? '') } },
+      useInput: (selector) => selector({ draft: React.useSyncExternalStore(fn => { draftListeners.add(fn); return () => draftListeners.delete(fn) }, () => draft) }),
+      inputActions: { setDraft: (text) => { draft = String(text ?? ''); draftListeners.forEach(fn => fn()) } },
       useWorkspaces: (selector) => selector({ items: [{ workspaceId: 'w1', sessionIds: ['s1'] }] }),
     }
     await act(async () => { dockRoot.render(React.createElement(Dock, dockProps)) })
@@ -116,6 +117,14 @@ test('ziwei engine and chart surfaces work inside the merged client', async () =
     assert.match(draft, /【\/紫微命盘】/)
     assert.match(draft, /五行局 水二局/)
 
+    const tuning = dockNode.querySelector('.hermes-tuning .hermes-ziwei-pill')
+    assert.equal(tuning.getAttribute('aria-pressed'), 'false')
+    await act(async () => tuning.click())
+    assert.match(draft, /^【紫微调参 v1 temperature=/)
+    assert.match(draft, /事业/)
+    await act(async () => tuning.click())
+    assert.doesNotMatch(draft, /【紫微调参/)
+    assert.match(draft, /【紫微命盘/)
     await act(async () => { root.unmount(); labelRoot.unmount(); dockRoot.unmount() })
   } finally {
     cleanups.reverse().forEach((fn) => fn())

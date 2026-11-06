@@ -7,12 +7,12 @@ import {createRoot} from 'react-dom/client'
 import {Window} from 'happy-dom'
 import {blessingDay,validBlessing,drawBlessing} from '../src/blessings.mjs'
 const catalog=JSON.parse(fs.readFileSync('assets/deities/catalog.json'))
-test('eight unique selectable deities have packaged portraits and real blessing copy',()=>{
-  assert.equal(catalog.length,8);assert.equal(new Set(catalog.map(d=>d.id)).size,8)
+test('36 unique selectable deities have packaged portraits and real blessing copy',()=>{
+  assert.equal(catalog.length,36);assert.equal(new Set(catalog.map(d=>d.id)).size,36)
   for(const [i,d]of catalog.entries()){
     assert.ok(fs.statSync(`assets/deities/${d.id}.webp`).size>1000)
     assert.ok(d.title&&d.wish&&d.note&&d.theme)
-    assert.equal(drawBlessing(catalog,'2026-11-01',()=>i/8).id,d.id)
+    assert.equal(drawBlessing(catalog,'2026-11-01',()=>i/catalog.length).id,d.id)
   }
 })
 test('daily blessing rejects stale dates and removed deities and validates acceptance',()=>{
@@ -56,12 +56,12 @@ test('native-card anchor, daily draw, reopen, persistence, disabled feature and 
     assert.ok(win.document.querySelector('.qiankun-blessing-glow'))
     assert.match(win.document.querySelector('.qiankun-blessing-apparition').src,/^data:image\/webp;base64,/)
     assert.equal(win.document.querySelectorAll('.qiankun-blessing-motes i').length,8)
-    assert.ok(win.document.querySelector('.qiankun-blessing-word').textContent.includes('加持'))
-    assert.ok(win.document.querySelector('.qiankun-blessing-stamp').textContent.length>0)
+    assert.equal(win.document.querySelector('.qiankun-blessing-word'),null)
+    assert.equal(win.document.querySelector('.qiankun-blessing-stamp'),null)
     assert.equal(win.document.querySelector('.qiankun-blessing-badge'),null)
     await act(async()=>win.document.querySelector('.qiankun-blessing-button').click())
-    assert.equal(win.document.querySelector('.qiankun-blessing-accept').textContent,'回到问道')
-    await act(async()=>win.document.querySelector('.qiankun-blessing-close').click())
+    assert.equal(win.document.querySelector('.qiankun-blessing-card').textContent,'')
+    await act(async()=>win.document.dispatchEvent(new win.KeyboardEvent('keydown',{key:'Escape',bubbles:true})))
     await act(async()=>win.document.querySelector('.qiankun-trigger').click())
     const option=[...win.document.querySelectorAll('.qiankun-options label')].find(l=>l.textContent==='神明加持').querySelector('input')
     await act(async()=>option.click())

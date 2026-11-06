@@ -1,0 +1,188 @@
+{
+  "tool": "image_gen",
+  "date": "2026-11-06",
+  "count": 36,
+  "batches": 6,
+  "portraits": [
+    {
+      "id": "guansheng",
+      "name": "关圣帝君",
+      "source": "guansheng.png"
+    },
+    {
+      "id": "laojun",
+      "name": "太上老君",
+      "source": "laojun.png"
+    },
+    {
+      "id": "wenchang",
+      "name": "文昌帝君",
+      "source": "wenchang.png"
+    },
+    {
+      "id": "mazu",
+      "name": "天上圣母",
+      "source": "mazu.png"
+    },
+    {
+      "id": "guanyin",
+      "name": "观音菩萨",
+      "source": "guanyin.png"
+    },
+    {
+      "id": "xuantian",
+      "name": "玄天上帝",
+      "source": "xuantian.png"
+    },
+    {
+      "id": "zhaogongming",
+      "name": "赵公明",
+      "source": "zhaogongming.png"
+    },
+    {
+      "id": "fude",
+      "name": "福德正神",
+      "source": "fude.png"
+    },
+    {
+      "id": "tianhuang",
+      "name": "勾陈天皇大帝",
+      "source": "tianhuang.png"
+    },
+    {
+      "id": "yuhuang",
+      "name": "玉皇大帝",
+      "source": "yuhuang.png"
+    },
+    {
+      "id": "houtu",
+      "name": "后土皇地祇",
+      "source": "houtu.png"
+    },
+    {
+      "id": "yuanshi",
+      "name": "元始天尊",
+      "source": "yuanshi.png"
+    },
+    {
+      "id": "ziwei",
+      "name": "紫微大帝",
+      "source": "ziwei.png"
+    },
+    {
+      "id": "lingbao",
+      "name": "灵宝天尊",
+      "source": "lingbao.png"
+    },
+    {
+      "id": "xiwangmu",
+      "name": "西王母",
+      "source": "xiwangmu.png"
+    },
+    {
+      "id": "nanjixianweng",
+      "name": "南极仙翁",
+      "source": "nanjixianweng.png"
+    },
+    {
+      "id": "doumu",
+      "name": "斗姆元君",
+      "source": "doumu.png"
+    },
+    {
+      "id": "dongwanggong",
+      "name": "东王公",
+      "source": "dongwanggong.png"
+    },
+    {
+      "id": "dizang",
+      "name": "地藏菩萨",
+      "source": "dizang.png"
+    },
+    {
+      "id": "wenshu",
+      "name": "文殊菩萨",
+      "source": "wenshu.png"
+    },
+    {
+      "id": "puxian",
+      "name": "普贤菩萨",
+      "source": "puxian.png"
+    },
+    {
+      "id": "mile",
+      "name": "弥勒菩萨",
+      "source": "mile.png"
+    },
+    {
+      "id": "amitabha",
+      "name": "阿弥陀佛",
+      "source": "amitabha.png"
+    },
+    {
+      "id": "yaoshi",
+      "name": "药师佛",
+      "source": "yaoshi.png"
+    },
+    {
+      "id": "riguang",
+      "name": "日光菩萨",
+      "source": "riguang.png"
+    },
+    {
+      "id": "yueguang",
+      "name": "月光菩萨",
+      "source": "yueguang.png"
+    },
+    {
+      "id": "zhongliquan",
+      "name": "钟离权",
+      "source": "zhongliquan.png"
+    },
+    {
+      "id": "zhangguolao",
+      "name": "张果老",
+      "source": "zhangguolao.png"
+    },
+    {
+      "id": "lvdongbin",
+      "name": "吕洞宾",
+      "source": "lvdongbin.png"
+    },
+    {
+      "id": "tieguaili",
+      "name": "铁拐李",
+      "source": "tieguaili.png"
+    },
+    {
+      "id": "lancaihe",
+      "name": "蓝采和",
+      "source": "lancaihe.png"
+    },
+    {
+      "id": "hexiangu",
+      "name": "何仙姑",
+      "source": "hexiangu.png"
+    },
+    {
+      "id": "erlang",
+      "name": "二郎真君",
+      "source": "erlang.png"
+    },
+    {
+      "id": "hanxiangzi",
+      "name": "韩湘子",
+      "source": "hanxiangzi.png"
+    },
+    {
+      "id": "nezha",
+      "name": "哪吒三太子",
+      "source": "nezha.png"
+    },
+    {
+      "id": "caoguojiu",
+      "name": "曹国舅",
+      "source": "caoguojiu.png"
+    }
+  ]
+}
