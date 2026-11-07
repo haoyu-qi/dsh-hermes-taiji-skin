@@ -926,9 +926,10 @@ window.__ModuleLoader__.load({
       ctx.slots.inject('conversation.input.model.label', () =>
         ctx.slots.register({ name: 'conversation.input.model.label', priority: -100 }, ZiweiModelLabel),
       )
-      ctx.slots.inject('conversation.session.header.utilities', () =>
+      ctx.slots.inject('conversation.session.header.utilities', () => [
         ctx.slots.register({ name: 'conversation.session.header.utilities', id: 'hermes-ziwei', order: 300 }, ZiweiHeaderButton),
-      )
+        ctx.slots.register({ name: 'conversation.session.header.utilities', id: 'hermes-daily-poem' }, DailyPoem),
+      ])
       ctx.slots.inject('sidebar.workspaces.session.row.action', () =>
         ctx.slots.register({ name: 'sidebar.workspaces.session.row.action', id: 'hermes-ziwei', order: 150 }, ZiweiSessionRowAction),
       )

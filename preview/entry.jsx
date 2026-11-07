@@ -1,5 +1,6 @@
 import React from 'react'
 import { createRoot } from 'react-dom/client'
+import { createPortal } from 'react-dom'
 import deities from '../assets/deities/catalog.json'
 import { PlusCircle, PuzzlePiece, Clock, GridFour, MagnifyingGlass, SlidersHorizontal, Folder, ChatCircle, CaretDown, Microphone, Plus, Gear, UserCircle, SidebarSimple } from '@phosphor-icons/react'
 const h = React.createElement
@@ -15,7 +16,7 @@ const directory = { store:{ subscribe(fn){directoryListeners.add(fn);return()=>d
   async select(selection){publish({status:'selecting'}); await new Promise(resolve=>setTimeout(resolve,120)); if(reject){publish({status:'error',error:'preview rejection'});throw new Error('rejected')};publish({current:selection,status:'ready',error:null})},
 }
 let plugin
-window.__ModuleLoader__={load({factory}){plugin=factory(name=>{if(name==='react')return React;throw new Error(name)})}}
+window.__ModuleLoader__={load({factory}){plugin=factory(name=>{if(name==='react')return React;if(name==='react-dom')return {createPortal};throw new Error(name)})}}
 await import('./plugin.js')
 const tokenStyle=document.createElement('style');document.head.append(tokenStyle)
 function scheme(dark){tokenStyle.textContent=':root{'+Object.entries(themeTokens).map(([key,value])=>`${key}:${value[dark?'dark':'light']}`).join(';')+'}'}
@@ -50,6 +51,16 @@ function App(){
       <div className="profile"><UserCircle size={36}/><span>问道者</span><button onClick={()=>setPanel(!panel)} aria-label="打开预览控制"><Gear size={20}/></button></div>
     </aside>
     <main className={layout==='chat'?'chat':''}>
+      {layout==='chat'&&<header className="preview-chat-header">
+        <div className="preview-chat-title">
+          <strong>会话预览</strong>
+          {enabled&&selectSlot('conversation.session.header.utilities','hermes-daily-poem',props)}
+        </div>
+        <div className="preview-chat-tab-row">
+          <div data-conversation-tabs role="tablist"><button role="tab" aria-selected="true">对话</button><button role="tab" aria-selected="false">轨迹</button></div>
+          <button aria-label="更多视图">⋯</button>
+        </div>
+      </header>}
       {layout==='chat'&&<article className="conversation"><p className="user-message">如何让复杂问题的分析更清晰？</p><h2>先分清目标，再拆解约束。</h2><p>将问题分成可验证的几个部分，明确每一步需要什么证据。</p><pre><code>{'const clarity = question => {\n  return { goal: question.goal, evidence: [] }\n}'}</code></pre><table><thead><tr><th>步骤</th><th>关注点</th></tr></thead><tbody><tr><td>定义</td><td>目标与边界</td></tr><tr><td>验证</td><td>事实与证据</td></tr></tbody></table><p className="state-label">{state==='thinking'?'推理中…':state==='output'?'正在输出…':state==='tools'?'工具执行中…':'思考已收敛'}</p></article>}
       <section className="composer-seat">
         {layout==='hero'&&<div className="hero"><h1>探索未至之境 <small>预览版</small></h1><p>问道 · 思考 · 创造 · 与更大的可能相遇</p></div>}

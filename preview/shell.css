@@ -3,3 +3,8 @@
 .sidebar .hermes-brand-zh{font-size:27px;line-height:29px;letter-spacing:.1em}
 .sidebar .hermes-brand-en{font-size:9px;line-height:12px;letter-spacing:.34em}
 @media(max-width:1250px){.sidebar .hermes-brand-zh{font-size:21px;line-height:24px}.sidebar .hermes-brand-en{font-size:7px;line-height:9px}}
+
+.preview-chat-header{position:relative;z-index:1;padding:0 22px;border-bottom:1px solid var(--dsw-alias-border-l1)}
+.preview-chat-title{display:flex;align-items:center;height:34px}
+.preview-chat-tab-row,.preview-chat-tab-row [data-conversation-tabs]{position:relative;display:flex;align-items:center;gap:16px;min-height:32px}
+.preview-chat-tab-row button{padding:2px 5px;border:0;background:none;color:inherit}

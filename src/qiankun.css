@@ -187,3 +187,11 @@
 [data-qiankun-motion=off] .qiankun-edict-aura,[data-qiankun-motion=off] .qiankun-edict-motes{display:none}
 @media(prefers-reduced-motion:reduce){.qiankun-cast *{animation:none!important}.qiankun-edict-aura,.qiankun-edict-motes{display:none}}
 .hermes-brand-row{max-width:100%}
+
+/* 每日诗词在会话标签栏的剩余空间内排版。 */
+.hermes-daily-poem{position:absolute;top:0;bottom:0;left:max(33%,var(--hermes-poem-tabs-end,0px));right:clamp(12px,calc(50% - 200px),24%);container-type:inline-size;min-width:0}
+.hermes-daily-poem-content{display:flex;align-items:center;justify-content:center;gap:12px;height:100%;transform:translateY(-5px);min-width:0;white-space:nowrap;color:var(--dsw-alias-label-secondary)}
+.hermes-daily-poem-verse{overflow:hidden;text-overflow:ellipsis;font-size:22px;line-height:1.15}
+.hermes-daily-poem-credit{max-width:42%;overflow:hidden;text-overflow:ellipsis;font:12px/1.4 system-ui;color:var(--dsw-alias-label-caption)}
+@container (max-width:420px){.hermes-daily-poem-credit{display:none}}
+@container (max-width:120px){.hermes-daily-poem-content{display:none}}

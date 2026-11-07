@@ -30,7 +30,8 @@ const deities = JSON.parse(read('assets/deities/catalog.json'))
 if (deities.length !== 36 || new Set(deities.map(d => d.id)).size !== 36) throw new Error('V3.2 requires 36 unique deities')
 const deityArt = Object.fromEntries(deities.map(d => [d.id, 'data:image/webp;base64,' + fs.readFileSync(new URL(`assets/deities/${d.id}.webp`, root)).toString('base64')]))
 const blessingState = read('src/blessings.mjs').replace(/^export /gm, '')
-const runtime = `const QIANKUN_ART = ${JSON.stringify(art)};\nconst QIANKUN_CSS = ${JSON.stringify(read('src/qiankun.css') + '\n' + read('src/blessing.css'))};\nconst ZIWEI_CSS = ${JSON.stringify(read('src/ziwei.css'))};\nconst DEITIES = ${JSON.stringify(deities)};\nconst DEITY_ART = ${JSON.stringify(deityArt)};\n${read('src/tuning.mjs').replace(/^export /gm, '')}\n${state}\n${blessingState}\n${read('src/qiankun.js')}\n${read('src/blessing-ui.js')}\n/* ——— V3.1 · 紫微斗数 ——— */\n${read('src/ziwei.js')}\n${read('src/tuning-ui.js')}`
+const poemExcerpts = JSON.parse(read('vendor/shijian/poem-excerpts.json'))
+const runtime = `const POEM_EXCERPTS = ${JSON.stringify(poemExcerpts)};\n${read('src/daily-poem.js')}\nconst QIANKUN_ART = ${JSON.stringify(art)};\nconst QIANKUN_CSS = ${JSON.stringify(read('src/qiankun.css') + '\n' + read('src/blessing.css'))};\nconst ZIWEI_CSS = ${JSON.stringify(read('src/ziwei.css'))};\nconst DEITIES = ${JSON.stringify(deities)};\nconst DEITY_ART = ${JSON.stringify(deityArt)};\n${read('src/tuning.mjs').replace(/^export /gm, '')}\n${state}\n${blessingState}\n${read('src/qiankun.js')}\n${read('src/blessing-ui.js')}\n/* ——— V3.1 · 紫微斗数 ——— */\n${read('src/ziwei.js')}\n${read('src/tuning-ui.js')}`
 const skin = read('src/client.js').replace('    /* @qiankun-runtime */', () => runtime)
 
 // 引擎 IIFE 必须在顶层（它自己挂 window.__HermesZiwei__），皮肤壳跟在后面。
